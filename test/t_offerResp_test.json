@@ -1,0 +1,1264 @@
+
+
+{
+"id": 192776,
+"createdAt": null,
+"lastUpdatedAt": 1431640337537,
+"lastUpdatedByUser": "rhidalg",
+"lastUpdatedByIp": "127.0.0.1",
+"version": null,
+"status": true,
+"seller": {
+"id": "uzgames",
+"name": "UZ Games",
+"description": "teste",
+"cnpj": "78983721000156",
+"status": true
+},
+"sellerId": "uzgames",
+"sku":{
+"id": 715,
+"createdAt": 1378417380000,
+"name": "Jogo 3DS Transformers Prime - The Game",
+"status": true,
+"weight": 200.0000,
+"height": 19.0000,
+"width": 14.0000,
+"length": 7.0000,
+"postalVolumeFee": 0.3103,
+"attributes": [],
+"skuFileList":
+{
+"skuFile": [
+{
+"id": 1630977,
+"idSku": 715,
+"fileId": 2268310,
+"file":
+{
+"id": 2268310,
+"name": "2000992",
+"fileLocation": "walmartv5/catalog/2000992.jpg",
+"fileFormat": {
+"id": 2,
+"name": "Imagem Jpg",
+"htmlTag": "<img src=\"#url#\" width=\"#width#\" height=\"#height#\" alt=\"#Texto#\" id=\"#id#\" />",
+"extension": "jpg",
+"mimeType": "image/jpeg"
+},
+"fileType":{
+"id": 10,
+"name": "Imagem Produto Zoom - 1000x1000",
+"height": 1000,
+"width": 1000,
+"size": 300,
+"requiredResizeFlag": true,
+"type": "Imagem"
+}
+,
+"fileFormatId": 2,
+"fileTypeId": 10,
+"height": 1000,
+"width": 1000
+},
+"status": false,
+"idFileType": 10,
+"label": "",
+"main": true
+}
+]
+},
+"eans": [
+"47875843424"
+],
+"product":
+{
+"id": 2000992,
+"name": "Jogo 3DS Transformers Prime - The Game",
+"description": "Jogo Transformers Prime - The Game<br /> Saiba mais sobre o Jogo Transformers Prime - The Game de 3DS<br /><br /> Lute, atire, corra, divirta-se com Jogo Transformers Prime - The Game , a série que virou um grande jogo, ou o jogo que virou uma grande série ? Opine, logo alí abaixo <br /><br />Transormers Prime: The Game é um jogo de ação em terceira pessoa baseando no show de TV: Transformers Prime da Hasbro. <br /><br />Mais de 40% do jogo mostra elementos da história onde o jogador observa as cenas e permite que a história de Transformers Prime se desdobre.<br /><br />Os Transformers são robôs que podem se transformar em diferentes tipos de veículos e são divididos em Autobots e Decepticons. Os Autobots e as crianças humanas descobrem que os Decepticons interceptaram um misterioso meteoro que se aproxima da terra. Optimus Prime, o líder dos Autobots, descobre que os Decepticons planejam usar a energia do meteoro para o mal e tentará frustrar seus planos. Durante o confronto no meteoro um antigo poder desperta do interior fazendo os autobots despencarem separados na terra.<br /><br />Os Autobots despertam espalhados por todo o Globo e devem encontrar uns aos outros, com a ajuda das crianças, para conter o plano malvado dos Megatrons.",
+"nameComplement": "",
+"linkText": "2000992-Jogo-3DS-Transformers-Prime---The-Game",
+"keyWords": "Jogo 3DS Transformers Prime - The Game Activision,Jogos para Nintendo 3DS,Nintendo 3DS,Games",
+"siteTitle": "",
+"metaTagDescription": "*** CONDIÇÃO ESPECIAL DE PAGAMENTO NA OPÇÃO DE BOLETO BANCÁRIO, CONFIRA !!! ***\r\n\r\n Jogo Transformers Prime - The Game\r\n Saiba mais sobre o Jogo Trans",
+"referenceCode": "",
+"fiscalCode": "",
+"status": true,
+"showFlag": true,
+"category":{
+"id": 2014,
+"name": "Jogos para Nintendo 3DS",
+"parent":
+{
+"id": 2012,
+"name": "Nintendo 3DS",
+"parent":{
+"id": 401,
+"name": "Games",
+"fieldGroups": [],
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+"fieldGroups": [],
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+"children": [],
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+"categoryId": 2014,
+"brand": {
+"id": 310,
+"name": "Activision",
+"text": "Activision",
+"listKeywords": [
+"Activision"
+],
+"siteTitle": "Activision",
+"displayedInHomeMenu": false,
+"status": true
+}
+,
+"brandId": 310,
+"fieldGroups": [
+{
+"id": 13658,
+"name": "Integracao",
+"priority": 1,
+"attributes": [
+{
+"field":{
+"id": 75671,
+"name": "Especificacao",
+"type":{
+"id": 5,
+"name": "Combo",
+"hasOptions": true,
+"status": true
+},
+"typeId": 5,
+"options": [
+{
+"id": 195864,
+"name": "-",
+"priority": 0,
+"status": true,
+"fieldId": 75671
+},
+{
+"id": 196967,
+"name": "Game Resident Evil Revelations - 3DS",
+"priority": 0,
+"status": true,
+"fieldId": 75671
+}
+,
+{
+"id": 165341,
+"name": "Único",
+"priority": 1,
+"status": true,
+"fieldId": 75671
+}
+],
+"priority": 1,
+"required": false,
+"displayedAsSpecification": false,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+}
+,
+"values": []
+}
+]
+},
+{
+"id": 6371,
+"name": "Características do Produto",
+"priority": 1,
+"attributes": [
+{
+"field":{
+"id": 64974,
+"name": "Gênero",
+"type":{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+},
+"typeId": 1,
+"priority": 1,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+},
+"values": [
+{
+"id": 51767061,
+"name": ""
+},
+{
+"id": 53467663,
+"name": "Ação,Aventura,Infantil,Luta,,"
+}
+]
+},
+{
+"field":{
+"id": 64975,
+"name": "Classificação Indicativa",
+"type":{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+}
+,
+"typeId": 1,
+"priority": 2,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+},
+"values": [
+{
+"id": 53467664,
+"name": "10 anos"
+},
+{
+"id": 51767062,
+"name": ""
+}
+]
+},
+{
+"field":{
+"id": 64976,
+"name": "Tipo de Mídia",
+"type":{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+}
+,
+"typeId": 1,
+"priority": 3,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+},
+"values": [
+{
+"id": 51767063,
+"name": ""
+},
+{
+"id": 53467665,
+"name": "Cartucho"
+}
+]
+},
+{
+"field":{
+"id": 64977,
+"name": "Idioma do Jogo",
+"type":{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+}
+,
+"typeId": 1,
+"priority": 4,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+},
+"values": [
+{
+"id": 51767064,
+"name": ""
+}
+]
+},
+{
+"field":{
+"id": 64978,
+"name": "Idioma do Manual",
+"type":{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+}
+,
+"typeId": 1,
+"priority": 5,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+},
+"values": [
+{
+"id": 51767065,
+"name": ""
+}
+]
+},
+{
+"field":{
+"id": 64979,
+"name": "Número de Jogadores Offline/Online",
+"type":{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+}
+,
+"typeId": 1,
+"priority": 6,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+},
+"values": [
+{
+"id": 51767066,
+"name": ""
+}
+]
+}
+]
+},
+{
+"id": 6372,
+"name": "Especificação",
+"priority": 2,
+"attributes": [
+{
+"field":{
+"id": 68272,
+"name": "Fabricante",
+"type":{
+"id": 7,
+"name": "CheckBox",
+"hasOptions": true,
+"status": true
+},
+"typeId": 7,
+"options": [],
+"priority": 1,
+"required": false,
+"displayedAsSpecification": false,
+"displayedAsFilter": true,
+"wizard": false,
+"topMenu": false,
+"sideMenu": true,
+"status": true,
+"fromSku": false
+}
+,
+"values": []
+},
+{
+"field":{
+"id": 68273,
+"name": "Categoria",
+"type":{
+"id": 7,
+"name": "CheckBox",
+"hasOptions": true,
+"status": true
+}
+,
+"typeId": 7,
+"options": [
+{
+"id": 33173,
+"name": "Ação",
+"priority": 1,
+"status": true,
+"fieldId": 68273
+},
+{
+"id": 33174,
+"name": "Aventura",
+"priority": 2,
+"status": true,
+"fieldId": 68273
+}
+,
+{
+"id": 33175,
+"name": "Corrida",
+"priority": 3,
+"status": true,
+"fieldId": 68273
+}
+,
+{
+"id": 33176,
+"name": "Esporte",
+"priority": 4,
+"status": true,
+"fieldId": 68273
+}
+,
+{
+"id": 33177,
+"name": "Estratégia/RPG",
+"priority": 5,
+"status": true,
+"fieldId": 68273
+}
+,
+{
+"id": 33178,
+"name": "Futebol",
+"priority": 6,
+"status": true,
+"fieldId": 68273
+},
+{
+"id": 33179,
+"name": "Guerra/Shooter",
+"priority": 7,
+"status": true,
+"fieldId": 68273
+}
+,
+{
+"id": 33180,
+"name": "Infantil",
+"priority": 8,
+"status": true,
+"fieldId": 68273
+}
+,
+{
+"id": 33181,
+"name": "Luta",
+"priority": 9,
+"status": true,
+"fieldId": 68273
+}
+,
+{
+"id": 33182,
+"name": "Tiro",
+"priority": 10,
+"status": true,
+"fieldId": 68273
+}
+,
+{
+"id": 33183,
+"name": "Musical",
+"priority": 11,
+"status": true,
+"fieldId": 68273
+}
+],
+"priority": 2,
+"required": false,
+"displayedAsSpecification": false,
+"displayedAsFilter": true,
+"wizard": false,
+"topMenu": false,
+"sideMenu": true,
+"status": true,
+"fromSku": false
+}
+,
+"values": [
+{
+"id": 53467667,
+"name": "Ação"
+},
+{
+"id": 53467668,
+"name": "Aventura"
+},
+{
+"id": 53467669,
+"name": "Infantil"
+},
+{
+"id": 53467670,
+"name": "Luta"
+}
+]
+}
+]
+},
+{
+"id": 6373,
+"name": "Itens Inclusos",
+"priority": 3,
+"attributes": [
+{
+"field":{
+"id": 64980,
+"name": "Itens Inclusos",
+"type":{
+"id": 2,
+"name": "Texto Grande",
+"hasOptions": false,
+"status": true
+},
+"typeId": 2,
+"priority": 1,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+},
+"values": [
+{
+"id": 51767067,
+"name": ""
+},
+{
+"id": 53467666,
+"name": "Caixa,Jogo,Manual"
+}
+]
+}
+]
+},
+{
+"id": 6374,
+"name": "Garantia",
+"priority": 4,
+"attributes": [
+{
+"field":{
+"id": 64981,
+"name": "Garantia",
+"type":{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+},
+"typeId": 1,
+"priority": 1,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+},
+"values": [
+{
+"id": 51767068,
+"name": ""
+}
+]
+}
+]
+},
+{
+"id": 6770,
+"name": "Referências do Produto",
+"priority": 3,
+"attributes": [
+{
+"field":{
+"id": 66977,
+"name": "Referência do Modelo",
+"type":{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+},
+"typeId": 1,
+"priority": 1,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+},
+"values": [
+{
+"id": 51767071,
+"name": "Jogo 3DS Transformers Prime - The Game"
+}
+]
+},
+{
+"field":{
+"id": 67103,
+"name": "Linha/Coleção",
+"type":{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+}
+,
+"typeId": 1,
+"priority": 2,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+},
+"values": [
+{
+"id": 51767072,
+"name": ""
+}
+]
+}
+]
+},
+{
+"id": 5992,
+"name": "Aviso",
+"priority": 1,
+"attributes": [
+{
+"field":{
+"id": 57434,
+"name": "Aviso",
+"type":{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+},
+"typeId": 1,
+"priority": 1,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+},
+"values": [
+{
+"id": 51767069,
+"name": "<b>Imagem meramente ilustrativa</b>"
+}
+]
+}
+]
+},
+{
+"id": 15370,
+"name": "Integracao",
+"priority": 1,
+"attributes": [
+{
+"field":{
+"id": 77762,
+"name": "Especificacao",
+"type":{
+"id": 5,
+"name": "Combo",
+"hasOptions": true,
+"status": true
+},
+"typeId": 5,
+"options": [
+{
+"id": 178059,
+"name": "Único",
+"priority": 1,
+"status": true,
+"fieldId": 77762
+}
+],
+"priority": 1,
+"required": false,
+"displayedAsSpecification": false,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+}
+,
+"values": []
+}
+]
+},
+{
+"id": 14933,
+"name": "Integracao",
+"priority": 1,
+"attributes": [
+{
+"field":{
+"id": 76947,
+"name": "Especificacao",
+"type":{
+"id": 5,
+"name": "Combo",
+"hasOptions": true,
+"status": true
+},
+"typeId": 5,
+"options": [
+{
+"id": 166611,
+"name": "Único",
+"priority": 1,
+"status": true,
+"fieldId": 76947
+}
+],
+"priority": 1,
+"required": false,
+"displayedAsSpecification": false,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+}
+,
+"values": []
+}
+]
+},
+{
+"id": 6795,
+"name": "Garantia",
+"priority": 4,
+"attributes": [
+{
+"field":{
+"id": 67177,
+"name": "Garantia",
+"type":{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+},
+"typeId": 1,
+"priority": 1,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+},
+"values": [
+{
+"id": 51767073,
+"name": ""
+}
+]
+}
+]
+},
+{
+"id": 5956,
+"name": "Assistência Técnica",
+"priority": 2,
+"attributes": [
+{
+"field":{
+"id": 57355,
+"name": "Assistência Técnica",
+"type":{
+"id": 2,
+"name": "Texto Grande",
+"hasOptions": false,
+"status": true
+},
+"typeId": 2,
+"priority": 1,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+},
+"values": [
+{
+"id": 51767070,
+"name": ""
+}
+]
+}
+]
+}
+],
+"editionDate": 1383568920000,
+"department":
+{
+"id": 401,
+"name": "Games",
+"children": [
+{
+"id": 402,
+"name": "PC e MAC",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+},
+{
+"id": 405,
+"name": "Nintendo Wii",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 409,
+"name": "Xbox 360",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 413,
+"name": "Playstation 3",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 417,
+"name": "Playstation 2",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 421,
+"name": "PSP",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+},
+{
+"id": 425,
+"name": "Nintendo DS",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 429,
+"name": "Outros Consoles",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 491,
+"name": "Game Boy Advanced",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 492,
+"name": "Game Cube",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 535,
+"name": "Tec Toy",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+},
+{
+"id": 538,
+"name": "Dynavision",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 2012,
+"name": "Nintendo 3DS",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 2725,
+"name": "PS Vita",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 2734,
+"name": "Pré Venda",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 2876,
+"name": "Lançamentos",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+},
+{
+"id": 2877,
+"name": "Mais Vendidos",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 2878,
+"name": "Ofertas",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 3072,
+"name": "Captura de Games",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 3145,
+"name": "Nintendo Wii U",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 3213,
+"name": "Cards",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+},
+{
+"id": 4417,
+"name": "Xbox One",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 4621,
+"name": "Playstation 4",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+{
+"id": 6276,
+"name": "Colecionáveis",
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+],
+"fieldGroups": [
+{
+"id": 5992,
+"name": "Aviso",
+"priority": 1,
+"fields": [
+{
+"id": 57434,
+"name": "Aviso",
+"type":
+{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+},
+"typeId": 1,
+"priority": 1,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+}
+]
+},
+{
+"id": 14933,
+"name": "Integracao",
+"priority": 1,
+"fields": [
+{
+"id": 76947,
+"name": "Especificacao",
+"type":
+{
+"id": 5,
+"name": "Combo",
+"hasOptions": true,
+"status": true
+},
+"typeId": 5,
+"options": [
+{
+"id": 166611,
+"name": "Único",
+"priority": 1,
+"status": true,
+"fieldId": 76947
+}
+],
+"priority": 1,
+"required": false,
+"displayedAsSpecification": false,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+}
+]
+},
+{
+"id": 5956,
+"name": "Assistência Técnica",
+"priority": 2,
+"fields": [
+{
+"id": 57355,
+"name": "Assistência Técnica",
+"type":
+{
+"id": 2,
+"name": "Texto Grande",
+"hasOptions": false,
+"status": true
+},
+"typeId": 2,
+"priority": 1,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+}
+]
+},
+{
+"id": 6770,
+"name": "Referências do Produto",
+"priority": 3,
+"fields": [
+{
+"id": 66977,
+"name": "Referência do Modelo",
+"type":
+{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+},
+"typeId": 1,
+"priority": 1,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+}
+,
+{
+"id": 67103,
+"name": "Linha/Coleção",
+"type":
+{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+},
+"typeId": 1,
+"priority": 2,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+}
+]
+},
+{
+"id": 6795,
+"name": "Garantia",
+"priority": 4,
+"fields": [
+{
+"id": 67177,
+"name": "Garantia",
+"type":
+{
+"id": 1,
+"name": "Texto",
+"hasOptions": false,
+"status": true
+},
+"typeId": 1,
+"priority": 1,
+"required": false,
+"displayedAsSpecification": true,
+"displayedAsFilter": false,
+"wizard": false,
+"topMenu": false,
+"sideMenu": false,
+"status": true,
+"fromSku": false
+}
+]
+}
+],
+"status": true,
+"idDepartment": 401,
+"flagCategoryMirror": false
+}
+,
+"tags": [
+{
+"id": 17536,
+"name": "shoppinguol"
+}
+]
+},
+"productId": 2000992,
+"freightType":{
+"id": 1,
+"name": "Leve"
+}
+,
+"freightTypeId": 1,
+"referenceCode": "aaaaa"
+},
+"skuId": 715,
+"store":
+{
+"id": 1,
+"name": "Loja Principal",
+"status": true
+},
+"storeId": 1,
+"sellerExternalOfferId": "19664",
+"requestedUpdateDate": null,
+"price": 10.0,
+"listPrice": 1.0,
+"quantity": 10,
+"importTax": 0
+}

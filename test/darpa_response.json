@@ -1,0 +1,40 @@
+[
+  {
+    "requestId": "6969",
+    "statusCode": 200,
+    "statusMessage": "Ok",
+    "payload": [
+      {
+        "offerId": 2856398,
+        "seller": {
+          "id": "1",
+          "name": "Walmart"
+        },
+        "price": {
+          "original": 10000,
+          "current": 9000
+        },
+        "installments": {
+          "bestCalculatedInstallment": {
+            "price": 5669,
+            "valuePerInstallment": 567,
+            "installmentAmount": 10,
+            "currency": "R$"
+          },
+          "bestCalculatedInstallmentWithRate": {}
+        },
+        "utm": {
+          "partner": null,
+          "medium": null,
+          "campaign": null
+        },
+        "id": 2856398
+      }
+    ]
+  },
+  {
+    "requestId": "123456",
+    "statusCode": 422,
+    "statusMessage": "Invalid Seller [11: Walmart]"
+  }
+]

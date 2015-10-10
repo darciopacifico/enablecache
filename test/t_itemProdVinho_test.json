@@ -1,0 +1,861 @@
+{
+  "id": 3010364,
+  "name": "Chianti Valserena DOCG 2013 - Tinto - 750ml",
+  "description": "â¢\tUm vinho de fama mundial produzido numa zona Ãºnica e inconfundÃ­vel que representa no seu complexo o maior territÃ³rio a D.O.C.G da Italia.\r\nâ¢\tO nosso Chianti D.O.C.G. Ã© caracterizado por um intenso perfume e sabor harmonioso, enxuto e fresco que o tornam particularmente indicado para acompanhar assados de carne de caÃ§a, carnes no espeto e grelhados alÃ©m de queijos curados.",
+  "nameComplement": "",
+  "linkText": "3010364m-chianti-valserena-docg-2013-tinto-750ml",
+  "keyWords": "Chianti, Valserena, DOCG, 2013",
+  "siteTitle": "Chianti Valserena DOCG 2013",
+  "metaTagDescription": "Chianti Valserena DOCG 2013, Vinhos, Trambusti",
+  "fiscalCode": "",
+  "status": true,
+  "showFlag": true,
+  "skus": [
+    {
+      "id": 1133393,
+      "createdAt": 1422447420000,
+      "name": "Chianti Valserena DOCG 2013 - Tinto - 750ml",
+      "description": "â¢\tUm vinho de fama mundial produzido numa zona Ãºnica e inconfundÃ­vel que representa no seu complexo o maior territÃ³rio a D.O.C.G da Italia.\r\nâ¢\tO nosso Chianti D.O.C.G. Ã© caracterizado por um intenso perfume e sabor harmonioso, enxuto e fresco que o tornam particularmente indicado para acompanhar assados de carne de caÃ§a, carnes no espeto e grelhados alÃ©m de queijos curados.\r\n\r\n",
+      "status": true,
+      "weight": 1.5000,
+      "height": 1.0000,
+      "width": 1.0000,
+      "length": 1.0000,
+      "postalVolumeFee": 0.0000,
+      "attributes": [],
+      "skuFileList": {
+        "skuFile": [
+          {
+            "id": 25012002,
+            "idSku": 1133393,
+            "fileId": 4146315,
+            "file": {
+              "id": 4146315,
+              "name": "1133393-1422447391705-0",
+              "fileLocation": "catalog/1133393-1422447391705-0.jpg",
+              "fileFormat": {
+                "id": 2,
+                "name": "Imagem Jpg",
+                "htmlTag": "<img src=\"#url#\" width=\"#width#\" height=\"#height#\" alt=\"#Texto#\" id=\"#id#\" />",
+                "extension": "jpg",
+                "mimeType": "image/jpeg"
+              },
+              "fileType": {
+                "id": 10,
+                "name": "Imagem Produto Zoom - 1000x1000",
+                "height": 1000,
+                "width": 1000,
+                "size": 300,
+                "requiredResizeFlag": true,
+                "type": "Imagem"
+              },
+              "fileFormatId": 2,
+              "fileTypeId": 10,
+              "height": 800,
+              "width": 800,
+              "widthMeasureUnit": "px",
+              "heightMeasureUnit": "px"
+            },
+            "status": false,
+            "idFileType": 10,
+            "main": false
+          }
+        ]
+      },
+      "eans": [],
+      "productId": 3010364,
+      "freightType": {
+        "id": 1,
+        "name": "Leve"
+      },
+      "freightTypeId": 1,
+      "offerList": {
+        "total_results": 1,
+        "offer": [
+          {
+            "id": 1037124,
+            "createdAt": null,
+            "lastUpdatedAt": 1433938431423,
+            "lastUpdatedByUser": "catalog-offers-hub",
+            "lastUpdatedByIp": "hostName",
+            "version": null,
+            "status": true,
+            "seller": {
+              "id": "vinhoreserva",
+              "name": "Vinho Reserva",
+              "description": "A vinho Reserva nasceu da exigÃªncia de propor, aos amantes de vinhos de qualidade, uma plataforma virtual contendo todas as informaÃ§Ãµes tÃ©cnicas, curiosidades e nuanÃ§as deste nÃ©ctar.\r\n",
+              "cnpj": "06152822000174",
+              "status": true
+            },
+            "sellerId": "vinhoreserva",
+            "sku": null,
+            "skuId": 1133393,
+            "store": {
+              "id": 1,
+              "name": "Loja Principal",
+              "status": true
+            },
+            "storeId": 1,
+            "sellerExternalOfferId": "4204574",
+            "requestedUpdateDate": null,
+            "price": 45.5,
+            "listPrice": 75.9,
+            "quantity": 189,
+            "importTax": 0.00
+          }
+        ]
+      }
+    }
+  ],
+  "category": {
+    "id": 4374,
+    "name": "Vinhos",
+    "parent": {
+      "id": 4373,
+      "name": "Adega",
+      "fieldGroups": [],
+      "status": true,
+      "idDepartment": 4373,
+      "flagCategoryMirror": false
+    },
+    "children": [
+      {
+        "id": 4377,
+        "name": "Branco",
+        "status": true,
+        "idDepartment": 4373,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 4378,
+        "name": "Espumante",
+        "status": true,
+        "idDepartment": 4373,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 4379,
+        "name": "Licoroso",
+        "status": true,
+        "idDepartment": 4373,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 4380,
+        "name": "Rose",
+        "status": true,
+        "idDepartment": 4373,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 4381,
+        "name": "Sobremesa",
+        "status": true,
+        "idDepartment": 4373,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 4382,
+        "name": "Tinto",
+        "status": true,
+        "idDepartment": 4373,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 6343,
+        "name": "Frisante",
+        "status": true,
+        "idDepartment": 4373,
+        "flagCategoryMirror": false
+      }
+    ],
+    "status": true,
+    "idDepartment": 4373,
+    "flagCategoryMirror": false
+  },
+  "categoryId": 4374,
+  "brand": {
+    "id": 12658,
+    "name": "Trambusti",
+    "text": "Trambusti\r\n",
+    "listKeywords": [
+      "Trambusti"
+    ],
+    "siteTitle": "Trambusti",
+    "displayedInHomeMenu": false,
+    "status": true
+  },
+  "brandId": 12658,
+  "fieldGroups": [
+    {
+      "id": 6805,
+      "name": "EspecificaÃ§Ãµes",
+      "priority": 1,
+      "attributes": [
+        {
+          "field": {
+            "id": 74545,
+            "name": "ConteÃºdo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 72514961,
+              "name": "750ml"
+            }
+          ]
+        },
+        {
+          "field": {
+            "id": 74546,
+            "name": "GraduaÃ§Ã£o AlcoÃ³lica",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 72514962,
+              "name": "13%"
+            }
+          ]
+        },
+        {
+          "field": {
+            "id": 74547,
+            "name": "HarmonizaÃ§Ã£o",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 3,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 72514963,
+              "name": "ndicado para acompanhar assados de carne de caÃ§a, carnes no espeto e grelhados alÃ©m de queijos curados."
+            }
+          ]
+        },
+        {
+          "field": {
+            "id": 74548,
+            "name": "Temperatura para servir",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 4,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 72514964,
+              "name": "Aconselha-se servÃ­-lo na temperatura de 18Âº C, abrindo a garrafa pelo menos uma hora antes"
+            }
+          ]
+        },
+        {
+          "field": {
+            "id": 74549,
+            "name": "Tipo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 5,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 72514965,
+              "name": "Tinto"
+            }
+          ]
+        },
+        {
+          "field": {
+            "id": 74550,
+            "name": "Vinicola",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 6,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 17812,
+      "name": "Filtros de Departamento",
+      "priority": 2,
+      "attributes": [
+        {
+          "field": {
+            "id": 92455,
+            "name": "Unidades",
+            "type": {
+              "id": 5,
+              "name": "Combo",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 5,
+            "options": [
+              {
+                "id": 500698,
+                "name": "Kit",
+                "priority": 1,
+                "status": true,
+                "fieldId": 92455
+              },
+              {
+                "id": 500697,
+                "name": "Pack",
+                "priority": 2,
+                "status": true,
+                "fieldId": 92455
+              },
+              {
+                "id": 500696,
+                "name": "UnitÃ¡rio",
+                "priority": 3,
+                "status": true,
+                "fieldId": 92455
+              }
+            ],
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": false
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 15090,
+      "name": "EspecificaÃ§Ãµes de Departamento",
+      "priority": 1,
+      "attributes": [
+        {
+          "field": {
+            "id": 77300,
+            "name": "Aviso sobre o produto",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 72514967,
+              "name": "Imagem meramente ilustrativa"
+            }
+          ]
+        },
+        {
+          "field": {
+            "id": 77302,
+            "name": "ConteÃºdo da Embalagem",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 77303,
+            "name": "Linha/ColeÃ§Ã£o",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 3,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 77305,
+            "name": "ReferÃªncia do Modelo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 4,
+            "required": false,
+            "displayedAsSpecification": false,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 77306,
+            "name": "SAC",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 5,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 92518,
+            "name": "URL VÃ­deo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 6,
+            "required": false,
+            "displayedAsSpecification": false,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": false
+          },
+          "values": []
+        }
+      ]
+    }
+  ],
+  "editionDate": 1422447420000,
+  "department": {
+    "id": 4373,
+    "name": "Adega",
+    "children": [
+      {
+        "id": 4374,
+        "name": "Vinhos",
+        "status": true,
+        "idDepartment": 4373,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 4375,
+        "name": "Azeite",
+        "status": true,
+        "idDepartment": 4373,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 4376,
+        "name": "Queijo",
+        "status": true,
+        "idDepartment": 4373,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 6348,
+        "name": "Cervejas",
+        "status": true,
+        "idDepartment": 4373,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 6421,
+        "name": "Whisky",
+        "status": true,
+        "idDepartment": 4373,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 6487,
+        "name": "CachaÃ§as",
+        "status": true,
+        "idDepartment": 4373,
+        "flagCategoryMirror": false
+      }
+    ],
+    "fieldGroups": [
+      {
+        "id": 15090,
+        "name": "EspecificaÃ§Ãµes de Departamento",
+        "priority": 1,
+        "fields": [
+          {
+            "id": 77300,
+            "name": "Aviso sobre o produto",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          {
+            "id": 77302,
+            "name": "ConteÃºdo da Embalagem",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          {
+            "id": 77303,
+            "name": "Linha/ColeÃ§Ã£o",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 3,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          {
+            "id": 77305,
+            "name": "ReferÃªncia do Modelo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 4,
+            "required": false,
+            "displayedAsSpecification": false,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          {
+            "id": 77306,
+            "name": "SAC",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 5,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          {
+            "id": 92518,
+            "name": "URL VÃ­deo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 6,
+            "required": false,
+            "displayedAsSpecification": false,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": false
+          }
+        ]
+      },
+      {
+        "id": 17812,
+        "name": "Filtros de Departamento",
+        "priority": 2,
+        "fields": [
+          {
+            "id": 92455,
+            "name": "Unidades",
+            "type": {
+              "id": 5,
+              "name": "Combo",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 5,
+            "options": [
+              {
+                "id": 500698,
+                "name": "Kit",
+                "priority": 1,
+                "status": true,
+                "fieldId": 92455
+              },
+              {
+                "id": 500697,
+                "name": "Pack",
+                "priority": 2,
+                "status": true,
+                "fieldId": 92455
+              },
+              {
+                "id": 500696,
+                "name": "UnitÃ¡rio",
+                "priority": 3,
+                "status": true,
+                "fieldId": 92455
+              }
+            ],
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": false
+          }
+        ]
+      }
+    ],
+    "status": true,
+    "idDepartment": 4373,
+    "flagCategoryMirror": false
+  },
+  "tags": [
+    {
+      "id": 14816,
+      "name": "Produtos - ZOOM - XML TESTE"
+    },
+    {
+      "id": 23502,
+      "name": "BO - Adega"
+    },
+    {
+      "id": 16827,
+      "name": "Ecompete"
+    },
+    {
+      "id": 23826,
+      "name": "mkt vinho"
+    },
+    {
+      "id": 23289,
+      "name": "Semana do Consumidor 2015"
+    },
+    {
+      "id": 23666,
+      "name": "feriadao - ficar em casa"
+    },
+    {
+      "id": 23222,
+      "name": "AÃ§Ã£o 72h - produto"
+    },
+    {
+      "id": 23825,
+      "name": "Jacotei sem livros"
+    },
+    {
+      "id": 16408,
+      "name": "Campanha ItaÃº Personal II"
+    },
+    {
+      "id": 15796,
+      "name": "Hagah - Restaurantes"
+    },
+    {
+      "id": 19731,
+      "name": "Vitrine - Internas - Vinhos"
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "id": 2034343,
+  "name": "Porta Jóia Musical Luxo - Cinderela JK31989 - Zippy Toys",
+  "brand": {
+    "id": 3231,
+    "name": "Zippy Toys"
+  },
+  "description": "A Zippy Toys acredita que as crianças tem o dever de sonhar, acreditar e acima de tudo se divertir. Sendo assim, vendem mais do que brinquedos, vendem a magia, imaginação e com isso conseguem algumas doses de felicidade!\r\nSão vários produtos licenciados que atendem diferentes idades e gostos, com o mesmo propósito...Sonhar!<br>\r\n\r\nLindo porta joias da Cinderela. Reproduz som e acompanha colar e anel.",
+  "keywords": [
+    "Brinquedos",
+    "porta joia musical",
+    "brincadeiras",
+    "porta joia princesas,"
+  ],
+  "linktext": "400545-Porta-Joia-Luxo-Cinderela",
+  "categories": [
+    {
+      "id": 77,
+      "name": "Brinquedos"
+    },
+    {
+      "id": 94,
+      "name": "Brincadeiras e Faz de Conta"
+    }
+  ],
+  "attributes": [
+    {
+      "id": 51606,
+      "name": "Composição",
+      "values": [
+        ""
+      ]
+    },
+    {
+      "id": 69828,
+      "name": "Brincadeira",
+      "values": [
+        ""
+      ]
+    },
+    {
+      "id": 69829,
+      "name": "Idade Recomendada",
+      "values": [
+        "A partir de 3 anos"
+      ]
+    },
+    {
+      "id": 51607,
+      "name": "Nº de moldes",
+      "values": [
+        ""
+      ]
+    },
+    {
+      "id": 69830,
+      "name": "Material",
+      "values": [
+        "Plástico"
+      ]
+    },
+    {
+      "id": 69831,
+      "name": "Tema",
+      "values": [
+        "Princesas"
+      ]
+    },
+    {
+      "id": 69832,
+      "name": "Outros",
+      "values": [
+        ""
+      ]
+    },
+    {
+      "id": 66967,
+      "name": "Alimentação",
+      "values": [
+        "3 pilhas AA (inclusas)"
+      ]
+    },
+    {
+      "id": 57436,
+      "name": "Aviso",
+      "values": [
+        "<b>Imagem meramente ilustrativa</b>"
+      ]
+    },
+    {
+      "id": 69833,
+      "name": "Itens Inclusos",
+      "values": [
+        "1 Porta joia"
+      ]
+    },
+    {
+      "id": 57358,
+      "name": "Assistência Técnica",
+      "values": [
+        "55 (11 ) 3787.4400"
+      ]
+    },
+    {
+      "id": 66952,
+      "name": "Garantia",
+      "values": [
+        "Não informado"
+      ]
+    },
+    {
+      "id": 66970,
+      "name": "Referência do Modelo",
+      "values": [
+        "JK31989"
+      ]
+    },
+    {
+      "id": 67096,
+      "name": "Linha/Coleção",
+      "values": [
+        "Princesas"
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": 69834,
+      "name": "Finalidade",
+      "values": [
+        "Para Meninas"
+      ]
+    },
+    {
+      "id": 69835,
+      "name": "Idade Indicada",
+      "values": [
+        "2 a 4 anos"
+      ]
+    },
+    {
+      "id": 69836,
+      "name": "Brincadeiras",
+      "values": null
+    },
+    {
+      "id": 69837,
+      "name": "Brincadeiras de Casinha",
+      "values": null
+    }
+  ],
+  "variations": [
+    {
+      "id": 36318,
+      "name": "Porta Jóia Musical Luxo - Cinderela JK31989 - Zippy Toys",
+      "specializations": null,
+      "dimensions": {
+        "height": 27,
+        "length": 23,
+        "weight": 690,
+        "width": 17
+      },
+      "codeList": {
+        "ean": [
+          "7898516905932"
+        ]
+      },
+      "attributes": null,
+      "filters": null,
+      "assets": {
+        "images": [
+          {
+            "url": "//static.wmobjects.com.br/imgres/arquivos/ids/2460039",
+            "attributes": [
+              {
+                "name": "extension",
+                "values": [
+                  "jpg"
+                ]
+              },
+              {
+                "name": "mimeType",
+                "values": [
+                  "image/jpeg"
+                ]
+              },
+              {
+                "name": "height",
+                "values": [
+                  "1000.00"
+                ]
+              },
+              {
+                "name": "width",
+                "values": [
+                  "1000.00"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "offers": [
+        {
+          "id": 2905647,
+          "seller": {
+            "id": "1",
+            "name": "Walmart"
+          },
+          "price": {
+            "original": 0,
+            "current": 0,
+            "importTax": 0
+          },
+          "available": false
+        }
+      ],
+      "OutOfCatalog": false
+    }
+  ]
+}

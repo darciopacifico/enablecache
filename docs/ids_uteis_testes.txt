@@ -1,0 +1,21 @@
+QA
+
+- IdProduct
+
+-- Attribute de SKU com DisplayAsSpecification == true
+
+SELECT p.*, cv.*
+FROM Campo c
+JOIN SkuCampoValor cv
+	ON cv.IdCampo = c.IdCampo
+JOIN Sku s
+	ON s.IdSKU = cv.IdSku
+JOIN Produto p
+	ON p.IdProduto = s.IdProduto
+where FlagExibeEspecificacao=1
+AND c.FlagAtiva=1
+AND EXISTS (SELECT 1 FROM SkuSeller WHERE StockKeepingUnitId=cv.IdSku AND IsActive=1)
+AND s.FlagAtiva=1
+AND p.FlagAtiva=1
+
+ids: 2142944

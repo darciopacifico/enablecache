@@ -1,0 +1,1724 @@
+{
+  "id": 2774379,
+  "name": "ColchÃ£o Paropas Potenza Uniface Pillow T King Size 203X193X30",
+  "description": "<p>O <strong>colchÃ£o Paropas Potenza</strong> Ã© um colchÃ£o para cama de casal KingÂ size desenvolvido para melhorar a sua qualidade de vida! Pois, ele agrega qualidade e oferece muito conforto aliado ao seu bem estar.</p>\r\n<p>Indicado para vocÃª e para a sua famÃ­lia, o colchÃ£o Potenza possui um design inovador composto por <strong>tecido MatelassÃª 80% poliÃ©ster</strong> com alto teor de elasticidade que oferece resistÃªncia para o produto, enquanto o <strong>Molejo Pocket ensacado</strong> garante a estabilidade e firmeza ao colchÃ£o e o bordado pantogrÃ¡fico deixa o visual da sua cama ainda mais bonita e elegante.</p>\r\n<p>A densidade da <strong>espuma D33</strong>Â que Ã© reconhecida por sua firmeza, qualidade e maciez, <strong>suporta atÃ© 150 Kg</strong>, e oferece para vocÃª e seu (sua) parceiro (a) noites de sono mais revigorantes e manhÃ£s com muito mais energia e disposiÃ§Ã£o para o dia a dia.</p>\r\n<table style=\"height: 175px;\" width=\"596\">\r\n<tbody>\r\n<tr>\r\n<td><strong>DimensÃµes aproximadas do volume 1 (AxLxP)</strong></td>\r\n<td><strong>Volume 1</strong></td>\r\n</tr>\r\n<tr>\r\n<td>Altura (cm)</td>\r\n<td>30Â cm</td>\r\n</tr>\r\n<tr>\r\n<td>Largura (cm)</td>\r\n<td>193Â cm</td>\r\n</tr>\r\n<tr>\r\n<td>Profundidade (cm)</td>\r\n<td>203Â cm</td>\r\n</tr>",
+  "linkText": "477696-colchao-paropas-potenza-uniface-pillow-t-king-size-203x193x30",
+  "keyWords": "ColchÃ£o Paropas, Potenza Uniface Pillow T, King Size 203X193X30, colchÃ£o Potenza Paropas, Molas Pocket, Tecido MatelassÃª 80% poliÃ©ster, Espuma D33, Espuma 100% poliuretano, Pillow quadrado, Polyframe, Bordado PantogrÃ¡fico,",
+  "siteTitle": "",
+  "metaTagDescription": "O colch&#227;o Paropas Potenza &#233; um colch&#227;o para cama de casal King size desenvolvido para melhorar a sua qualidade de vida! Confira!",
+  "referenceCode": "100279717",
+  "status": false,
+  "showFlag": false,
+  "skus": [
+    {
+      "id": 880698,
+      "createdAt": 1410145200000,
+      "name": "ColchÃ£o Paropas Potenza Uniface Pillow T King Size 203X193X30",
+      "status": false,
+      "weight": 80990.0000,
+      "height": 204.0000,
+      "width": 194.0000,
+      "length": 31.0000,
+      "postalVolumeFee": 256.0000,
+      "weightReal": 80890.0000,
+      "heightReal": 30.0000,
+      "widthReal": 193.0000,
+      "lengthReal": 203.0000,
+      "attributes": [],
+      "skuFileList": {
+        "skuFile": [
+          {
+            "id": 29326543,
+            "idSku": 880698,
+            "fileId": 3788608,
+            "file": {
+              "id": 3788608,
+              "name": "7514688-jpg-7516797",
+              "fileLocation": "walmartv5/catalog/7514688-jpg-7516797.jpg",
+              "fileFormat": {
+                "id": 2,
+                "name": "Imagem Jpg",
+                "htmlTag": "<img src=\"#url#\" width=\"#width#\" height=\"#height#\" alt=\"#Texto#\" id=\"#id#\" />",
+                "extension": "jpg",
+                "mimeType": "image/jpeg"
+              },
+              "fileType": {
+                "id": 39,
+                "name": "Imagem Produto Giga 1000x1000",
+                "height": 1000,
+                "width": 1000,
+                "size": 300,
+                "requiredResizeFlag": true,
+                "type": "Imagem"
+              },
+              "fileFormatId": 2,
+              "fileTypeId": 39,
+              "height": 1000,
+              "width": 1000,
+              "widthMeasureUnit": "px",
+              "heightMeasureUnit": "px"
+            },
+            "status": false,
+            "idFileType": 39,
+            "tag": "",
+            "label": "",
+            "main": true
+          },
+          {
+            "id": 29326547,
+            "idSku": 880698,
+            "fileId": 3788609,
+            "file": {
+              "id": 3788609,
+              "name": "7514689-jpg-7516787",
+              "fileLocation": "walmartv5/catalog/7514689-jpg-7516787.jpg",
+              "fileFormat": {
+                "id": 2,
+                "name": "Imagem Jpg",
+                "htmlTag": "<img src=\"#url#\" width=\"#width#\" height=\"#height#\" alt=\"#Texto#\" id=\"#id#\" />",
+                "extension": "jpg",
+                "mimeType": "image/jpeg"
+              },
+              "fileType": {
+                "id": 39,
+                "name": "Imagem Produto Giga 1000x1000",
+                "height": 1000,
+                "width": 1000,
+                "size": 300,
+                "requiredResizeFlag": true,
+                "type": "Imagem"
+              },
+              "fileFormatId": 2,
+              "fileTypeId": 39,
+              "height": 1000,
+              "width": 1000,
+              "widthMeasureUnit": "px",
+              "heightMeasureUnit": "px"
+            },
+            "status": false,
+            "idFileType": 39,
+            "tag": "",
+            "label": "",
+            "main": false
+          },
+          {
+            "id": 29326550,
+            "idSku": 880698,
+            "fileId": 3788610,
+            "file": {
+              "id": 3788610,
+              "name": "7514690-jpg-7516776",
+              "fileLocation": "walmartv5/catalog/7514690-jpg-7516776.jpg",
+              "fileFormat": {
+                "id": 2,
+                "name": "Imagem Jpg",
+                "htmlTag": "<img src=\"#url#\" width=\"#width#\" height=\"#height#\" alt=\"#Texto#\" id=\"#id#\" />",
+                "extension": "jpg",
+                "mimeType": "image/jpeg"
+              },
+              "fileType": {
+                "id": 39,
+                "name": "Imagem Produto Giga 1000x1000",
+                "height": 1000,
+                "width": 1000,
+                "size": 300,
+                "requiredResizeFlag": true,
+                "type": "Imagem"
+              },
+              "fileFormatId": 2,
+              "fileTypeId": 39,
+              "height": 1000,
+              "width": 1000,
+              "widthMeasureUnit": "px",
+              "heightMeasureUnit": "px"
+            },
+            "status": false,
+            "idFileType": 39,
+            "tag": "",
+            "label": "",
+            "main": false
+          }
+        ]
+      },
+      "eans": [
+        "7890372249489"
+      ],
+      "productId": 2774379,
+      "freightType": {
+        "id": 2,
+        "name": "Pesado"
+      },
+      "freightTypeId": 2,
+      "offerList": {
+        "offer": [
+          {
+            "id": 2852650,
+            "createdAt": null,
+            "lastUpdatedAt": 1439835214723,
+            "lastUpdatedByUser": null,
+            "lastUpdatedByIp": null,
+            "version": null,
+            "status": false,
+            "seller": {
+              "id": "1",
+              "name": "Walmart",
+              "email": "alexandre.mendes@wal-mart.com",
+              "description": "O Walmart chegou ao Brasil em 1995 e vem crescendo desde entÃ£o, oferecendo preÃ§os baixos e de forma sustentÃ¡vel e socialmente responsÃ¡vel. Hoje cobrimos todo o territÃ³rio nacional com nosso site de comÃ©rcio eletrÃ´nico e estamos presentes com lojas e clubes em 18 Estados e tambÃ©m no Distrito Federal, nas regiÃµes Nordeste, Centro-Oeste, Sudeste e Sul.\r\nEm um paÃ­s com tanta diversidade cultural, de costumes, paisagens e climas, atender aos diferentes perfis que frequentam nossas mais de 550 unidades Ã© um desafio. Para satisfazer nossos consumidores, trabalhamos com vÃ¡rios formatos: hipermercados, supermercados, clubes de compra, lojas de atacado e de vizinhanÃ§a. \r\nAlÃ©m da sede em Barueri (SP), mantemos escritÃ³rios regionais em Porto Alegre (RS), Curitiba (PR), Salvador (BA) e Recife (PE).",
+              "cnpj": "14314050000158",
+              "status": true
+            },
+            "sellerId": "1",
+            "sku": null,
+            "skuId": 880698,
+            "store": {
+              "id": 1,
+              "name": "Loja Principal",
+              "status": true
+            },
+            "storeId": 1,
+            "sellerExternalOfferId": "477696",
+            "requestedUpdateDate": 1439835214723,
+            "price": null,
+            "listPrice": null,
+            "quantity": null,
+            "importTax": null
+          }
+        ]
+      },
+      "referenceCode": "477696"
+    }
+  ],
+  "category": {
+    "id": 764,
+    "name": "King Size",
+    "parent": {
+      "id": 5727,
+      "name": "ColchÃ£o",
+      "parent": {
+        "id": 755,
+        "name": "MÃ³veis e DecoraÃ§Ã£o",
+        "fieldGroups": [],
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "flagMenu": true,
+        "order": 1,
+        "keywords": "MÃ³veis,ColchÃµes, Cadeiras, Mesas, Estantes, Racks, Walmart",
+        "siteTitle": "MÃ³veis e DecoraÃ§Ã£o Ã© no Walmart.com",
+        "flagActiveMenuLink": true
+      },
+      "fieldGroups": [],
+      "status": true,
+      "idDepartment": 755,
+      "flagCategoryMirror": false,
+      "parentId": 755,
+      "flagMenu": true,
+      "order": 2,
+      "keywords": "ColchÃ£o, ColchÃµes, MÃ³veis e DecoraÃ§Ã£o - Walmart",
+      "siteTitle": "ColchÃ£o: MÃ³veis e DecoraÃ§Ã£o - Walmart.com",
+      "flagActiveMenuLink": true
+    },
+    "children": [],
+    "status": true,
+    "idDepartment": 755,
+    "flagCategoryMirror": false,
+    "parentId": 5727,
+    "flagMenu": true,
+    "order": 1,
+    "keywords": "ColchÃ£o King Size, Quarto, MÃ³veis e ColchÃµes, Walmart",
+    "siteTitle": "ColchÃ£o King Size  Ã© no Walmart.com",
+    "flagActiveMenuLink": true
+  },
+  "categoryId": 764,
+  "brand": {
+    "id": 915,
+    "name": "Paropas",
+    "text": "Paropas",
+    "listKeywords": [
+      "Paropas"
+    ],
+    "siteTitle": "Paropas",
+    "displayedInHomeMenu": false,
+    "status": true
+  },
+  "brandId": 915,
+  "fieldGroups": [
+    {
+      "id": 13892,
+      "name": "Integracao",
+      "priority": 1,
+      "attributes": [
+        {
+          "field": {
+            "id": 80187,
+            "name": "Especificacao",
+            "type": {
+              "id": 5,
+              "name": "Combo",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 5,
+            "options": [
+              {
+                "id": 337357,
+                "name": "Ãšnico",
+                "priority": 1,
+                "status": true,
+                "fieldId": 80187
+              }
+            ],
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": false,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 5866,
+      "name": "CaracterÃ­sticas do Produto",
+      "priority": 2,
+      "attributes": [
+        {
+          "field": {
+            "id": 55527,
+            "name": "Modelo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55528,
+            "name": "Espuma (tipo)",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55529,
+            "name": "Mola (tipo)",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 3,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55530,
+            "name": "Suporta (kg)",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 4,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55531,
+            "name": "AntiÃ¡caro",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 5,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55532,
+            "name": "Antimofo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 6,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55533,
+            "name": "AntialÃ©rgico",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 7,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55534,
+            "name": "Antifungo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 8,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55535,
+            "name": "Antirefluxo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 9,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55536,
+            "name": "OrtopÃ©dico",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 10,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55537,
+            "name": "Tecido",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 11,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55538,
+            "name": "Camada extra de espuma",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 12,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55539,
+            "name": "Estabilizadores laterais",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 13,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55540,
+            "name": "NÃ­vel de conforto",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 14,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55541,
+            "name": "Revestimento",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 15,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55542,
+            "name": "ImpermeÃ¡vel",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 16,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55543,
+            "name": "Pillow top",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 17,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 55544,
+            "name": "Qtde de kg suportados",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 18,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 92502,
+            "name": "Cor",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 501164,
+                "name": "Amarelo",
+                "priority": 1,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501165,
+                "name": "Azul",
+                "priority": 2,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501166,
+                "name": "Branco",
+                "priority": 3,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501167,
+                "name": "Cinza",
+                "priority": 4,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501168,
+                "name": "Laranja",
+                "priority": 5,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501169,
+                "name": "Marrom",
+                "priority": 6,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501170,
+                "name": "Multicores",
+                "priority": 7,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501171,
+                "name": "Preto",
+                "priority": 8,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501172,
+                "name": "Rosa",
+                "priority": 9,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501173,
+                "name": "Roxo",
+                "priority": 10,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501174,
+                "name": "Verde",
+                "priority": 11,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501175,
+                "name": "Vermelho",
+                "priority": 12,
+                "status": true,
+                "fieldId": 92502
+              }
+            ],
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": false,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": false
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 5868,
+      "name": "EspecificaÃ§Ãµes",
+      "priority": 5,
+      "attributes": [
+        {
+          "field": {
+            "id": 55545,
+            "name": "Tipo",
+            "type": {
+              "id": 5,
+              "name": "Combo",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 5,
+            "options": [
+              {
+                "id": 22177,
+                "name": "Box",
+                "priority": 1,
+                "status": false,
+                "fieldId": 55545
+              },
+              {
+                "id": 22174,
+                "name": "Espuma",
+                "priority": 2,
+                "status": true,
+                "fieldId": 55545
+              },
+              {
+                "id": 22175,
+                "name": "Queen",
+                "priority": 3,
+                "status": false,
+                "fieldId": 55545
+              },
+              {
+                "id": 22176,
+                "name": "King",
+                "priority": 3,
+                "status": false,
+                "fieldId": 55545
+              },
+              {
+                "id": 22173,
+                "name": "Mola",
+                "priority": 4,
+                "status": true,
+                "fieldId": 55545
+              },
+              {
+                "id": 22178,
+                "name": "Para BerÃ§o",
+                "priority": 6,
+                "status": false,
+                "fieldId": 55545
+              }
+            ],
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": false
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 92507,
+            "name": "URL VÃ­deo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": false,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": false
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 5961,
+      "name": "AssistÃªncia TÃ©cnica ",
+      "priority": 6,
+      "attributes": [
+        {
+          "field": {
+            "id": 57360,
+            "name": "AssistÃªncia TÃ©cnica",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 70322337,
+              "name": "Telefone: (32) 8445-6400"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14948,
+      "name": "Integracao",
+      "priority": 1,
+      "attributes": [
+        {
+          "field": {
+            "id": 76962,
+            "name": "Especificacao",
+            "type": {
+              "id": 5,
+              "name": "Combo",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 5,
+            "options": [
+              {
+                "id": 166625,
+                "name": "Ãšnico",
+                "priority": 1,
+                "status": true,
+                "fieldId": 76962
+              }
+            ],
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": false,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 5867,
+      "name": "Itens Inclusos",
+      "priority": 3,
+      "attributes": [
+        {
+          "field": {
+            "id": 55384,
+            "name": "Itens Inclusos",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 70322334,
+              "name": "1 colchÃ£o e certificado de garantia"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5968,
+      "name": "Aviso",
+      "priority": 1,
+      "attributes": [
+        {
+          "field": {
+            "id": 57375,
+            "name": "Aviso",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 70322332,
+              "name": "<b> AVISO: O Walmart se responsabilizarÃ¡ pela entrega dos produtos adquiridos atÃ© a porta de entrada ou portaria do endereÃ§o indicado. Esclarecemos que nÃ£o nos responsabilizamos por montagens, desmontagens e instalaÃ§Ãµes, ficando assim sob responsabilidade do cliente. Confira as dimensÃµes do produto no momento da compra, e, certifique-se de que passarÃ¡ normalmente por elevadores, portas, escadas e/ou corredores, evitando assim futuros desagrados ou imprevistos com a entrega do produto. </b>\r\n<b>Imagens meramente ilustrativas</b>\r\n<b>BASE VENDIDA SEPARADAMENTE</b>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6776,
+      "name": "ReferÃªncias do Produto",
+      "priority": 7,
+      "attributes": [
+        {
+          "field": {
+            "id": 66982,
+            "name": "ReferÃªncia do Modelo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 70322338,
+              "name": "24948"
+            }
+          ]
+        },
+        {
+          "field": {
+            "id": 67109,
+            "name": "Linha/ColeÃ§Ã£o",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 70322339,
+              "name": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5869,
+      "name": "Garantia",
+      "priority": 4,
+      "attributes": [
+        {
+          "field": {
+            "id": 55760,
+            "name": "Garantia",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 70322335,
+              "name": "Espuma e Molejo: 01 Ano( jÃ¡ inclusoos 90dias dias de garantia legal conforme lei do consumidor.) TapeÃ§aria 90 dias( garantia legal conforme lei do consumidor)."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "editionDate": 1439697120000,
+  "department": {
+    "id": 755,
+    "name": "MÃ³veis e DecoraÃ§Ã£o",
+    "children": [
+      {
+        "id": 760,
+        "name": "Quarto",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 1,
+        "keywords": "Quarto, ColchÃ£o, Cama, Sapateiras, BerÃ§o, Walmart",
+        "siteTitle": "Tudo para Quartos - ColchÃ£o, Cama, Sapateiras, BerÃ§o... - Walmart",
+        "flagActiveMenuLink": true
+      },
+      {
+        "id": 775,
+        "name": "Sala de Estar",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 4,
+        "keywords": "Tudo para Sala, Estantes, Racks, Puffs, Mesas, Poltronas, Walmart, Sala",
+        "siteTitle": "Sala de Estar - Walmart.com",
+        "flagActiveMenuLink": true
+      },
+      {
+        "id": 784,
+        "name": "Cozinha",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 3,
+        "keywords": "Tudo para Cozinha, Mesas, Cadeiras, Banquetas, Walmart, Cozinha",
+        "siteTitle": "Tudo para Cozinha - Mesas, Cadeiras, Banquetas... - Walmart",
+        "flagActiveMenuLink": true
+      },
+      {
+        "id": 793,
+        "name": "Sala de Jantar",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 5,
+        "keywords": "Tudo para Sala de Jantar, Mesa, Cadeira, BalcÃ£o, Walmart",
+        "siteTitle": "Tudo para Sala de Jantar - Mesa, Cadeira, BalcÃ£o... - Walmart",
+        "flagActiveMenuLink": true
+      },
+      {
+        "id": 800,
+        "name": "EscritÃ³rio",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 8,
+        "keywords": "EscritÃ³rio e Home Office, Cadeiras para EscritÃ³rio, Racks, Walmart",
+        "siteTitle": "MÃ³veis e DecoraÃ§Ã£o: EscritÃ³rio - Walmart.com",
+        "flagActiveMenuLink": true
+      },
+      {
+        "id": 818,
+        "name": "Ãrea Externa",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 9,
+        "keywords": "Ãrea Externa",
+        "siteTitle": "Ãrea Externa - Walmart.com",
+        "flagActiveMenuLink": true
+      },
+      {
+        "id": 822,
+        "name": "Banheiro",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 12,
+        "keywords": "OfurÃ´ Banheiro, MÃ³veis e ColchÃµes, Walmart, Banheiro",
+        "siteTitle": "Banheiro: MÃ³veis e DecoraÃ§Ã£o - Walmart.com",
+        "flagActiveMenuLink": true
+      },
+      {
+        "id": 823,
+        "name": "Lavanderia",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 11,
+        "keywords": "Lavanderia",
+        "siteTitle": "Lavanderia - Walmart.com",
+        "flagActiveMenuLink": true
+      },
+      {
+        "id": 3402,
+        "name": "Infantil",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 7,
+        "keywords": "Infantil",
+        "siteTitle": "Infantil - Walmart.com",
+        "flagActiveMenuLink": true
+      },
+      {
+        "id": 3600,
+        "name": "AcessÃ³rios",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 10,
+        "keywords": "AcessÃ³rios, MÃ³veis e DecoraÃ§Ã£o - Walmart",
+        "siteTitle": "AcessÃ³rios Ã© no Walmart.com",
+        "flagActiveMenuLink": true
+      },
+      {
+        "id": 5724,
+        "name": "DecoraÃ§Ã£o",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 6,
+        "keywords": "DecoraÃ§Ã£o, RelÃ³gios, Tapetes, Walmart",
+        "siteTitle": "DecoraÃ§Ã£o Ã© no Walmart.com",
+        "flagActiveMenuLink": true
+      },
+      {
+        "id": 5727,
+        "name": "ColchÃ£o",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 2,
+        "keywords": "ColchÃ£o, ColchÃµes, MÃ³veis e DecoraÃ§Ã£o - Walmart",
+        "siteTitle": "ColchÃ£o: MÃ³veis e DecoraÃ§Ã£o - Walmart.com",
+        "flagActiveMenuLink": true
+      },
+      {
+        "id": 6318,
+        "name": "Enfeites de Natal",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 13,
+        "keywords": "Enfeites de natal, Enfeites, Enfeite, MÃ³veis e DecoraÃ§Ã£o, Walmart",
+        "siteTitle": "Tudo para Enfeites de Natal - Ãrvores de Natal, Bolas, Enfeites, FestÃ£o... - Walmart",
+        "flagActiveMenuLink": true
+      },
+      {
+        "id": 6528,
+        "name": "ServiÃ§os",
+        "status": true,
+        "idDepartment": 755,
+        "flagCategoryMirror": false,
+        "parentId": 755,
+        "flagMenu": true,
+        "order": 14,
+        "keywords": "MÃ³veis e DecoraÃ§Ã£o, ServiÃ§os",
+        "siteTitle": "ServiÃ§os para MÃ³veis e DecoraÃ§Ã£o Ã© no Walmart.com",
+        "flagActiveMenuLink": true
+      }
+    ],
+    "fieldGroups": [
+      {
+        "id": 14948,
+        "name": "Integracao",
+        "priority": 1,
+        "fields": [
+          {
+            "id": 76962,
+            "name": "Especificacao",
+            "type": {
+              "id": 5,
+              "name": "Combo",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 5,
+            "options": [
+              {
+                "id": 166625,
+                "name": "Ãšnico",
+                "priority": 1,
+                "status": true,
+                "fieldId": 76962
+              }
+            ],
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": false,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          }
+        ]
+      },
+      {
+        "id": 5968,
+        "name": "Aviso",
+        "priority": 1,
+        "fields": [
+          {
+            "id": 57375,
+            "name": "Aviso",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          }
+        ]
+      },
+      {
+        "id": 5866,
+        "name": "CaracterÃ­sticas do Produto",
+        "priority": 2,
+        "fields": [
+          {
+            "id": 92502,
+            "name": "Cor",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 501164,
+                "name": "Amarelo",
+                "priority": 1,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501165,
+                "name": "Azul",
+                "priority": 2,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501166,
+                "name": "Branco",
+                "priority": 3,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501167,
+                "name": "Cinza",
+                "priority": 4,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501168,
+                "name": "Laranja",
+                "priority": 5,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501169,
+                "name": "Marrom",
+                "priority": 6,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501170,
+                "name": "Multicores",
+                "priority": 7,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501171,
+                "name": "Preto",
+                "priority": 8,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501172,
+                "name": "Rosa",
+                "priority": 9,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501173,
+                "name": "Roxo",
+                "priority": 10,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501174,
+                "name": "Verde",
+                "priority": 11,
+                "status": true,
+                "fieldId": 92502
+              },
+              {
+                "id": 501175,
+                "name": "Vermelho",
+                "priority": 12,
+                "status": true,
+                "fieldId": 92502
+              }
+            ],
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": false,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": false
+          }
+        ]
+      },
+      {
+        "id": 5867,
+        "name": "Itens Inclusos",
+        "priority": 3,
+        "fields": [
+          {
+            "id": 55384,
+            "name": "Itens Inclusos",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          }
+        ]
+      },
+      {
+        "id": 5869,
+        "name": "Garantia",
+        "priority": 4,
+        "fields": [
+          {
+            "id": 55760,
+            "name": "Garantia",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          }
+        ]
+      },
+      {
+        "id": 5868,
+        "name": "EspecificaÃ§Ãµes",
+        "priority": 5,
+        "fields": [
+          {
+            "id": 92507,
+            "name": "URL VÃ­deo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": false,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": false
+          }
+        ]
+      },
+      {
+        "id": 5961,
+        "name": "AssistÃªncia TÃ©cnica ",
+        "priority": 6,
+        "fields": [
+          {
+            "id": 57360,
+            "name": "AssistÃªncia TÃ©cnica",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          }
+        ]
+      },
+      {
+        "id": 6776,
+        "name": "ReferÃªncias do Produto",
+        "priority": 7,
+        "fields": [
+          {
+            "id": 66982,
+            "name": "ReferÃªncia do Modelo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          {
+            "id": 67109,
+            "name": "Linha/ColeÃ§Ã£o",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          }
+        ]
+      }
+    ],
+    "status": true,
+    "idDepartment": 755,
+    "flagCategoryMirror": false,
+    "flagMenu": true,
+    "order": 1,
+    "keywords": "MÃ³veis,ColchÃµes, Cadeiras, Mesas, Estantes, Racks, Walmart",
+    "siteTitle": "MÃ³veis e DecoraÃ§Ã£o Ã© no Walmart.com",
+    "flagActiveMenuLink": true
+  },
+  "tags": []
+}

@@ -1,0 +1,3913 @@
+{
+  "id": 2075039,
+  "name": "Meia com Sola Antiderrapante Foguete - Pimpolho",
+  "description": "Cabedal em meia com solado antiderrapante, ideal para os primeiros passos e detalhes super delicados que vÃ£o deixar seu bebÃª um charme.  ReferÃªncia de tamanhos*:  NÃºmero 16 = 06 - 07 meses  NÃºmero 17 = 07 - 08 meses  NÃºmero 18 = 08 - 09 meses  NÃºmero 19 = 09 - 10 meses  NÃºmero 20 = 10 - 12 meses  NÃºmero 21 = 13 - 15 meses  *Valores apenas como referÃªncia. Os nÃºmeros podem variar de acordo com seu bebÃª.",
+  "linkText": "2075039-Meia-com-Sola-Antiderrapante-Foguete---Pimpolho",
+  "status": true,
+  "showFlag": true,
+  "skus": [
+    {
+      "id": 92069,
+      "createdAt": 1382031180000,
+      "name": "Meia com Sola Antiderrapante Foguete - Pimpolho - Tamanho 16",
+      "status": true,
+      "weight": 100.0000,
+      "height": 5.0000,
+      "width": 10.0000,
+      "length": 10.0000,
+      "postalVolumeFee": 0.1042,
+      "attributes": [
+        {
+          "id": 822615,
+          "field": {
+            "id": 73304,
+            "name": "Especificacao",
+            "typeId": 5,
+            "priority": 2,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": true,
+            "selector": true
+          },
+          "fieldId": 73304,
+          "value": "Tam 16 - priority 2"
+        },
+        {
+          "id": 1062355,
+          "field": {
+            "id": 73304,
+            "name": "Especificacao",
+            "typeId": 5,
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": true,
+            "selector": true
+          },
+          "fieldId": 73304,
+          "value": "Tam 16 - priority 1"
+        },
+        {
+          "id": 1497618,
+          "field": {
+            "id": 73304,
+            "name": "Especificacao",
+            "typeId": 5,
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": true,
+            "selector": true
+          },
+          "fieldId": 73304,
+          "value": "Meia com Sola Antiderrapante Foguete - Pimpolho - Tamanho 16"
+        },
+        {
+          "id": 1501407,
+          "field": {
+            "id": 73304,
+            "name": "Especificacao",
+            "typeId": 5,
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": true,
+            "selector": true
+          },
+          "fieldId": 73304,
+          "value": "Meia com Sola Antiderrapante Foguete - Pimpolho - Tamanho 16"
+        },
+        {
+          "id": 3525502,
+          "field": {
+            "id": 73304,
+            "name": "Especificacao",
+            "typeId": 5,
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": true,
+            "selector": true
+          },
+          "fieldId": 73304,
+          "value": "16"
+        }
+      ],
+      "skuFileList": {
+        "skuFile": [
+          {
+            "id": 1766157,
+            "idSku": 92069,
+            "fileId": 2403492,
+            "file": {
+              "id": 2403492,
+              "name": "72118CF",
+              "fileLocation": "walmartv5/catalog/72118CF.jpg",
+              "fileFormat": {
+                "id": 2,
+                "name": "Imagem Jpg",
+                "htmlTag": "<img src=\"#url#\" width=\"#width#\" height=\"#height#\" alt=\"#Texto#\" id=\"#id#\" />",
+                "extension": "jpg",
+                "mimeType": "image/jpeg"
+              },
+              "fileType": {
+                "id": 10,
+                "name": "Imagem Produto Zoom - 1000x1000",
+                "height": 1000,
+                "width": 1000,
+                "size": 300,
+                "requiredResizeFlag": true,
+                "type": "Imagem"
+              },
+              "fileFormatId": 2,
+              "fileTypeId": 10,
+              "height": 470,
+              "width": 470
+            },
+            "status": false,
+            "idFileType": 10,
+            "main": true
+          },
+          {
+            "id": 1766158,
+            "idSku": 92069,
+            "fileId": 2403493,
+            "file": {
+              "id": 2403493,
+              "name": "72118CF",
+              "fileLocation": "walmartv5/catalog/72118CF_38678.jpg",
+              "fileFormat": {
+                "id": 2,
+                "name": "Imagem Jpg",
+                "htmlTag": "<img src=\"#url#\" width=\"#width#\" height=\"#height#\" alt=\"#Texto#\" id=\"#id#\" />",
+                "extension": "jpg",
+                "mimeType": "image/jpeg"
+              },
+              "fileType": {
+                "id": 10,
+                "name": "Imagem Produto Zoom - 1000x1000",
+                "height": 1000,
+                "width": 1000,
+                "size": 300,
+                "requiredResizeFlag": true,
+                "type": "Imagem"
+              },
+              "fileFormatId": 2,
+              "fileTypeId": 10,
+              "height": 470,
+              "width": 470
+            },
+            "status": false,
+            "idFileType": 10,
+            "main": true
+          }
+        ]
+      },
+      "eans": [
+        "7899375721602"
+      ],
+      "productId": 2075039,
+      "freightType": {
+        "id": 1,
+        "name": "Leve"
+      },
+      "freightTypeId": 1,
+      "offerList": {
+        "total_results": 1,
+        "offer": [
+          {
+            "id": 267919,
+            "createdAt": null,
+            "lastUpdatedAt": 1423760895363,
+            "lastUpdatedByUser": null,
+            "lastUpdatedByIp": null,
+            "version": null,
+            "status": false,
+            "seller": {
+              "id": "vtex_prod_babyou",
+              "name": "Babyou_Moip",
+              "description": "1teste1221",
+              "cnpj": "59171777000161",
+              "status": true
+            },
+            "sellerId": "vtex_prod_babyou",
+            "sku": null,
+            "skuId": 92069,
+            "store": {
+              "id": 1,
+              "name": "Loja Principal",
+              "status": true
+            },
+            "storeId": 1,
+            "sellerExternalOfferId": "1990",
+            "requestedUpdateDate": null,
+            "price": 0,
+            "listPrice": 0,
+            "quantity": 0,
+            "importTax": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": 112980,
+      "createdAt": 1382054580000,
+      "name": "Meia com Sola Antiderrapante Foguete - Pimpolho - Tamanho 20",
+      "status": true,
+      "weight": 100.0000,
+      "height": 5.0000,
+      "width": 10.0000,
+      "length": 10.0000,
+      "postalVolumeFee": 0.1042,
+      "attributes": [
+        {
+          "id": 1501408,
+          "field": {
+            "id": 73304,
+            "name": "Especificacao",
+            "typeId": 5,
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": true,
+            "selector": true
+          },
+          "fieldId": 73304,
+          "value": "Meia com Sola Antiderrapante Foguete - Pimpolho - Tamanho 20"
+        },
+        {
+          "id": 3525500,
+          "field": {
+            "id": 73304,
+            "name": "Especificacao",
+            "typeId": 5,
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": true,
+            "selector": true
+          },
+          "fieldId": 73304,
+          "value": "Meia com Sola Antiderrapante Foguete - Pimpolho - Tamanho 20"
+        }
+      ],
+      "skuFileList": {
+        "skuFile": [
+          {
+            "id": 1793540,
+            "idSku": 112980,
+            "fileId": 2430875,
+            "file": {
+              "id": 2430875,
+              "name": "72118CF",
+              "fileLocation": "walmartv5/catalog/72118CF_77125.jpg",
+              "fileFormat": {
+                "id": 2,
+                "name": "Imagem Jpg",
+                "htmlTag": "<img src=\"#url#\" width=\"#width#\" height=\"#height#\" alt=\"#Texto#\" id=\"#id#\" />",
+                "extension": "jpg",
+                "mimeType": "image/jpeg"
+              },
+              "fileType": {
+                "id": 10,
+                "name": "Imagem Produto Zoom - 1000x1000",
+                "height": 1000,
+                "width": 1000,
+                "size": 300,
+                "requiredResizeFlag": true,
+                "type": "Imagem"
+              },
+              "fileFormatId": 2,
+              "fileTypeId": 10,
+              "height": 470,
+              "width": 470
+            },
+            "status": false,
+            "idFileType": 10,
+            "main": true
+          },
+          {
+            "id": 1793541,
+            "idSku": 112980,
+            "fileId": 2430876,
+            "file": {
+              "id": 2430876,
+              "name": "72118CF",
+              "fileLocation": "walmartv5/catalog/72118CF_58597.jpg",
+              "fileFormat": {
+                "id": 2,
+                "name": "Imagem Jpg",
+                "htmlTag": "<img src=\"#url#\" width=\"#width#\" height=\"#height#\" alt=\"#Texto#\" id=\"#id#\" />",
+                "extension": "jpg",
+                "mimeType": "image/jpeg"
+              },
+              "fileType": {
+                "id": 10,
+                "name": "Imagem Produto Zoom - 1000x1000",
+                "height": 1000,
+                "width": 1000,
+                "size": 300,
+                "requiredResizeFlag": true,
+                "type": "Imagem"
+              },
+              "fileFormatId": 2,
+              "fileTypeId": 10,
+              "height": 470,
+              "width": 470
+            },
+            "status": false,
+            "idFileType": 10,
+            "main": true
+          }
+        ]
+      },
+      "eans": [
+        "0000000003085"
+      ],
+      "productId": 2075039,
+      "freightType": {
+        "id": 1,
+        "name": "Leve"
+      },
+      "freightTypeId": 1,
+      "offerList": {
+        "total_results": 1,
+        "offer": [
+          {
+            "id": 288838,
+            "createdAt": null,
+            "lastUpdatedAt": 1423643447227,
+            "lastUpdatedByUser": null,
+            "lastUpdatedByIp": null,
+            "version": null,
+            "status": false,
+            "seller": {
+              "id": "vtex_prod_babyou",
+              "name": "Babyou_Moip",
+              "description": "1teste1221",
+              "cnpj": "59171777000161",
+              "status": true
+            },
+            "sellerId": "vtex_prod_babyou",
+            "sku": null,
+            "skuId": 112980,
+            "store": {
+              "id": 1,
+              "name": "Loja Principal",
+              "status": true
+            },
+            "storeId": 1,
+            "sellerExternalOfferId": "1994",
+            "requestedUpdateDate": null,
+            "price": 0,
+            "listPrice": 0,
+            "quantity": 0,
+            "importTax": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": 112993,
+      "createdAt": 1382054640000,
+      "name": "Meia com Sola Antiderrapante Foguete - Pimpolho - Tamanho 21",
+      "status": true,
+      "weight": 100.0000,
+      "height": 5.0000,
+      "width": 10.0000,
+      "length": 10.0000,
+      "postalVolumeFee": 0.1042,
+      "attributes": [
+        {
+          "id": 1501409,
+          "field": {
+            "id": 73304,
+            "name": "Especificacao",
+            "typeId": 5,
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": true,
+            "selector": true
+          },
+          "fieldId": 73304,
+          "value": "Meia com Sola Antiderrapante Foguete - Pimpolho - Tamanho 21"
+        },
+        {
+          "id": 3525499,
+          "field": {
+            "id": 73304,
+            "name": "Especificacao",
+            "typeId": 5,
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": true,
+            "selector": true
+          },
+          "fieldId": 73304,
+          "value": "Meia com Sola Antiderrapante Foguete - Pimpolho - Tamanho 21"
+        }
+      ],
+      "skuFileList": {
+        "skuFile": [
+          {
+            "id": 1793575,
+            "idSku": 112993,
+            "fileId": 2430910,
+            "file": {
+              "id": 2430910,
+              "name": "72118CF",
+              "fileLocation": "walmartv5/catalog/72118CF_68796.jpg",
+              "fileFormat": {
+                "id": 2,
+                "name": "Imagem Jpg",
+                "htmlTag": "<img src=\"#url#\" width=\"#width#\" height=\"#height#\" alt=\"#Texto#\" id=\"#id#\" />",
+                "extension": "jpg",
+                "mimeType": "image/jpeg"
+              },
+              "fileType": {
+                "id": 10,
+                "name": "Imagem Produto Zoom - 1000x1000",
+                "height": 1000,
+                "width": 1000,
+                "size": 300,
+                "requiredResizeFlag": true,
+                "type": "Imagem"
+              },
+              "fileFormatId": 2,
+              "fileTypeId": 10,
+              "height": 470,
+              "width": 470
+            },
+            "status": false,
+            "idFileType": 10,
+            "main": true
+          },
+          {
+            "id": 1793576,
+            "idSku": 112993,
+            "fileId": 2430911,
+            "file": {
+              "id": 2430911,
+              "name": "72118CF",
+              "fileLocation": "walmartv5/catalog/72118CF_99773.jpg",
+              "fileFormat": {
+                "id": 2,
+                "name": "Imagem Jpg",
+                "htmlTag": "<img src=\"#url#\" width=\"#width#\" height=\"#height#\" alt=\"#Texto#\" id=\"#id#\" />",
+                "extension": "jpg",
+                "mimeType": "image/jpeg"
+              },
+              "fileType": {
+                "id": 10,
+                "name": "Imagem Produto Zoom - 1000x1000",
+                "height": 1000,
+                "width": 1000,
+                "size": 300,
+                "requiredResizeFlag": true,
+                "type": "Imagem"
+              },
+              "fileFormatId": 2,
+              "fileTypeId": 10,
+              "height": 470,
+              "width": 470
+            },
+            "status": false,
+            "idFileType": 10,
+            "main": true
+          }
+        ]
+      },
+      "eans": [
+        "7899375721657"
+      ],
+      "productId": 2075039,
+      "freightType": {
+        "id": 1,
+        "name": "Leve"
+      },
+      "freightTypeId": 1,
+      "offerList": {
+        "total_results": 1,
+        "offer": [
+          {
+            "id": 288851,
+            "createdAt": null,
+            "lastUpdatedAt": 1423643448397,
+            "lastUpdatedByUser": null,
+            "lastUpdatedByIp": null,
+            "version": null,
+            "status": false,
+            "seller": {
+              "id": "vtex_prod_babyou",
+              "name": "Babyou_Moip",
+              "description": "1teste1221",
+              "cnpj": "59171777000161",
+              "status": true
+            },
+            "sellerId": "vtex_prod_babyou",
+            "sku": null,
+            "skuId": 112993,
+            "store": {
+              "id": 1,
+              "name": "Loja Principal",
+              "status": true
+            },
+            "storeId": 1,
+            "sellerExternalOfferId": "2007",
+            "requestedUpdateDate": null,
+            "price": 0,
+            "listPrice": 0,
+            "quantity": 0,
+            "importTax": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": 206641,
+      "createdAt": 1387194600000,
+      "name": "Meia com Sola Antiderrapante Foguete - Pimpolho - Tamanho 18",
+      "status": true,
+      "weight": 100.0000,
+      "height": 5.0000,
+      "width": 10.0000,
+      "length": 10.0000,
+      "postalVolumeFee": 0.0000,
+      "attributes": [
+        {
+          "id": 1877686,
+          "field": {
+            "id": 73304,
+            "name": "Especificacao",
+            "typeId": 5,
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": true,
+            "selector": true
+          },
+          "fieldId": 73304,
+          "value": "Tam.18"
+        },
+        {
+          "id": 3525496,
+          "field": {
+            "id": 73304,
+            "name": "Especificacao",
+            "typeId": 5,
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": true,
+            "selector": true
+          },
+          "fieldId": 73304,
+          "value": "18"
+        }
+      ],
+      "skuFileList": {
+        "skuFile": [
+          {
+            "id": 5504308,
+            "idSku": 206641,
+            "fileId": 2696965,
+            "file": {
+              "id": 2696965,
+              "name": "206641-1387194735422-0",
+              "fileLocation": "catalog/206641-1387194735422-0.jpg",
+              "fileFormat": {
+                "id": 2,
+                "name": "Imagem Jpg",
+                "htmlTag": "<img src=\"#url#\" width=\"#width#\" height=\"#height#\" alt=\"#Texto#\" id=\"#id#\" />",
+                "extension": "jpg",
+                "mimeType": "image/jpeg"
+              },
+              "fileType": {
+                "id": 10,
+                "name": "Imagem Produto Zoom - 1000x1000",
+                "height": 1000,
+                "width": 1000,
+                "size": 300,
+                "requiredResizeFlag": true,
+                "type": "Imagem"
+              },
+              "fileFormatId": 2,
+              "fileTypeId": 10,
+              "widthMeasureUnit": "px"
+            },
+            "status": false,
+            "idFileType": 10,
+            "main": false
+          },
+          {
+            "id": 5504309,
+            "idSku": 206641,
+            "fileId": 2696966,
+            "file": {
+              "id": 2696966,
+              "name": "206641-1387194735422-1",
+              "fileLocation": "catalog/206641-1387194735422-1.jpg",
+              "fileFormat": {
+                "id": 2,
+                "name": "Imagem Jpg",
+                "htmlTag": "<img src=\"#url#\" width=\"#width#\" height=\"#height#\" alt=\"#Texto#\" id=\"#id#\" />",
+                "extension": "jpg",
+                "mimeType": "image/jpeg"
+              },
+              "fileType": {
+                "id": 10,
+                "name": "Imagem Produto Zoom - 1000x1000",
+                "height": 1000,
+                "width": 1000,
+                "size": 300,
+                "requiredResizeFlag": true,
+                "type": "Imagem"
+              },
+              "fileFormatId": 2,
+              "fileTypeId": 10,
+              "widthMeasureUnit": "px"
+            },
+            "status": false,
+            "idFileType": 10,
+            "main": false
+          }
+        ]
+      },
+      "eans": [
+        "7899375721626"
+      ],
+      "productId": 2075039,
+      "freightType": {
+        "id": 1,
+        "name": "Leve"
+      },
+      "freightTypeId": 1,
+      "offerList": {
+        "total_results": 1,
+        "offer": [
+          {
+            "id": 302938,
+            "createdAt": null,
+            "lastUpdatedAt": 1423643456720,
+            "lastUpdatedByUser": null,
+            "lastUpdatedByIp": null,
+            "version": null,
+            "status": true,
+            "seller": {
+              "id": "vtex_prod_babyou",
+              "name": "Babyou_Moip",
+              "description": "1teste1221",
+              "cnpj": "59171777000161",
+              "status": true
+            },
+            "sellerId": "vtex_prod_babyou",
+            "sku": null,
+            "skuId": 206641,
+            "store": {
+              "id": 1,
+              "name": "Loja Principal",
+              "status": true
+            },
+            "storeId": 1,
+            "sellerExternalOfferId": "1992",
+            "requestedUpdateDate": null,
+            "price": 0,
+            "listPrice": 0,
+            "quantity": 0,
+            "importTax": 0
+          }
+        ]
+      }
+    }
+  ],
+  "category": {
+    "id": 620,
+    "name": "CalÃ§ados e Meias",
+    "parent": {
+      "id": 621,
+      "name": "VestuÃ¡rio Infantil",
+      "parent": {
+        "id": 580,
+        "name": "BebÃªs e CrianÃ§as",
+        "fieldGroups": [],
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      "fieldGroups": [],
+      "status": true,
+      "idDepartment": 580,
+      "flagCategoryMirror": false
+    },
+    "children": [],
+    "status": true,
+    "idDepartment": 580,
+    "flagCategoryMirror": false
+  },
+  "categoryId": 620,
+  "brand": {
+    "id": 3772,
+    "name": "Pimpolho",
+    "text": "Pimpolho",
+    "listKeywords": [
+      "Pimpolho"
+    ],
+    "siteTitle": "Pimpolho",
+    "displayedInHomeMenu": false,
+    "status": true
+  },
+  "brandId": 3772,
+  "fieldGroups": [
+    {
+      "id": 5696,
+      "name": "CaracterÃ­sticas do Produto",
+      "priority": 1,
+      "attributes": [
+        {
+          "field": {
+            "id": 53652,
+            "name": "Cabedal",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 53653,
+            "name": "Palmilha",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 53654,
+            "name": "Solado",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 3,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 53655,
+            "name": "Idades Recomendadas",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 4,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 52275605,
+              "name": "6 a 9 meses"
+            },
+            {
+              "id": 58779286,
+              "name": "6 a 9 meses"
+            }
+          ]
+        },
+        {
+          "field": {
+            "id": 53656,
+            "name": "Outros",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 5,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 53659,
+            "name": "Material",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 53662,
+            "name": "Outros",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 5697,
+      "name": "Itens Inclusos",
+      "priority": 2,
+      "attributes": [
+        {
+          "field": {
+            "id": 53657,
+            "name": "Itens Inclusos",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 53663,
+            "name": "Itens Inclusos",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 5698,
+      "name": "CategorizaÃ§Ã£o",
+      "priority": 3,
+      "attributes": [
+        {
+          "field": {
+            "id": 53658,
+            "name": "Tipo",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 21857,
+                "name": "CalÃ§ados",
+                "priority": 1,
+                "status": false,
+                "fieldId": 53658
+              },
+              {
+                "id": 21858,
+                "name": "Meias",
+                "priority": 2,
+                "status": false,
+                "fieldId": 53658
+              },
+              {
+                "id": 28720,
+                "name": "SandÃ¡lia",
+                "priority": 3,
+                "status": false,
+                "fieldId": 53658
+              },
+              {
+                "id": 28721,
+                "name": "Pantufa",
+                "priority": 4,
+                "status": false,
+                "fieldId": 53658
+              },
+              {
+                "id": 28722,
+                "name": "TÃªnis",
+                "priority": 5,
+                "status": false,
+                "fieldId": 53658
+              },
+              {
+                "id": 28723,
+                "name": "Sapato",
+                "priority": 6,
+                "status": false,
+                "fieldId": 53658
+              },
+              {
+                "id": 28724,
+                "name": "Chinelo",
+                "priority": 7,
+                "status": false,
+                "fieldId": 53658
+              },
+              {
+                "id": 34073,
+                "name": "Sapatinhos Menina",
+                "priority": 8,
+                "status": false,
+                "fieldId": 53658
+              },
+              {
+                "id": 34074,
+                "name": "Sapatinhos Menino",
+                "priority": 9,
+                "status": false,
+                "fieldId": 53658
+              },
+              {
+                "id": 34075,
+                "name": "Sapatinhos Batizado",
+                "priority": 10,
+                "status": false,
+                "fieldId": 53658
+              }
+            ],
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 54904,
+            "name": "Por idade",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 34149,
+                "name": "De 0 a 2 Meses",
+                "priority": 1,
+                "status": true,
+                "fieldId": 54904
+              },
+              {
+                "id": 34150,
+                "name": "De 2 a 4 Meses",
+                "priority": 2,
+                "status": true,
+                "fieldId": 54904
+              },
+              {
+                "id": 34151,
+                "name": "De 4 a 6 Meses",
+                "priority": 3,
+                "status": true,
+                "fieldId": 54904
+              },
+              {
+                "id": 34152,
+                "name": "De 6 a 7 Meses",
+                "priority": 4,
+                "status": true,
+                "fieldId": 54904
+              },
+              {
+                "id": 34153,
+                "name": "De 4 a 6 Meses",
+                "priority": 5,
+                "status": true,
+                "fieldId": 54904
+              },
+              {
+                "id": 34154,
+                "name": "De 6 a 7 Meses",
+                "priority": 6,
+                "status": true,
+                "fieldId": 54904
+              },
+              {
+                "id": 34155,
+                "name": "De 7 a 8 Meses",
+                "priority": 7,
+                "status": true,
+                "fieldId": 54904
+              },
+              {
+                "id": 34156,
+                "name": "De 8 a 9 Meses",
+                "priority": 8,
+                "status": true,
+                "fieldId": 54904
+              },
+              {
+                "id": 34157,
+                "name": "De 9 a 10 Meses",
+                "priority": 9,
+                "status": true,
+                "fieldId": 54904
+              },
+              {
+                "id": 34158,
+                "name": "De 10 a 12 Meses",
+                "priority": 10,
+                "status": true,
+                "fieldId": 54904
+              },
+              {
+                "id": 34159,
+                "name": "De 13 a 15 Meses",
+                "priority": 11,
+                "status": true,
+                "fieldId": 54904
+              },
+              {
+                "id": 34160,
+                "name": "De 16 a 18 Meses",
+                "priority": 12,
+                "status": true,
+                "fieldId": 54904
+              },
+              {
+                "id": 34161,
+                "name": "De 19 a 24 Meses",
+                "priority": 13,
+                "status": true,
+                "fieldId": 54904
+              },
+              {
+                "id": 34162,
+                "name": "2,5 Anos",
+                "priority": 14,
+                "status": true,
+                "fieldId": 54904
+              }
+            ],
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 66204,
+            "name": "Por tamanho",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 34135,
+                "name": "1",
+                "priority": 1,
+                "status": true,
+                "fieldId": 66204
+              },
+              {
+                "id": 34136,
+                "name": "2",
+                "priority": 2,
+                "status": true,
+                "fieldId": 66204
+              },
+              {
+                "id": 34137,
+                "name": "3",
+                "priority": 3,
+                "status": true,
+                "fieldId": 66204
+              },
+              {
+                "id": 34138,
+                "name": "4",
+                "priority": 4,
+                "status": true,
+                "fieldId": 66204
+              },
+              {
+                "id": 34139,
+                "name": "15",
+                "priority": 5,
+                "status": true,
+                "fieldId": 66204
+              },
+              {
+                "id": 34140,
+                "name": "16",
+                "priority": 6,
+                "status": true,
+                "fieldId": 66204
+              },
+              {
+                "id": 34141,
+                "name": "17",
+                "priority": 7,
+                "status": true,
+                "fieldId": 66204
+              },
+              {
+                "id": 34142,
+                "name": "18",
+                "priority": 8,
+                "status": true,
+                "fieldId": 66204
+              },
+              {
+                "id": 34143,
+                "name": "19",
+                "priority": 9,
+                "status": true,
+                "fieldId": 66204
+              },
+              {
+                "id": 34144,
+                "name": "20",
+                "priority": 10,
+                "status": true,
+                "fieldId": 66204
+              },
+              {
+                "id": 34145,
+                "name": "21",
+                "priority": 11,
+                "status": true,
+                "fieldId": 66204
+              },
+              {
+                "id": 34146,
+                "name": "22",
+                "priority": 12,
+                "status": true,
+                "fieldId": 66204
+              },
+              {
+                "id": 34147,
+                "name": "23",
+                "priority": 13,
+                "status": true,
+                "fieldId": 66204
+              },
+              {
+                "id": 34148,
+                "name": "24",
+                "priority": 14,
+                "status": true,
+                "fieldId": 66204
+              }
+            ],
+            "priority": 3,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 53664,
+            "name": "Tipo",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 21859,
+                "name": "Banho de Sol",
+                "priority": 1,
+                "status": true,
+                "fieldId": 53664
+              },
+              {
+                "id": 21860,
+                "name": "Body",
+                "priority": 2,
+                "status": true,
+                "fieldId": 53664
+              },
+              {
+                "id": 21861,
+                "name": "Camiseta",
+                "priority": 3,
+                "status": true,
+                "fieldId": 53664
+              },
+              {
+                "id": 21862,
+                "name": "ChapÃ©us",
+                "priority": 4,
+                "status": true,
+                "fieldId": 53664
+              },
+              {
+                "id": 21863,
+                "name": "Conjuntos",
+                "priority": 5,
+                "status": true,
+                "fieldId": 53664
+              },
+              {
+                "id": 21864,
+                "name": "MacacÃ£o",
+                "priority": 6,
+                "status": true,
+                "fieldId": 53664
+              },
+              {
+                "id": 21865,
+                "name": "Pantufa",
+                "priority": 7,
+                "status": true,
+                "fieldId": 53664
+              },
+              {
+                "id": 21866,
+                "name": "Roupinhas de BebÃª",
+                "priority": 8,
+                "status": true,
+                "fieldId": 53664
+              },
+              {
+                "id": 21867,
+                "name": "Vestido",
+                "priority": 9,
+                "status": true,
+                "fieldId": 53664
+              },
+              {
+                "id": 28886,
+                "name": "Luvas",
+                "priority": 10,
+                "status": true,
+                "fieldId": 53664
+              }
+            ],
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 6741,
+      "name": "CaracterÃ­sticas do Produto",
+      "priority": 5,
+      "attributes": [
+        {
+          "field": {
+            "id": 66592,
+            "name": "Cabedal",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 66594,
+            "name": "Palmilha",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 66595,
+            "name": "Solado",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 3,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 66596,
+            "name": "Idade Recomendada",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 4,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 66612,
+            "name": "Cabedal",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 66614,
+            "name": "Solado",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 66863,
+            "name": "Idade Recomendada",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 3,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 52275608,
+              "name": "6 a 9 meses"
+            },
+            {
+              "id": 58779287,
+              "name": "6 a 9 meses"
+            }
+          ]
+        },
+        {
+          "field": {
+            "id": 66613,
+            "name": "Palmilha",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 71009,
+            "name": "Tamanho",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 28725,
+                "name": "PP",
+                "priority": 1,
+                "status": true,
+                "fieldId": 71009
+              },
+              {
+                "id": 28726,
+                "name": "Pequeno",
+                "priority": 2,
+                "status": true,
+                "fieldId": 71009
+              },
+              {
+                "id": 28727,
+                "name": "MÃ©dio",
+                "priority": 3,
+                "status": true,
+                "fieldId": 71009
+              },
+              {
+                "id": 28728,
+                "name": "Grande",
+                "priority": 4,
+                "status": true,
+                "fieldId": 71009
+              }
+            ],
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 6742,
+      "name": "Itens Inclusos",
+      "priority": 6,
+      "attributes": [
+        {
+          "field": {
+            "id": 66593,
+            "name": "Itens Inclusos",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 66864,
+            "name": "Itens Inclusos",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 6743,
+      "name": "EspecificaÃ§Ãµes",
+      "priority": 7,
+      "attributes": [
+        {
+          "field": {
+            "id": 66597,
+            "name": "Tipo",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 34200,
+                "name": "CalÃ§ados",
+                "priority": 1,
+                "status": true,
+                "fieldId": 66597
+              },
+              {
+                "id": 34201,
+                "name": "SandÃ¡lia",
+                "priority": 2,
+                "status": true,
+                "fieldId": 66597
+              },
+              {
+                "id": 31484,
+                "name": "Meias",
+                "priority": 3,
+                "status": true,
+                "fieldId": 66597
+              },
+              {
+                "id": 34202,
+                "name": "TÃªnis",
+                "priority": 4,
+                "status": true,
+                "fieldId": 66597
+              },
+              {
+                "id": 34203,
+                "name": "Sapatinhos Menina",
+                "priority": 5,
+                "status": true,
+                "fieldId": 66597
+              },
+              {
+                "id": 34204,
+                "name": "Sapatinhos Menino",
+                "priority": 6,
+                "status": true,
+                "fieldId": 66597
+              },
+              {
+                "id": 34205,
+                "name": "Batizado",
+                "priority": 7,
+                "status": true,
+                "fieldId": 66597
+              },
+              {
+                "id": 346398,
+                "name": "Pantufas",
+                "priority": 7,
+                "status": true,
+                "fieldId": 66597
+              },
+              {
+                "id": 352260,
+                "name": "Pantufas",
+                "priority": 7,
+                "status": true,
+                "fieldId": 66597
+              },
+              {
+                "id": 31528,
+                "name": "Sapatinhos",
+                "priority": 8,
+                "status": true,
+                "fieldId": 66597
+              }
+            ],
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 67200,
+            "name": "Por tamanho",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 31499,
+                "name": "1",
+                "priority": 1,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 337648,
+                "name": "RN",
+                "priority": 1,
+                "status": false,
+                "fieldId": 67200
+              },
+              {
+                "id": 349495,
+                "name": "RN",
+                "priority": 1,
+                "status": false,
+                "fieldId": 67200
+              },
+              {
+                "id": 31500,
+                "name": "2",
+                "priority": 2,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 31501,
+                "name": "3",
+                "priority": 3,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 31502,
+                "name": "4",
+                "priority": 4,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 31503,
+                "name": "15",
+                "priority": 5,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 31504,
+                "name": "17",
+                "priority": 6,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 31505,
+                "name": "18",
+                "priority": 7,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 31506,
+                "name": "19",
+                "priority": 8,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 31507,
+                "name": "20",
+                "priority": 9,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 31508,
+                "name": "21",
+                "priority": 10,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 31509,
+                "name": "22",
+                "priority": 11,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 31510,
+                "name": "23",
+                "priority": 12,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 31511,
+                "name": "24",
+                "priority": 13,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 215201,
+                "name": "16",
+                "priority": 15,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 337649,
+                "name": "16-21",
+                "priority": 16,
+                "status": false,
+                "fieldId": 67200
+              },
+              {
+                "id": 349496,
+                "name": "16-21",
+                "priority": 16,
+                "status": false,
+                "fieldId": 67200
+              },
+              {
+                "id": 337650,
+                "name": "21-26",
+                "priority": 17,
+                "status": false,
+                "fieldId": 67200
+              },
+              {
+                "id": 349497,
+                "name": "21-26",
+                "priority": 17,
+                "status": false,
+                "fieldId": 67200
+              },
+              {
+                "id": 337651,
+                "name": "27-32",
+                "priority": 18,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 346451,
+                "name": "13",
+                "priority": 18,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 350429,
+                "name": "13",
+                "priority": 18,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 337652,
+                "name": "32-35",
+                "priority": 19,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 346452,
+                "name": "14",
+                "priority": 19,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 350430,
+                "name": "14",
+                "priority": 19,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 337653,
+                "name": "33-36",
+                "priority": 20,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 346264,
+                "name": "27-29",
+                "priority": 20,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 352462,
+                "name": "27-29",
+                "priority": 20,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 337654,
+                "name": "34-36",
+                "priority": 21,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 337655,
+                "name": "37-39",
+                "priority": 22,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 337656,
+                "name": "37-40",
+                "priority": 23,
+                "status": true,
+                "fieldId": 67200
+              },
+              {
+                "id": 337657,
+                "name": "38-42",
+                "priority": 24,
+                "status": true,
+                "fieldId": 67200
+              }
+            ],
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 67201,
+            "name": "Por idade",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 31512,
+                "name": "0 a 2 meses",
+                "priority": 1,
+                "status": true,
+                "fieldId": 67201
+              },
+              {
+                "id": 31513,
+                "name": "2 a 4 meses",
+                "priority": 2,
+                "status": true,
+                "fieldId": 67201
+              },
+              {
+                "id": 31514,
+                "name": "4 a 6 meses",
+                "priority": 3,
+                "status": true,
+                "fieldId": 67201
+              },
+              {
+                "id": 31515,
+                "name": "6 a 7 meses",
+                "priority": 4,
+                "status": true,
+                "fieldId": 67201
+              },
+              {
+                "id": 31516,
+                "name": "6 a 8 meses",
+                "priority": 5,
+                "status": true,
+                "fieldId": 67201
+              },
+              {
+                "id": 31517,
+                "name": "7 a 8 meses",
+                "priority": 6,
+                "status": true,
+                "fieldId": 67201
+              },
+              {
+                "id": 31518,
+                "name": "8 a 9 meses",
+                "priority": 7,
+                "status": true,
+                "fieldId": 67201
+              },
+              {
+                "id": 31519,
+                "name": "9 a 10 meses",
+                "priority": 8,
+                "status": true,
+                "fieldId": 67201
+              },
+              {
+                "id": 31520,
+                "name": "10 a 12 meses",
+                "priority": 9,
+                "status": true,
+                "fieldId": 67201
+              },
+              {
+                "id": 31521,
+                "name": "13 a 15 meses",
+                "priority": 10,
+                "status": true,
+                "fieldId": 67201
+              },
+              {
+                "id": 31522,
+                "name": "16 a 18 meses",
+                "priority": 11,
+                "status": true,
+                "fieldId": 67201
+              },
+              {
+                "id": 31523,
+                "name": "19 a 24 meses",
+                "priority": 12,
+                "status": true,
+                "fieldId": 67201
+              },
+              {
+                "id": 31524,
+                "name": "2,5 anos",
+                "priority": 13,
+                "status": true,
+                "fieldId": 67201
+              }
+            ],
+            "priority": 3,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 67221,
+            "name": "Sexo",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 31526,
+                "name": "Feminino",
+                "priority": 1,
+                "status": true,
+                "fieldId": 67221
+              },
+              {
+                "id": 31527,
+                "name": "Masculino",
+                "priority": 2,
+                "status": true,
+                "fieldId": 67221
+              }
+            ],
+            "priority": 4,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 6740,
+      "name": "Garantia",
+      "priority": 4,
+      "attributes": [
+        {
+          "field": {
+            "id": 66865,
+            "name": "Garantia",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 6773,
+      "name": "ReferÃªncias do Produto",
+      "priority": 8,
+      "attributes": [
+        {
+          "field": {
+            "id": 66979,
+            "name": "ReferÃªncia do Modelo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 58779285,
+              "name": "PIM-72118-F-16"
+            },
+            {
+              "id": 52275603,
+              "name": "PIM-72118-F-16"
+            },
+            {
+              "id": 52275604,
+              "name": "PIM-72118-F-16"
+            }
+          ]
+        },
+        {
+          "field": {
+            "id": 67106,
+            "name": "Linha/ColeÃ§Ã£o",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 5970,
+      "name": "PromoÃ§Ã£o",
+      "priority": 1,
+      "attributes": [
+        {
+          "field": {
+            "id": 57377,
+            "name": "Regulamento",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 53660,
+            "name": "Tamanho",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 58779282,
+              "name": "16"
+            },
+            {
+              "id": 52275606,
+              "name": "16"
+            },
+            {
+              "id": 52275607,
+              "name": "16"
+            }
+          ]
+        },
+        {
+          "field": {
+            "id": 53661,
+            "name": "Cor",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 3,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 53665,
+            "name": "Idade Recomendada",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 22034,
+                "name": "AtÃ© 6 meses",
+                "priority": 1,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 21868,
+                "name": "AtÃ© 12 meses",
+                "priority": 2,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 21869,
+                "name": "De 13 a 24 meses",
+                "priority": 3,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 21870,
+                "name": "Acima de 2 anos",
+                "priority": 4,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346399,
+                "name": "AtÃ© 3 meses",
+                "priority": 5,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352261,
+                "name": "AtÃ© 3 meses",
+                "priority": 5,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346400,
+                "name": "De 3 a 6 meses",
+                "priority": 6,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352262,
+                "name": "De 3 a 6 meses",
+                "priority": 6,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346401,
+                "name": "De 6 a 12 meses",
+                "priority": 7,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352263,
+                "name": "De 6 a 12 meses",
+                "priority": 7,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346402,
+                "name": "De 1 a 2 anos",
+                "priority": 8,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352264,
+                "name": "De 1 a 2 anos",
+                "priority": 8,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346403,
+                "name": "De 3 a 4 anos",
+                "priority": 9,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352265,
+                "name": "De 3 a 4 anos",
+                "priority": 9,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346404,
+                "name": "5 a 7 anos",
+                "priority": 10,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352266,
+                "name": "5 a 7 anos",
+                "priority": 10,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346405,
+                "name": "8 a 11 anos",
+                "priority": 11,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352267,
+                "name": "8 a 11 anos",
+                "priority": 11,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346406,
+                "name": "Acima de 12 anos",
+                "priority": 12,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352268,
+                "name": "Acima de 12 anos",
+                "priority": 12,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346407,
+                "name": "MamÃ£e",
+                "priority": 13,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352269,
+                "name": "MamÃ£e",
+                "priority": 13,
+                "status": true,
+                "fieldId": 53665
+              }
+            ],
+            "priority": 4,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        },
+        {
+          "field": {
+            "id": 82893,
+            "name": "GÃªnero",
+            "type": {
+              "id": 5,
+              "name": "Combo",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 5,
+            "options": [
+              {
+                "id": 346423,
+                "name": "Meninas",
+                "priority": 1,
+                "status": true,
+                "fieldId": 82893
+              },
+              {
+                "id": 346424,
+                "name": "Meninos",
+                "priority": 2,
+                "status": true,
+                "fieldId": 82893
+              },
+              {
+                "id": 346425,
+                "name": "Unissex",
+                "priority": 3,
+                "status": true,
+                "fieldId": 82893
+              },
+              {
+                "id": 346426,
+                "name": "MamÃ£e",
+                "priority": 4,
+                "status": true,
+                "fieldId": 82893
+              }
+            ],
+            "priority": 6,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": false
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 16436,
+      "name": "Filtros de Categoria",
+      "priority": 1,
+      "attributes": [
+        {
+          "field": {
+            "id": 82852,
+            "name": "Cor",
+            "type": {
+              "id": 5,
+              "name": "Combo",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 5,
+            "options": [
+              {
+                "id": 346525,
+                "name": "Amarelo",
+                "priority": 1,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346526,
+                "name": "Azul",
+                "priority": 2,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346542,
+                "name": "Bege",
+                "priority": 3,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346527,
+                "name": "Branco",
+                "priority": 4,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346528,
+                "name": "Cinza",
+                "priority": 5,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346529,
+                "name": "Dourado",
+                "priority": 6,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346530,
+                "name": "Laranja",
+                "priority": 7,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346549,
+                "name": "LilÃ¡s",
+                "priority": 8,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346531,
+                "name": "Marrom",
+                "priority": 9,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346532,
+                "name": "Multicores",
+                "priority": 10,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346533,
+                "name": "Prateado",
+                "priority": 11,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346534,
+                "name": "Preto",
+                "priority": 12,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346535,
+                "name": "Rosa",
+                "priority": 13,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346536,
+                "name": "RosÃª",
+                "priority": 14,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346537,
+                "name": "SalmÃ£o",
+                "priority": 15,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346538,
+                "name": "Roxo",
+                "priority": 16,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346539,
+                "name": "Verde",
+                "priority": 17,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346541,
+                "name": "Ãnico",
+                "priority": 17,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346540,
+                "name": "Vermelho",
+                "priority": 18,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346543,
+                "name": "Chumbo",
+                "priority": 19,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346544,
+                "name": "Transparente",
+                "priority": 20,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346545,
+                "name": "Amarelo Fosco",
+                "priority": 21,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346546,
+                "name": "Amarelo Polido",
+                "priority": 22,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346547,
+                "name": "Branco Fosco",
+                "priority": 23,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346548,
+                "name": "Branco Polido",
+                "priority": 24,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346550,
+                "name": "Pink",
+                "priority": 26,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346551,
+                "name": "Azul Marinho",
+                "priority": 27,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346552,
+                "name": "CÃ¡qui",
+                "priority": 28,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346553,
+                "name": "CÃ¡qui Claro",
+                "priority": 29,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346554,
+                "name": "Verde Claro",
+                "priority": 30,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346555,
+                "name": "Verde LimÃ£o",
+                "priority": 31,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346556,
+                "name": "Verde Escuro",
+                "priority": 32,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346557,
+                "name": "Verde Musgo",
+                "priority": 33,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346558,
+                "name": "Amarelo Escuro",
+                "priority": 34,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346559,
+                "name": "Verde Ãgua",
+                "priority": 35,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346560,
+                "name": "Azul Royal",
+                "priority": 36,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346561,
+                "name": "Azul BebÃª",
+                "priority": 37,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346562,
+                "name": "Tigre",
+                "priority": 38,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346563,
+                "name": "Floral",
+                "priority": 39,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346564,
+                "name": "OnÃ§a",
+                "priority": 40,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346565,
+                "name": "Cobra",
+                "priority": 41,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346566,
+                "name": "Branco MadrepÃ©rola",
+                "priority": 42,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346567,
+                "name": "Chocolate",
+                "priority": 43,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346568,
+                "name": "Champanhe",
+                "priority": 44,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346569,
+                "name": "Nude",
+                "priority": 45,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346570,
+                "name": "Azul Turquesa",
+                "priority": 46,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346571,
+                "name": "Azul Claro",
+                "priority": 47,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346572,
+                "name": "Azul Denin",
+                "priority": 48,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346573,
+                "name": "Vermelho Lipstick",
+                "priority": 49,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346574,
+                "name": "Ouro Branco",
+                "priority": 50,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346575,
+                "name": "Ouro Rose",
+                "priority": 51,
+                "status": true,
+                "fieldId": 82852
+              },
+              {
+                "id": 346576,
+                "name": "Ouro Amarelo",
+                "priority": 52,
+                "status": true,
+                "fieldId": 82852
+              }
+            ],
+            "priority": 1,
+            "required": true,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": false
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 6240,
+      "name": "Aviso",
+      "priority": 3,
+      "attributes": [
+        {
+          "field": {
+            "id": 60437,
+            "name": "Aviso",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 58779284,
+              "name": "Imagem Meramente Ilustrativa"
+            },
+            {
+              "id": 54275858,
+              "name": "<b>Imagem Meramente Ilustrativa</b>"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14838,
+      "name": "Integracao",
+      "priority": 1,
+      "attributes": [
+        {
+          "field": {
+            "id": 76851,
+            "name": "Especificacao",
+            "type": {
+              "id": 5,
+              "name": "Combo",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 5,
+            "options": [
+              {
+                "id": 166516,
+                "name": "Ãnico",
+                "priority": 1,
+                "status": true,
+                "fieldId": 76851
+              }
+            ],
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": []
+        }
+      ]
+    },
+    {
+      "id": 5958,
+      "name": "AssistÃªncia TÃ©cnica ",
+      "priority": 2,
+      "attributes": [
+        {
+          "field": {
+            "id": 57357,
+            "name": "AssistÃªncia TÃ©cnica",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          "values": [
+            {
+              "id": 52275609,
+              "name": "Pimpolho"
+            },
+            {
+              "id": 58779283,
+              "name": "Pimpolho"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "editionDate": 1432748700000,
+  "department": {
+    "id": 580,
+    "name": "BebÃªs e CrianÃ§as",
+    "children": [
+      {
+        "id": 581,
+        "name": "Alimentos",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 582,
+        "name": "AlimentaÃ§Ã£o - Produtos",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 583,
+        "name": "SaÃºde e Higiene",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 584,
+        "name": "Bem-estar",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 585,
+        "name": "BerÃ§Ã¡rio e DecoraÃ§Ã£o",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 586,
+        "name": "Brinquedos e DiversÃ£o",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 587,
+        "name": "Enxoval do BebÃª",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 588,
+        "name": "Mamadeira e AcessÃ³rios",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 589,
+        "name": "Para a MamÃ£e",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 590,
+        "name": "Passeio",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 592,
+        "name": "SeguranÃ§a",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 621,
+        "name": "VestuÃ¡rio Infantil",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 2599,
+        "name": "Carrinho de BebÃª",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 2626,
+        "name": "Fraldas",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 3216,
+        "name": "Escolinha",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 4404,
+        "name": "AcessÃ³rios",
+        "status": false,
+        "idDepartment": 580,
+        "flagCategoryMirror": false
+      },
+      {
+        "id": 6141,
+        "name": "Moda Infantil",
+        "status": true,
+        "idDepartment": 580,
+        "flagCategoryMirror": true
+      }
+    ],
+    "fieldGroups": [
+      {
+        "id": 5970,
+        "name": "PromoÃ§Ã£o",
+        "priority": 1,
+        "fields": [
+          {
+            "id": 57377,
+            "name": "Regulamento",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          {
+            "id": 53660,
+            "name": "Tamanho",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          {
+            "id": 53661,
+            "name": "Cor",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 3,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          {
+            "id": 53665,
+            "name": "Idade Recomendada",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 22034,
+                "name": "AtÃ© 6 meses",
+                "priority": 1,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 21868,
+                "name": "AtÃ© 12 meses",
+                "priority": 2,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 21869,
+                "name": "De 13 a 24 meses",
+                "priority": 3,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 21870,
+                "name": "Acima de 2 anos",
+                "priority": 4,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346399,
+                "name": "AtÃ© 3 meses",
+                "priority": 5,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352261,
+                "name": "AtÃ© 3 meses",
+                "priority": 5,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346400,
+                "name": "De 3 a 6 meses",
+                "priority": 6,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352262,
+                "name": "De 3 a 6 meses",
+                "priority": 6,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346401,
+                "name": "De 6 a 12 meses",
+                "priority": 7,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352263,
+                "name": "De 6 a 12 meses",
+                "priority": 7,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346402,
+                "name": "De 1 a 2 anos",
+                "priority": 8,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352264,
+                "name": "De 1 a 2 anos",
+                "priority": 8,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346403,
+                "name": "De 3 a 4 anos",
+                "priority": 9,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352265,
+                "name": "De 3 a 4 anos",
+                "priority": 9,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346404,
+                "name": "5 a 7 anos",
+                "priority": 10,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352266,
+                "name": "5 a 7 anos",
+                "priority": 10,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346405,
+                "name": "8 a 11 anos",
+                "priority": 11,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352267,
+                "name": "8 a 11 anos",
+                "priority": 11,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346406,
+                "name": "Acima de 12 anos",
+                "priority": 12,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352268,
+                "name": "Acima de 12 anos",
+                "priority": 12,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 346407,
+                "name": "MamÃ£e",
+                "priority": 13,
+                "status": true,
+                "fieldId": 53665
+              },
+              {
+                "id": 352269,
+                "name": "MamÃ£e",
+                "priority": 13,
+                "status": true,
+                "fieldId": 53665
+              }
+            ],
+            "priority": 4,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          {
+            "id": 82893,
+            "name": "GÃªnero",
+            "type": {
+              "id": 5,
+              "name": "Combo",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 5,
+            "options": [
+              {
+                "id": 346423,
+                "name": "Meninas",
+                "priority": 1,
+                "status": true,
+                "fieldId": 82893
+              },
+              {
+                "id": 346424,
+                "name": "Meninos",
+                "priority": 2,
+                "status": true,
+                "fieldId": 82893
+              },
+              {
+                "id": 346425,
+                "name": "Unissex",
+                "priority": 3,
+                "status": true,
+                "fieldId": 82893
+              },
+              {
+                "id": 346426,
+                "name": "MamÃ£e",
+                "priority": 4,
+                "status": true,
+                "fieldId": 82893
+              }
+            ],
+            "priority": 6,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": true,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": false
+          }
+        ]
+      },
+      {
+        "id": 14838,
+        "name": "Integracao",
+        "priority": 1,
+        "fields": [
+          {
+            "id": 76851,
+            "name": "Especificacao",
+            "type": {
+              "id": 5,
+              "name": "Combo",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 5,
+            "options": [
+              {
+                "id": 166516,
+                "name": "Ãnico",
+                "priority": 1,
+                "status": true,
+                "fieldId": 76851
+              }
+            ],
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          }
+        ]
+      },
+      {
+        "id": 5958,
+        "name": "AssistÃªncia TÃ©cnica ",
+        "priority": 2,
+        "fields": [
+          {
+            "id": 57357,
+            "name": "AssistÃªncia TÃ©cnica",
+            "type": {
+              "id": 2,
+              "name": "Texto Grande",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 2,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          }
+        ]
+      },
+      {
+        "id": 6240,
+        "name": "Aviso",
+        "priority": 3,
+        "fields": [
+          {
+            "id": 60437,
+            "name": "Aviso",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          }
+        ]
+      },
+      {
+        "id": 6741,
+        "name": "CaracterÃ­sticas do Produto",
+        "priority": 5,
+        "fields": [
+          {
+            "id": 66613,
+            "name": "Palmilha",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          {
+            "id": 71009,
+            "name": "Tamanho",
+            "type": {
+              "id": 7,
+              "name": "CheckBox",
+              "hasOptions": true,
+              "status": true
+            },
+            "typeId": 7,
+            "options": [
+              {
+                "id": 28725,
+                "name": "PP",
+                "priority": 1,
+                "status": true,
+                "fieldId": 71009
+              },
+              {
+                "id": 28726,
+                "name": "Pequeno",
+                "priority": 2,
+                "status": true,
+                "fieldId": 71009
+              },
+              {
+                "id": 28727,
+                "name": "MÃ©dio",
+                "priority": 3,
+                "status": true,
+                "fieldId": 71009
+              },
+              {
+                "id": 28728,
+                "name": "Grande",
+                "priority": 4,
+                "status": true,
+                "fieldId": 71009
+              }
+            ],
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": true,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": true,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          }
+        ]
+      },
+      {
+        "id": 6773,
+        "name": "ReferÃªncias do Produto",
+        "priority": 8,
+        "fields": [
+          {
+            "id": 66979,
+            "name": "ReferÃªncia do Modelo",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 1,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          },
+          {
+            "id": 67106,
+            "name": "Linha/ColeÃ§Ã£o",
+            "type": {
+              "id": 1,
+              "name": "Texto",
+              "hasOptions": false,
+              "status": true
+            },
+            "typeId": 1,
+            "priority": 2,
+            "required": false,
+            "displayedAsSpecification": true,
+            "displayedAsFilter": false,
+            "wizard": false,
+            "topMenu": false,
+            "sideMenu": false,
+            "status": true,
+            "fromSku": false,
+            "selector": true
+          }
+        ]
+      }
+    ],
+    "status": true,
+    "idDepartment": 580,
+    "flagCategoryMirror": false
+  },
+  "tags": [
+    {
+      "id": 19897,
+      "name": "bebe - tommy"
+    },
+    {
+      "id": 18286,
+      "name": "Rise XML"
+    },
+    {
+      "id": 13183,
+      "name": "Liquigas Limite"
+    },
+    {
+      "id": 17535,
+      "name": "buscape"
+    },
+    {
+      "id": 17536,
+      "name": "shoppinguol"
+    }
+  ]
+}
