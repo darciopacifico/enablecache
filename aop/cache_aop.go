@@ -19,14 +19,14 @@ var errorInterfaceModel = reflect.TypeOf((*error)(nil)).Elem()
 type typeSwapFunc func(ins []reflect.Value) []reflect.Value
 
 //overload function
-func MakeSwap(emptyBodyFunction interface{}, originalFunction interface{}, cacheManager cache.CacheManager, cached bool) {
-	MakeSwapPrefix(emptyBodyFunction, originalFunction, cacheManager, cached, "")
+func MakeSwap(emptyBodyFunction interface{}, originalFunction interface{}, cacheManager cache.CacheManager, takeCache bool) {
+	MakeSwapPrefix(emptyBodyFunction, originalFunction, cacheManager, takeCache, "")
 }
 
 //Put in the emptyBodyFunction the original function call and caching mechanism
 //WILL EXIT APPLICATION IF SOME PREREQ WAS NOT ACCOMPLISHED
 //MUST BE CALLED AT APPLICATION STARTUP ONCE AND ONLY ONCE PER FUNCTION.
-func MakeSwapPrefix(emptyBodyFunction interface{}, originalFunction interface{}, cacheManager cache.CacheManager, cached bool, cacheIdPrefix string) {
+func MakeSwapPrefix(emptyBodyFunction interface{}, originalFunction interface{}, cacheManager cache.CacheManager, takeCache bool, cacheIdPrefix string) {
 	/*
 		if err := notSameSignature(emptyBodyFunction, originalFunction); err != nil {
 			log.Error("As funcoes %v e %v nao possuem a mesma assinatura!", err)
@@ -41,7 +41,7 @@ func MakeSwapPrefix(emptyBodyFunction interface{}, originalFunction interface{},
 	}
 
 	//build a swap function that can call the original function and cache results
-	swapFunction := getSwapFunctionForCache(emptyBodyFunction, originalFunction, cacheManager, cached, cacheIdPrefix)
+	swapFunction := getSwapFunctionForCache(emptyBodyFunction, originalFunction, cacheManager, takeCache, cacheIdPrefix)
 
 	//set emptyBodyFunction body with swapFunction containing cache mechanism
 	setSwapAsFunctionBody(emptyBodyFunction, swapFunction)
@@ -61,6 +61,9 @@ func getSwapFunctionForCache(emptyBodyFunction interface{}, originalFunction int
 		log.Error("Error trying to define default values for function %v. %v ", originalFunction, errDefVal)
 		os.Exit(1)
 	}
+
+
+
 
 	//swap function implementation for cache operation
 	swap := func(ins []reflect.Value) []reflect.Value {
