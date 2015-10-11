@@ -1,7 +1,7 @@
 package aop
 
 import (
-	"gitlab.wmxp.com.br/bis/biro/cache"
+	"github.com/darciopacifico/cachengo/cache"
 
 	"math/rand"
 	"strconv"
