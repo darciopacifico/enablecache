@@ -3,8 +3,8 @@ package cache
 import (
 	"bytes"
 	"encoding/gob"
-	"time"
 	"errors"
+	"time"
 
 	"github.com/garyburd/redigo/redis"
 )
@@ -117,7 +117,7 @@ func (s RedisCacheStorage) GetTTL(key string) (int, error) {
 }
 
 //Recover current ttl information about registries
-func (s RedisCacheStorage) zipTTL(mapCacheRegistry map[string]CacheRegistry, ttlMap map[string]int) (map[string]CacheRegistry) {
+func (s RedisCacheStorage) zipTTL(mapCacheRegistry map[string]CacheRegistry, ttlMap map[string]int) map[string]CacheRegistry {
 	//prepare a keyval pair array
 	for key, cacheRegistry := range mapCacheRegistry {
 		if ttl, hasTtl := ttlMap[key]; hasTtl {
@@ -125,7 +125,7 @@ func (s RedisCacheStorage) zipTTL(mapCacheRegistry map[string]CacheRegistry, ttl
 		} else {
 			cacheRegistry.Ttl = -1
 		}
-		mapCacheRegistry[key]=cacheRegistry
+		mapCacheRegistry[key] = cacheRegistry
 	}
 
 	return mapCacheRegistry

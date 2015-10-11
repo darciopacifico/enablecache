@@ -2,13 +2,13 @@ package aop
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"reflect"
 	"strconv"
-	"fmt"
 
-	"github.com/op/go-logging"
 	"github.com/darciopacifico/cachengo/cache"
+	"github.com/op/go-logging"
 )
 
 var typeCacheable = reflect.TypeOf((*cache.Cacheable)(nil)).Elem()
@@ -25,9 +25,9 @@ func MakeSwap(emptyFunction interface{}, concreteFunction interface{}, cacheMana
 //makes a swap function for reflection operations
 func MakeSwapPrefix(emptyFunction interface{}, concreteFunction interface{}, cacheManager cache.CacheManager, cached bool, prefixLit string) {
 	var prefix *string
-	if (prefixLit == "") {
+	if prefixLit == "" {
 		prefix = nil
-	}else {
+	} else {
 		prefix = &prefixLit
 	}
 
@@ -168,7 +168,7 @@ func getCachedMap(emptyBodyFunction interface{}, in reflect.Value, outType refle
 
 //execute an one to one reflection + cache operation
 func executeOneToOne(emptyFunction interface{}, originalIns []reflect.Value, eO []reflect.Type, cacheManager cache.CacheManager,
-defaultVals []reflect.Value, concreteFunction interface{}, prefix *string) (returnValue []reflect.Value) {
+	defaultVals []reflect.Value, concreteFunction interface{}, prefix *string) (returnValue []reflect.Value) {
 
 	defer func() { //assure for not panicking
 		if r := recover(); r != nil {
@@ -212,8 +212,8 @@ defaultVals []reflect.Value, concreteFunction interface{}, prefix *string) (retu
 
 //execute an many to many call
 func executeManyToMany(emptyFunction interface{}, originalIns []reflect.Value, eO []reflect.Type,
-eI []reflect.Type, cacheManager cache.CacheManager, defaultVals []reflect.Value,
-concreteFunction interface{}, prefix *string) (returnVal []reflect.Value) {
+	eI []reflect.Type, cacheManager cache.CacheManager, defaultVals []reflect.Value,
+	concreteFunction interface{}, prefix *string) (returnVal []reflect.Value) {
 
 	defer func() {
 		if r := recover(); r != nil {
@@ -237,7 +237,7 @@ func fixReturnTypes(outTypes []reflect.Type, values []reflect.Value) []reflect.V
 	}
 
 	if values[0].Type().AssignableTo(outTypes[0]) &&
-	values[0].Type().ConvertibleTo(outTypes[0]) {
+		values[0].Type().ConvertibleTo(outTypes[0]) {
 
 		newVal := reflect.New(outTypes[0])
 		newVal.Elem().Set(values[0])
@@ -249,7 +249,7 @@ func fixReturnTypes(outTypes []reflect.Type, values []reflect.Value) []reflect.V
 
 //execute an many to one call
 func executeManyToOne(emptyFunction interface{}, originalIns []reflect.Value, eO []reflect.Type, eI []reflect.Type,
-cacheManager cache.CacheManager, defaultVals []reflect.Value, concreteFunction interface{}, prefix *string) (returnValue []reflect.Value) {
+	cacheManager cache.CacheManager, defaultVals []reflect.Value, concreteFunction interface{}, prefix *string) (returnValue []reflect.Value) {
 	defer func() { //assure for not panicking
 		if r := recover(); r != nil {
 
@@ -267,7 +267,7 @@ cacheManager cache.CacheManager, defaultVals []reflect.Value, concreteFunction i
 
 //call from Many function interface to any kind of concrete funcition (many or one)
 func executeManyToAny(emptyFunction interface{}, originalIns []reflect.Value, eO []reflect.Type, eI []reflect.Type,
-cacheManager cache.CacheManager, defaultVals []reflect.Value, concreteFunction interface{}, prefix *string) (returnValue []reflect.Value) {
+	cacheManager cache.CacheManager, defaultVals []reflect.Value, concreteFunction interface{}, prefix *string) (returnValue []reflect.Value) {
 
 	outType := getArrayInnerType(eO[0])
 	cacheRegMap := getCachedMap(emptyFunction, originalIns[0], eO[0], cacheManager, prefix)
@@ -300,7 +300,7 @@ func putFirstResultEvidence(firstResult reflect.Value, defaultVals []reflect.Val
 }
 
 func executeOneToMany(emptyFunction interface{}, originalIns []reflect.Value, eO []reflect.Type, eI []reflect.Type,
-cI []reflect.Type, cacheManager cache.CacheManager, defaultVals []reflect.Value, concreteFunction interface{}, prefix *string) (returnValue []reflect.Value) {
+	cI []reflect.Type, cacheManager cache.CacheManager, defaultVals []reflect.Value, concreteFunction interface{}, prefix *string) (returnValue []reflect.Value) {
 
 	defer func() { //assure for not panicking out
 		if r := recover(); r != nil {
@@ -482,9 +482,9 @@ func getKeyForInput(outType reflect.Type, valueIn reflect.Value, prefix *string)
 	}
 
 	var keyPrefix string
-	if (prefix != nil) {
+	if prefix != nil {
 		keyPrefix = *prefix
-	}else {
+	} else {
 		keyPrefix = outType.Name()
 	}
 
@@ -524,8 +524,8 @@ func validateResults(emptyBodyFunction interface{}, in []reflect.Value, out []re
 
 		//has some return value
 		if len(out) > 1 &&
-		out[1].IsValid() &&
-		out[1].Kind() == reflect.Bool {
+			out[1].IsValid() &&
+			out[1].Kind() == reflect.Bool {
 
 			boolVal, _ := out[1].Interface().(bool)
 
@@ -534,7 +534,7 @@ func validateResults(emptyBodyFunction interface{}, in []reflect.Value, out []re
 
 		log.Error("Erro ", emptyBodyFunction)
 		funcName := reflect.TypeOf(emptyBodyFunction).Name()
-		log.Error("", errors.New("Its not possible to infer a return value validation. Your function " + funcName + " need to implement ValidateResults inferface!"))
+		log.Error("", errors.New("Its not possible to infer a return value validation. Your function "+funcName+" need to implement ValidateResults inferface!"))
 		return false
 	}
 
@@ -560,7 +560,7 @@ func mustHaveKeyDefiner(emptyBodyFunction interface{}) {
 		_, outTypes := getInOutTypes(reflect.TypeOf(emptyBodyFunction))
 		firstType := outTypes[0] // get the first return type and check...
 
-		if (isMany(firstType)) {
+		if isMany(firstType) {
 
 			innerType := getArrayInnerType(firstType)
 

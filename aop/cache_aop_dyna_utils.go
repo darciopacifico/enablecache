@@ -192,8 +192,7 @@ func mustBeCompatibleSignatures(emptyFunction interface{}, concreteFunction inte
 	ins_a, outs_a := getInOutTypes(reflect.TypeOf(emptyFunction))
 	ins_b, outs_b := getInOutTypes(reflect.TypeOf(concreteFunction))
 
-
-	if(len(ins_a) > 1 || len(ins_b) > 1){
+	if len(ins_a) > 1 || len(ins_b) > 1 {
 		log.Warning("In multiple input functions, only the first paramater will be considered as cache key!")
 	}
 

@@ -1,7 +1,6 @@
 package aop
 
 import (
-
 	"encoding/gob"
 	"reflect"
 	"strconv"
@@ -15,7 +14,7 @@ import (
 var (
 	cacheAreaAuto     = "dyna_test"
 	cacheStorageRedis = cache.NewRedisCacheStorage("localhost:6379", "", 8, cacheAreaAuto)
-	cacheManagerAuto = cache.SimpleCacheManager{
+	cacheManagerAuto  = cache.SimpleCacheManager{
 		cacheStorageRedis,
 	}
 )

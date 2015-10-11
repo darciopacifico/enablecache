@@ -1,8 +1,8 @@
 package aop
 
 import (
-	"fmt"
 	"encoding/gob"
+	"fmt"
 	"reflect"
 	"strconv"
 	"testing"
