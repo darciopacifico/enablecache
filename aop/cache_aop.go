@@ -29,13 +29,25 @@ type CacheSpot struct {
 	CacheIdPrefix string //(Optional) cache prefix for cache registries
 }
 
-func MakeSwap(CachedSpotFunction interface{}, OriginalFunction   interface{}, CacheManager       cache.CacheManager, TakeCache          bool              ){
+func MakeSwapPrefix(CachedSpotFunction interface{}, OriginalFunction interface{}, CacheManager cache.CacheManager, TakeCache bool, Prefix string) {
 
 	MakeCachedSpotFunction(CacheSpot{
-		CachedSpotFunction:  CachedSpotFunction,
-		OriginalFunction  :  OriginalFunction  ,
-		CacheManager :  CacheManager ,
-		TakeCache: TakeCache,
+		CachedSpotFunction: CachedSpotFunction,
+		OriginalFunction:   OriginalFunction,
+		CacheManager:       CacheManager,
+		TakeCache:          TakeCache,
+		CacheIdPrefix:      Prefix,
+	})
+
+}
+
+func MakeSwap(CachedSpotFunction interface{}, OriginalFunction interface{}, CacheManager cache.CacheManager, TakeCache bool) {
+
+	MakeCachedSpotFunction(CacheSpot{
+		CachedSpotFunction: CachedSpotFunction,
+		OriginalFunction:   OriginalFunction,
+		CacheManager:       CacheManager,
+		TakeCache:          TakeCache,
 	})
 
 }
