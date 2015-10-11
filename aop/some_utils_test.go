@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"gitlab.wmxp.com.br/bis/biro/cache"
+	"github.com/darciopacifico/cachengo/cache"
 )
 
 var (

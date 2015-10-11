@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"code.google.com/p/go-uuid/uuid"
-	"gitlab.wmxp.com.br/bis/biro/cache"
+	"github.com/darciopacifico/cachengo/cache"
 )
 
 var (
