@@ -1,7 +1,5 @@
 package cache
 
-import ()
-
 //Basic contract for cache storage. Define basic key/value operations
 //could be implemented with any kind of key/value persistence mechanism
 //a good cachestorage implementation can store and recover data efficiently, like batch recover,

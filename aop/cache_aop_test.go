@@ -2,6 +2,7 @@ package aop
 
 import (
 	"fmt"
+	"encoding/gob"
 	"reflect"
 	"strconv"
 	"testing"

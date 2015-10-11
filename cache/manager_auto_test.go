@@ -13,7 +13,7 @@ import (
 
 var (
 	cacheAreaAuto    = "tests"
-	cacheStorageAuto = NewRedisCacheStorage("localhost:6379", "", 8, cacheAreaAuto)
+	cacheStorageAuto = NewRedisCacheStorage("localhost:6379","", 8, cacheAreaAuto)
 	cacheManagerAuto = AutoCacheManager{
 		cacheStorageAuto,
 	}
