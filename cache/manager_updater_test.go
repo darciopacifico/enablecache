@@ -6,7 +6,7 @@ import (
 )
 
 var simpleCacheManager = SimpleCacheManager{
-	Ps: NewRedisCacheStorage(conf.Config("ipPortRedis", "localhost:6379"), conf.Config("passwordRedis", ""), 8, cacheArea),
+	Ps: NewRedisCacheStorage("localhost:6379", "", 8, cacheArea),
 }
 
 var updaterCacheManager = UpdaterCacheManagerImpl{

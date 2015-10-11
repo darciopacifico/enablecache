@@ -2,7 +2,6 @@ package aop
 
 import (
 	"gitlab.wmxp.com.br/bis/biro/cache"
-	"gitlab.wmxp.com.br/bis/biro/config"
 
 	"math/rand"
 	"strconv"
@@ -10,9 +9,7 @@ import (
 )
 
 var (
-	conf = config.CreateConfig()
-
-	cacheStorage = cache.NewRedisCacheStorage(conf.Config("ipPortRedis", "localhost:6379"), conf.Config("passwordRedis", ""), 8, strconv.Itoa(rand.Int()))
+	cacheStorage = cache.NewRedisCacheStorage("localhost:6379", "", 8, strconv.Itoa(rand.Int()))
 	cacheManager = cache.SimpleCacheManager{
 		Ps: cacheStorage,
 	}
