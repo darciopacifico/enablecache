@@ -2,7 +2,6 @@ package aop
 
 import (
 	"fmt"
-	//"github.com/influxdb/influxdb/uuid"
 	"encoding/gob"
 	"reflect"
 	"strconv"

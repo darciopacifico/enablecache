@@ -7,10 +7,10 @@ import (
 	"strconv"
 
 	"github.com/op/go-logging"
-	"gitlab.wmxp.com.br/bis/biro/cache"
+	"github.com/darciopacifico/cachengo/cache"
 )
 
-var log = logging.MustGetLogger("biro")
+var log = logging.MustGetLogger("cache")
 
 //
 var errorInterfaceModel = reflect.TypeOf((*error)(nil)).Elem()

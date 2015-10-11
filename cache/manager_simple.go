@@ -4,7 +4,7 @@ import (
 	"github.com/op/go-logging"
 )
 
-var log = logging.MustGetLogger("biro")
+var log = logging.MustGetLogger("cache")
 
 // define statistics util for iro
 var St *Stats = NewStats("iro-cache")

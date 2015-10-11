@@ -3,20 +3,10 @@ package cache
 import (
 	"testing"
 	"time"
-
-	"gitlab.wmxp.com.br/bis/biro/config"
-
-	//"github.com/garyburd/redigo/redis"
 )
 
 var (
-	conf = config.CreateConfig()
-
-	cacheStorageRedis_test = NewRedisCacheStorage(
-		conf.Config("ipPortRedis", "localhost:6379"), conf.Config("passwordRedis", ""),
-		8,
-		"cachetest",
-	)
+	cacheStorageRedis_test = NewRedisCacheStorage("localhost:6379", "", 8, "cachetest")
 )
 
 func TestDelete(t *testing.T) {
@@ -101,7 +91,9 @@ func TestSetTTL(t *testing.T) {
 	cacheReg := cacheRegs[cacheKey]
 
 	if cacheReg.Ttl >= ttl {
-		log.Error("TTL setting was not updated as return val!", cacheReg.Ttl, ttl)
+		log.Error("TTL setting was not updated in return val! %v, %v", cacheReg.Ttl, ttl)
 		t.Fail()
+	}else{
+		log.Debug("TTL setting was updated in return val! %v, %v", cacheReg.Ttl, ttl)
 	}
 }
