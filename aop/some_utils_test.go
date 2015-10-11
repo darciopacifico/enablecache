@@ -13,10 +13,6 @@ var (
 	cacheManager = cache.SimpleCacheManager{
 		Ps: cacheStorage,
 	}
-
-	cacheManagerUpdater = cache.UpdaterCacheManagerImpl{
-		SimpleCacheManager: cacheManager,
-	}
 )
 
 type User struct {
