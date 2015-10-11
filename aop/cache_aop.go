@@ -18,18 +18,37 @@ var errorInterfaceModel = reflect.TypeOf((*error)(nil)).Elem()
 //just to formalize the signature of swap function
 type TypeSwapFunc func(ins []reflect.Value) []reflect.Value
 
-func MakeSwap(emptyFunction interface{}, concreteFunction interface{}, cacheManager cache.CacheManager, cached bool) {
-	MakeSwapPrefix(emptyFunction, concreteFunction, cacheManager, cached, "")
+type CacheSpot struct {
+	CachedSpotFunction interface{}        //empty function ref, that will contain cacheable function. Pass a nil reference
+	OriginalFunction   interface{}        //real hot function, that will have results cached
+	CacheManager       cache.CacheManager //cache manager implementation
+	TakeCache          bool               //mark if cache manager can take cached values or just store results
+
+	Name          string  //(Optional) cache spot config for log and metrics.
+	CacheIdPrefix *string //(Optional) cache prefix for cache registries
+}
+
+func MakeSwapPrefix(CachedSpotFunction interface{}, OriginalFunction interface{}, CacheManager cache.CacheManager, TakeCache bool, Prefix string) {
+	MakeCachedSpotFunction(CacheSpot{
+		CachedSpotFunction: CachedSpotFunction,
+		OriginalFunction:   OriginalFunction,
+		CacheManager:       CacheManager,
+		TakeCache:          TakeCache,
+		CacheIdPrefix:      &Prefix,
+	})
+}
+
+func MakeSwap(CachedSpotFunction interface{}, OriginalFunction interface{}, CacheManager cache.CacheManager, TakeCache bool) {
+	MakeCachedSpotFunction(CacheSpot{
+		CachedSpotFunction: CachedSpotFunction,
+		OriginalFunction:   OriginalFunction,
+		CacheManager:       CacheManager,
+		TakeCache:          TakeCache,
+	})
 }
 
 //makes a swap function for reflection operations
-func MakeSwapPrefix(emptyFunction interface{}, concreteFunction interface{}, cacheManager cache.CacheManager, cached bool, prefixLit string) {
-	var prefix *string
-	if prefixLit == "" {
-		prefix = nil
-	} else {
-		prefix = &prefixLit
-	}
+func MakeCachedSpotFunction(cacheSpot CacheSpot) {
 
 	defer func() { //assure for not panicking
 		if r := recover(); r != nil {
@@ -39,14 +58,14 @@ func MakeSwapPrefix(emptyFunction interface{}, concreteFunction interface{}, cac
 	}()
 
 	//assure for swap possibilities
-	mustBePossibleToSwap(emptyFunction, concreteFunction)
+	mustBePossibleToSwap(cacheSpot.CachedSpotFunction, cacheSpot.OriginalFunction)
 
-	eI, eO := getInOutTypes(reflect.TypeOf(emptyFunction))
-	cI, _ := getInOutTypes(reflect.TypeOf(concreteFunction))
+	eI, eO := getInOutTypes(reflect.TypeOf(cacheSpot.CachedSpotFunction))
+	cI, _ := getInOutTypes(reflect.TypeOf(cacheSpot.OriginalFunction))
 
 	eIM, cIM := isMany(eI[0]), isMany(cI[0])
 
-	defaultVals := defaultValues(emptyFunction, eO, true)
+	defaultVals := defaultValues(cacheSpot.CachedSpotFunction, eO, true)
 
 	swap := func(originalIns []reflect.Value) []reflect.Value {
 
@@ -54,16 +73,16 @@ func MakeSwapPrefix(emptyFunction interface{}, concreteFunction interface{}, cac
 
 		//make a fit swap function
 		if !eIM && !cIM { //one to one
-			retVals = executeOneToOne(emptyFunction, originalIns, eO, cacheManager, defaultVals, concreteFunction, prefix)
+			retVals = executeOneToOne(cacheSpot, originalIns, eO, defaultVals)
 
 		} else if eIM && cIM { // many to many
-			retVals = executeManyToMany(emptyFunction, originalIns, eO, eI, cacheManager, defaultVals, concreteFunction, prefix)
+			retVals = executeManyToMany(cacheSpot, originalIns, eO, eI, defaultVals)
 
 		} else if eIM && !cIM { //many to one
-			retVals = executeManyToOne(emptyFunction, originalIns, eO, eI, cacheManager, defaultVals, concreteFunction, prefix)
+			retVals = executeManyToOne(cacheSpot, originalIns, eO, eI, defaultVals)
 
 		} else if !eIM && cIM { //one to many
-			retVals = executeOneToMany(emptyFunction, originalIns, eO, eI, cI, cacheManager, defaultVals, concreteFunction, prefix)
+			retVals = executeOneToMany(cacheSpot, originalIns, eO, eI, cI, defaultVals)
 
 		} else {
 			log.Critical("I is not logically supposed to be possible to reach this code! Something really wrong happened!")
@@ -76,7 +95,7 @@ func MakeSwapPrefix(emptyFunction interface{}, concreteFunction interface{}, cac
 	}
 
 	//set emptyBodyFunction body with swapFunction containing cache mechanism
-	setSwapAsFunctionBody(emptyFunction, swap)
+	setSwapAsFunctionBody(cacheSpot.CachedSpotFunction, swap)
 }
 
 //check if is array
@@ -167,8 +186,12 @@ func getCachedMap(emptyBodyFunction interface{}, in reflect.Value, outType refle
 }
 
 //execute an one to one reflection + cache operation
-func executeOneToOne(emptyFunction interface{}, originalIns []reflect.Value, eO []reflect.Type, cacheManager cache.CacheManager,
-	defaultVals []reflect.Value, concreteFunction interface{}, prefix *string) (returnValue []reflect.Value) {
+func executeOneToOne(cacheSpot CacheSpot, originalIns []reflect.Value, eO []reflect.Type, defaultVals []reflect.Value) (returnValue []reflect.Value) {
+
+	emptyFunction := cacheSpot.CachedSpotFunction
+	concreteFunction := cacheSpot.OriginalFunction
+	cacheManager := cacheSpot.CacheManager
+	prefix := cacheSpot.CacheIdPrefix
 
 	defer func() { //assure for not panicking
 		if r := recover(); r != nil {
@@ -211,9 +234,12 @@ func executeOneToOne(emptyFunction interface{}, originalIns []reflect.Value, eO 
 }
 
 //execute an many to many call
-func executeManyToMany(emptyFunction interface{}, originalIns []reflect.Value, eO []reflect.Type,
-	eI []reflect.Type, cacheManager cache.CacheManager, defaultVals []reflect.Value,
-	concreteFunction interface{}, prefix *string) (returnVal []reflect.Value) {
+func executeManyToMany(cacheSpot CacheSpot, originalIns []reflect.Value, eO []reflect.Type, eI []reflect.Type, defaultVals []reflect.Value) (returnVal []reflect.Value) {
+
+	emptyFunction := cacheSpot.CachedSpotFunction
+	concreteFunction := cacheSpot.OriginalFunction
+	cacheManager := cacheSpot.CacheManager
+	prefix := cacheSpot.CacheIdPrefix
 
 	defer func() {
 		if r := recover(); r != nil {
@@ -248,8 +274,12 @@ func fixReturnTypes(outTypes []reflect.Type, values []reflect.Value) []reflect.V
 }
 
 //execute an many to one call
-func executeManyToOne(emptyFunction interface{}, originalIns []reflect.Value, eO []reflect.Type, eI []reflect.Type,
-	cacheManager cache.CacheManager, defaultVals []reflect.Value, concreteFunction interface{}, prefix *string) (returnValue []reflect.Value) {
+func executeManyToOne(cacheSpot CacheSpot, originalIns []reflect.Value, eO []reflect.Type, eI []reflect.Type, defaultVals []reflect.Value) (returnValue []reflect.Value) {
+	emptyFunction := cacheSpot.CachedSpotFunction
+	concreteFunction := cacheSpot.OriginalFunction
+	cacheManager := cacheSpot.CacheManager
+	prefix := cacheSpot.CacheIdPrefix
+
 	defer func() { //assure for not panicking
 		if r := recover(); r != nil {
 
@@ -299,8 +329,12 @@ func putFirstResultEvidence(firstResult reflect.Value, defaultVals []reflect.Val
 	return arrOuts
 }
 
-func executeOneToMany(emptyFunction interface{}, originalIns []reflect.Value, eO []reflect.Type, eI []reflect.Type,
-	cI []reflect.Type, cacheManager cache.CacheManager, defaultVals []reflect.Value, concreteFunction interface{}, prefix *string) (returnValue []reflect.Value) {
+func executeOneToMany(cacheSpot CacheSpot, originalIns []reflect.Value, eO []reflect.Type, eI []reflect.Type, cI []reflect.Type, defaultVals []reflect.Value) (returnValue []reflect.Value) {
+
+	emptyFunction := cacheSpot.CachedSpotFunction
+	concreteFunction := cacheSpot.OriginalFunction
+	cacheManager := cacheSpot.CacheManager
+	prefix := cacheSpot.CacheIdPrefix
 
 	defer func() { //assure for not panicking out
 		if r := recover(); r != nil {
