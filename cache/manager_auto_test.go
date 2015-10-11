@@ -4,17 +4,16 @@ import (
 	"bytes"
 	"encoding/gob"
 	"fmt"
-	"gitlab.wmxp.com.br/bis/biro/Godeps/_workspace/src/github.com/davecgh/go-spew/spew"
 	"reflect"
 	"strconv"
 	"testing"
 	"time"
+
 )
 
 var (
-	_                = spew.Dump
 	cacheAreaAuto    = "tests"
-	cacheStorageAuto = NewRedisCacheStorage(conf.Config("ipPortRedis", "localhost:6379"), conf.Config("passwordRedis", ""), 8, cacheAreaAuto)
+	cacheStorageAuto = NewRedisCacheStorage("localhost:6379", "", 8, cacheAreaAuto)
 	cacheManagerAuto = AutoCacheManager{
 		cacheStorageAuto,
 	}

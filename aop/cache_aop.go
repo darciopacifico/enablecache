@@ -5,8 +5,8 @@ import (
 	"os"
 	"reflect"
 	"strconv"
-
 	"fmt"
+
 	"github.com/op/go-logging"
 	"gitlab.wmxp.com.br/bis/biro/cache"
 )

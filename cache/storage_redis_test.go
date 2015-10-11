@@ -3,20 +3,10 @@ package cache
 import (
 	"testing"
 	"time"
-
-	"gitlab.wmxp.com.br/bis/biro/config"
-
-	//"github.com/garyburd/redigo/redis"
 )
 
 var (
-	conf = config.CreateConfig()
-
-	cacheStorageRedis_test = NewRedisCacheStorage(
-		conf.Config("ipPortRedis", "localhost:6379"), conf.Config("passwordRedis", ""),
-		8,
-		"cachetest",
-	)
+	cacheStorageRedis_test = NewRedisCacheStorage("localhost:6379", "", 8, "cachetest")
 )
 
 func TestDelete(t *testing.T) {

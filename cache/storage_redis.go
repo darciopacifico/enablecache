@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"encoding/gob"
 	"time"
-
 	"errors"
+
 	"github.com/garyburd/redigo/redis"
 )
 

@@ -3,8 +3,9 @@ package aop
 import (
 	"errors"
 	"fmt"
-	"gitlab.wmxp.com.br/bis/biro/cache"
 	"reflect"
+
+	"gitlab.wmxp.com.br/bis/biro/cache"
 )
 
 func FromWrappedToArray(wrappedResponseArray reflect.Value) []reflect.Value {

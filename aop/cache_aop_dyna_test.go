@@ -1,19 +1,20 @@
 package aop
 
 import (
-	"code.google.com/p/go-uuid/uuid"
+
 	"encoding/gob"
-	"gitlab.wmxp.com.br/bis/biro/cache"
 	"reflect"
 	"strconv"
 	"testing"
 	"time"
+
+	"code.google.com/p/go-uuid/uuid"
+	"gitlab.wmxp.com.br/bis/biro/cache"
 )
 
 var (
 	cacheAreaAuto     = "dyna_test"
-	cacheStorageRedis = cache.NewRedisCacheStorage(
-		conf.Config("ipPortRedis", "localhost:6379"), conf.Config("passwordRedis", ""), 8, cacheAreaAuto)
+	cacheStorageRedis = cache.NewRedisCacheStorage("localhost:6379", "", 8, cacheAreaAuto)
 	cacheManagerAuto = cache.SimpleCacheManager{
 		cacheStorageRedis,
 	}
