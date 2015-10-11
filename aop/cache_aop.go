@@ -29,6 +29,17 @@ type CacheSpot struct {
 	CacheIdPrefix string //(Optional) cache prefix for cache registries
 }
 
+func MakeSwap(CachedSpotFunction interface{}, OriginalFunction   interface{}, CacheManager       cache.CacheManager, TakeCache          bool              ){
+
+	MakeCachedSpotFunction(CacheSpot{
+		CachedSpotFunction:  CachedSpotFunction,
+		OriginalFunction  :  OriginalFunction  ,
+		CacheManager :  CacheManager ,
+		TakeCache: TakeCache,
+	})
+
+}
+
 //Put in the emptyBodyFunction the original function call and caching mechanism
 //WILL EXIT APPLICATION IF SOME PREREQ WAS NOT ACCOMPLISHED
 //MUST BE CALLED AT APPLICATION STARTUP ONCE AND ONLY ONCE PER FUNCTION.
