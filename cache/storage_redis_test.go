@@ -101,7 +101,9 @@ func TestSetTTL(t *testing.T) {
 	cacheReg := cacheRegs[cacheKey]
 
 	if cacheReg.Ttl >= ttl {
-		log.Error("TTL setting was not updated as return val!", cacheReg.Ttl, ttl)
+		log.Error("TTL setting was not updated in return val! %v, %v", cacheReg.Ttl, ttl)
 		t.Fail()
+	}else{
+		log.Debug("TTL setting was updated in return val! %v, %v", cacheReg.Ttl, ttl)
 	}
 }
