@@ -16,15 +16,10 @@ var (
 	cacheArea               = strconv.Itoa(rand.Int())
 	//all registries will be deleted, if test success
 
-	cacheStorageReflect = NewRedisCacheStorage("localhost:6379", "", 8, "reflect")
-	cacheStorage        = NewRedisCacheStorage("localhost:6379", "", 8, cacheArea)
+	cacheStorage = NewRedisCacheStorage("localhost:6379", "", 8, cacheArea)
 
 	cacheManager = SimpleCacheManager{
 		cacheStorage,
-	}
-
-	cacheManagerUpdater = UpdaterCacheManagerImpl{
-		SimpleCacheManager: cacheManager,
 	}
 )
 

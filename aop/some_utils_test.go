@@ -13,11 +13,11 @@ var (
 	cacheManager = cache.SimpleCacheManager{
 		Ps: cacheStorage,
 	}
-
-	cacheManagerUpdater = cache.UpdaterCacheManagerImpl{
-		SimpleCacheManager: cacheManager,
-	}
 )
+
+func init() {
+
+}
 
 type User struct {
 	Id       int
@@ -35,7 +35,7 @@ func (u User) SetTtl(ttl int) interface{} {
 }
 
 func FindUser(id int) User {
-
+	log.Debug("Calling hot find user!")
 	user := createUser(id)
 	user.Ttl = 1 // by some fake business rule, the ttl will be one second
 	return user
