@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"testing"
 	"time"
-	"encoding/gob"
 )
 
 //FindUser
