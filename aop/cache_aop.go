@@ -6,8 +6,8 @@ import (
 	"reflect"
 	"strconv"
 
-	"github.com/op/go-logging"
 	"github.com/darciopacifico/cachengo/cache"
+	"github.com/op/go-logging"
 )
 
 var log = logging.MustGetLogger("cache")
@@ -18,15 +18,22 @@ var errorInterfaceModel = reflect.TypeOf((*error)(nil)).Elem()
 //just to formalize the signature of swap function
 type typeSwapFunc func(ins []reflect.Value) []reflect.Value
 
-//overload function
-func MakeSwap(emptyBodyFunction interface{}, originalFunction interface{}, cacheManager cache.CacheManager, takeCache bool) {
-	MakeSwapPrefix(emptyBodyFunction, originalFunction, cacheManager, takeCache, "")
+// cache spot configuration
+type CacheSpot struct {
+	CachedSpotFunction interface{}        //empty function ref, that will contain cacheable function. Pass a nil reference
+	OriginalFunction   interface{}        //real hot function, that will have results cached
+	CacheManager       cache.CacheManager //cache manager implementation
+	TakeCache          bool               //mark if cache manager can take cached values or just store results
+
+	Name          string //(Optional) cache spot config for log and metrics.
+	CacheIdPrefix string //(Optional) cache prefix for cache registries
 }
 
 //Put in the emptyBodyFunction the original function call and caching mechanism
 //WILL EXIT APPLICATION IF SOME PREREQ WAS NOT ACCOMPLISHED
 //MUST BE CALLED AT APPLICATION STARTUP ONCE AND ONLY ONCE PER FUNCTION.
-func MakeSwapPrefix(emptyBodyFunction interface{}, originalFunction interface{}, cacheManager cache.CacheManager, takeCache bool, cacheIdPrefix string) {
+func MakeCachedSpotFunction(cacheSpot CacheSpot) {
+
 	/*
 		if err := notSameSignature(emptyBodyFunction, originalFunction); err != nil {
 			log.Error("As funcoes %v e %v nao possuem a mesma assinatura!", err)
@@ -35,47 +42,46 @@ func MakeSwapPrefix(emptyBodyFunction interface{}, originalFunction interface{},
 	*/
 
 	//basic validation of emptyBodyFunction pre requirements
-	if isValidationOK, err := hasValidationMethod(emptyBodyFunction); !isValidationOK {
-		log.Error("Initilization Error:", err) //if this function doesnt implement ValidateResults and is not possible to infer return validation
-		os.Exit(1)                             //will exit imediatelly. Application must not run with any inconsistency
-	}
-
-	//build a swap function that can call the original function and cache results
-	swapFunction := getSwapFunctionForCache(emptyBodyFunction, originalFunction, cacheManager, takeCache, cacheIdPrefix)
-
-	//set emptyBodyFunction body with swapFunction containing cache mechanism
-	setSwapAsFunctionBody(emptyBodyFunction, swapFunction)
-}
-
-//create a swap function for cache operation
-func getSwapFunctionForCache(emptyBodyFunction interface{}, originalFunction interface{}, cacheManager cache.CacheManager, cached bool, cacheIdPrefix string) typeSwapFunc {
-
-	//vars that must stay out of closure. execute once and only once
-	//retrieve the out types for the function
-	outTypes := getOutTypes(originalFunction)
-	//default values for each return of a function
-
-	defaultVals, errDefVal := defaultValues(emptyBodyFunction, outTypes)
-
-	if errDefVal != nil {
-		log.Error("Error trying to define default values for function %v. %v ", originalFunction, errDefVal)
+	if isValidationOK, err := hasValidationMethod(cacheSpot.CachedSpotFunction); !isValidationOK {
+		//if this function doesnt implement ValidateResults and is not possible to infer return validation
+		//will exit imediatelly. Application must not run with any inconsistency
+		log.Error("Initilization Error:", err)
 		os.Exit(1)
 	}
 
+	//build a swap function that can call the original function and cache results
+	swapFunction := getSwapFunctionForCache(cacheSpot)
 
+	//set emptyBodyFunction body with swapFunction containing cache mechanism
+	setSwapAsFunctionBody(cacheSpot.CachedSpotFunction, swapFunction)
+}
 
+//create a swap function for cache operation
+func getSwapFunctionForCache(cacheSpot CacheSpot) typeSwapFunc {
+
+	//vars that must stay out of closure. execute once and only once
+	//retrieve the out types for the function
+	outTypes := getOutTypes(cacheSpot.OriginalFunction)
+	//default values for each return of a function
+
+	defaultVals, errDefVal := defaultValues(cacheSpot.CachedSpotFunction, outTypes)
+
+	if errDefVal != nil {
+		log.Error("Error trying to define default values for function %v. %v ", cacheSpot.OriginalFunction, errDefVal)
+		os.Exit(1)
+	}
 
 	//swap function implementation for cache operation
 	swap := func(ins []reflect.Value) []reflect.Value {
 		//keys array, based on inputs and return types
-		keys, errCK := cacheKeys(emptyBodyFunction, ins, outTypes, cacheIdPrefix)
+		keys, errCK := cacheKeys(cacheSpot.CachedSpotFunction, ins, outTypes, cacheSpot.CacheIdPrefix)
 		if errCK != nil {
 			log.Error("Error trying to solve cache keys! Is not possible to proceed with cache operations!", errCK)
 		}
 
 		//try to find a cached value
-		if cached && errCK == nil {
-			values, hasCachedValue, err := getCache(keys, defaultVals, cacheManager)
+		if cacheSpot.TakeCache && errCK == nil {
+			values, hasCachedValue, err := getCache(keys, defaultVals, cacheSpot.CacheManager)
 			if err != nil {
 				log.Error("Error trying to retrieve cache data", errCK)
 			}
@@ -91,12 +97,12 @@ func getSwapFunctionForCache(emptyBodyFunction interface{}, originalFunction int
 		//NOT CACHED DATA OPERATIONS CODE BELOW
 
 		//legacy execution
-		outs := reflect.ValueOf(originalFunction).Call(ins) //ok there is no cached value. lets call the original function
+		outs := reflect.ValueOf(cacheSpot.OriginalFunction).Call(ins) //ok there is no cached value. lets call the original function
 
 		// if some error happens trying to define CacheKeys, cache operations will be canceled at all
 		if errCK == nil {
 			//start a new go routine to store cache data
-			go validateStoreInCache(emptyBodyFunction, ins, outs, keys, cacheManager)
+			go validateStoreInCache(cacheSpot, ins, outs, keys)
 		}
 		return outs
 	}
@@ -124,7 +130,7 @@ func fixReturnTypes(outTypes []reflect.Type, values []reflect.Value) []reflect.V
 
 //validate results and store in cache.
 //assure for not panicking in goroutine for validating and store
-func validateStoreInCache(emptyBodyFunction interface{}, ins2 []reflect.Value, outs2 []reflect.Value, keys2 []string, cacheManager2 cache.CacheManager) {
+func validateStoreInCache(cacheSpot CacheSpot, ins2 []reflect.Value, outs2 []reflect.Value, keys2 []string) {
 
 	defer func() { //assure for not panicking
 		if r := recover(); r != nil {
@@ -133,8 +139,8 @@ func validateStoreInCache(emptyBodyFunction interface{}, ins2 []reflect.Value, o
 	}()
 
 	// check whether results are valid and must be cached
-	if validateResults(emptyBodyFunction, ins2, outs2) {
-		storeInCache(outs2, keys2, cacheManager2)
+	if validateResults(cacheSpot.CachedSpotFunction, ins2, outs2) {
+		storeInCache(outs2, keys2, cacheSpot.CacheManager)
 	}
 }
 

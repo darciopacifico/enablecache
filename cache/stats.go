@@ -24,7 +24,6 @@ func NewStats(name string) *Stats {
 	metrics.Register(name+"-hit", stats.hit)
 	metrics.Register(name+"-miss", stats.miss)
 
-
 	return &stats
 }
 
@@ -43,5 +42,5 @@ func (st *Stats) Miss() {
 
 //initialize metrics "daemon"
 func init() {
-	go metrics.Log(metrics.DefaultRegistry, time.Minute*2,  nativeLog.New(os.Stderr, "metrics: ", nativeLog.Lmicroseconds))
+	go metrics.Log(metrics.DefaultRegistry, time.Minute*2, nativeLog.New(os.Stderr, "metrics: ", nativeLog.Lmicroseconds))
 }

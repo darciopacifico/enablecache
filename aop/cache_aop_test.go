@@ -1,8 +1,8 @@
 package aop
 
 import (
-	"fmt"
 	"encoding/gob"
+	"fmt"
 	"reflect"
 	"strconv"
 	"testing"
@@ -32,7 +32,15 @@ func TestAutoValidation(t *testing.T) {
 
 	var cachedFinder FindCustomerType
 
-	MakeSwap(&cachedFinder, FindCustomer, cacheManager, true)
+	//join all resources for cache
+	cacheSpot := CacheSpot{
+		CachedSpotFunction: &cachedFinder,
+		OriginalFunction:   FindCustomer,
+		CacheManager:       cacheManager,
+		TakeCache:          true,
+	}
+
+	MakeCachedSpotFunction(cacheSpot)
 
 	//first finding, must be cached
 	_, _, creationTime := cachedFinder(idTest, "teste", true)
@@ -81,7 +89,14 @@ func TestCustomValidation(t *testing.T) {
 
 	var cachedFinderSimple FindCustomerSimpleType
 
-	MakeSwap(&cachedFinderSimple, FindCustomerSimple, cacheManager, true)
+	cacheSpot := CacheSpot{
+		CachedSpotFunction: &cachedFinderSimple,
+		OriginalFunction:   FindCustomerSimple,
+		CacheManager:       cacheManager,
+		TakeCache:          true,
+	}
+
+	MakeCachedSpotFunction(cacheSpot)
 
 	//first finding, must be cached
 	cpCache := cachedFinderSimple(idTest)
@@ -110,9 +125,16 @@ func TestCustomValidation(t *testing.T) {
 func TestTTL(t *testing.T) {
 	idUser := 42
 
-	//prepared a cached function, using the original one
 	var cachedFindUser FindUserType
-	MakeSwap(&cachedFindUser, FindUser, cacheManager, true)
+	cacheSpot := CacheSpot{
+		CachedSpotFunction: &cachedFindUser,
+		OriginalFunction:   FindUser,
+		CacheManager:       cacheManager,
+		TakeCache:          true,
+	}
+
+	//prepared a cached function, using the original one
+	MakeCachedSpotFunction(cacheSpot)
 
 	//first search will be uncached
 	user1 := cachedFindUser(idUser)
