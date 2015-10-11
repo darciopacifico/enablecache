@@ -23,11 +23,15 @@ type CacheManager interface {
 
 	//set values to cache
 	//SetCache(cacheKey string, cacheVal interface{}, ttl int) int
-	SetCache(cacheRegistry CacheRegistry) error
+	SetCache(cacheRegistry ...CacheRegistry) error
 
 	//recover value from cache
 	//GetCache(cacheKey string) (interface{}, bool, int)
 	GetCache(cacheKey string) (CacheRegistry, error)
+
+	//recover value from cache
+	//GetCache(cacheKey string) (interface{}, bool, int)
+	GetCaches(cacheKey ...string) (map[string]CacheRegistry, error)
 
 	//return time to live of cacheKey
 	GetCacheTTL(cacheKey string) (int, error)

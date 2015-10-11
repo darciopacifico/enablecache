@@ -19,6 +19,14 @@ type SpecifyCacheKeys interface {
 	CacheKeys(in []reflect.Value, outTypes []reflect.Type) []string
 }
 
+//contract to be implemented by a function that will need to define keys for cache
+type SpecifyOutKeys interface {
+
+	//determine cache key for each return value
+	//empty string cachekey means that default value must be used
+	KeysForCache(out []reflect.Value) ([]string, []reflect.Value)
+}
+
 //implemented by a function that needs to define default values to their returns
 //determine default values for each return
 //an string empty cache key (see method above) means that default value must be used

@@ -14,7 +14,7 @@ func TestDelete(t *testing.T) {
 	//cleanup repository
 	cacheStorageRedis_test.DeleteValues("valtestdel1", "valtestdel2", "valtestdel3")
 
-	cp, err := cacheStorageRedis_test.GetValues("valtestdel1", "valtestdel2", "valtestdel3")
+	cp, err := cacheStorageRedis_test.GetValuesMap("valtestdel1", "valtestdel2", "valtestdel3")
 
 	if err != nil {
 		log.Error("Erro ao tentar consultar cache storage", err)
@@ -33,7 +33,7 @@ func TestDelete(t *testing.T) {
 		CacheRegistry{"valtestdel3", "valor3", -1, true})
 
 	//check insertion
-	cpsNew, err := cacheStorageRedis_test.GetValues("valtestdel1", "valtestdel2", "valtestdel3")
+	cpsNew, err := cacheStorageRedis_test.GetValuesMap("valtestdel1", "valtestdel2", "valtestdel3")
 
 	if err != nil {
 		log.Error("erro ao tentar consultar cache storage!", err)
@@ -51,7 +51,7 @@ func TestDelete(t *testing.T) {
 	cacheStorageRedis_test.DeleteValues("valtestdel1", "valtestdel2", "valtestdel3")
 
 	//check deletion
-	cpCheckDel, err := cacheStorageRedis_test.GetValues("valtestdel3")
+	cpCheckDel, err := cacheStorageRedis_test.GetValuesMap("valtestdel3")
 	if err != nil {
 		log.Error("erro ao tentar consultar cache storage!", err)
 		t.Fail()
@@ -69,7 +69,7 @@ func TestDelete(t *testing.T) {
 
 func TestSetTTL(t *testing.T) {
 	cacheKey := "testSetTTL"
-	ttl := 10
+	ttl := 100
 
 	cacheStorageRedis_test.SetValues(CacheRegistry{
 		cacheKey,
@@ -81,7 +81,7 @@ func TestSetTTL(t *testing.T) {
 	log.Debug("Waiting for 2 seconds to test ttl update at get operation!")
 	time.Sleep(time.Second * 2)
 
-	cacheRegs, err := cacheStorageRedis_test.GetValues(cacheKey)
+	cacheRegs, err := cacheStorageRedis_test.GetValuesMap(cacheKey)
 	if err != nil {
 		log.Error("Erro ao tentar recuperar cache registry!")
 		t.Fail()
@@ -91,7 +91,7 @@ func TestSetTTL(t *testing.T) {
 	cacheReg := cacheRegs[cacheKey]
 
 	if cacheReg.Ttl >= ttl {
-		log.Error("TTL setting was not updated in return val! %v, %v", cacheReg.Ttl, ttl)
+		log.Error("TTL setting was not updated as return val! %v, %v", cacheReg.Ttl, ttl)
 		t.Fail()
 	} else {
 		log.Debug("TTL setting was updated in return val! %v, %v", cacheReg.Ttl, ttl)

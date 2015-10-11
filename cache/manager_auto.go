@@ -42,12 +42,7 @@ func (c AutoCacheManager) Invalidate(cacheKeys ...string) error {
 }
 
 //set cache implementation
-func (c AutoCacheManager) SetCache(cacheRegistry CacheRegistry) error {
-	return c.SetCaches(cacheRegistry)
-}
-
-//set cache implementation
-func (c AutoCacheManager) SetCaches(cacheRegistries ...CacheRegistry) error {
+func (c AutoCacheManager) SetCache(cacheRegistries ...CacheRegistry) error {
 
 	mapToSave := make(map[string]CacheRegistry)
 
@@ -102,7 +97,7 @@ func (c AutoCacheManager) GetCaches(cacheKeys ...string) (map[string]CacheRegist
 	ckDepTree := c.getCKDepTree(cacheKeys...)
 
 	//recover cache regs for build tree. ask cache storage
-	crDepTree, err := c.Ps.GetValues(ckDepTree...)
+	crDepTree, err := c.Ps.GetValuesMap(ckDepTree...)
 	if err != nil {
 		return make(map[string]CacheRegistry, 0), err
 	}
@@ -115,7 +110,7 @@ func (c AutoCacheManager) GetCaches(cacheKeys ...string) (map[string]CacheRegist
 	allKeys := append(dependencyKeys, cacheKeys...)
 
 	//recover cacheregs for all keys, in ony one round trip
-	allCRs, err := c.Ps.GetValues(allKeys...)
+	allCRs, err := c.Ps.GetValuesMap(allKeys...)
 
 	//check cache miss
 	//all the informed cacheKeys must be returned by cache storage
