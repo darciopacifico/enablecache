@@ -1,11 +1,11 @@
 package aop
 
 import (
-	"github.com/darciopacifico/cachengo/cache"
-
 	"math/rand"
 	"strconv"
 	"time"
+
+	"github.com/darciopacifico/cachengo/cache"
 )
 
 var (
