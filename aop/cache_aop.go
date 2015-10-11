@@ -94,6 +94,8 @@ func getSwapFunctionForCache(cacheSpot CacheSpot) typeSwapFunc {
 		os.Exit(1)
 	}
 
+
+
 	//swap function implementation for cache operation
 	swap := func(ins []reflect.Value) []reflect.Value {
 		//keys array, based on inputs and return types
