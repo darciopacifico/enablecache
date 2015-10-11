@@ -5,6 +5,7 @@ import (
 	"encoding/gob"
 	"time"
 
+	"errors"
 	"github.com/garyburd/redigo/redis"
 )
 
@@ -15,9 +16,23 @@ type RedisCacheStorage struct {
 }
 
 //recover all cacheregistries of keys
-func (s RedisCacheStorage) GetValues(cacheKeys ...string) (map[string]CacheRegistry, error) {
-	//mapResults := make(map[string]interface{})
-	//mapHasResults := make(map[string]bool)
+func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRegistry, error) {
+
+	ttlMapChan := make(chan map[string]int)
+
+	go func() {
+		defer func() {
+			if r := recover(); r != nil {
+				log.Critical("Error trying to get ttl for registries %v!", cacheKeys)
+				panic(errors.New("panicking"))
+				//return no ttl
+				ttlMapChan <- make(map[string]int, 0)
+			}
+		}()
+
+		ttlMapChan <- s.GetTTLMap(cacheKeys)
+	}()
+
 	mapCacheRegistry := make(map[string]CacheRegistry)
 
 	if len(cacheKeys) <= 0 {
@@ -32,6 +47,8 @@ func (s RedisCacheStorage) GetValues(cacheKeys ...string) (map[string]CacheRegis
 	replyMget, err := conn.Do("MGET", (s.getKeys(cacheKeys))...)
 	if err != nil || replyMget == nil {
 		log.Error("Error trying to get values from cache %v", err)
+		log.Error("Returning an empty registry!")
+
 		return mapCacheRegistry, err // error trying to search cache keys
 	}
 
@@ -68,17 +85,19 @@ func (s RedisCacheStorage) GetValues(cacheKeys ...string) (map[string]CacheRegis
 					mapCacheRegistry[cacheRegistry.CacheKey] = cacheRegistry
 				}
 			} else {
-
 				log.Debug("Returned null for cacheKeys %v!", cacheKeys)
 			}
 		}
 	} else {
-		log.Error("Value returned by a MGET query is not array!") //formal check
+		log.Error("Value returned by a MGET query is not array for keys %v! No error will be returned!", cacheKeys) //formal check
+
+		return make(map[string]CacheRegistry), nil
 	}
 
-	mapCacheRegistryTTL, errTTl := s.GetActualTTL(mapCacheRegistry)
+	//wait for ttl channel
+	mapCacheRegistry = s.zipTTL(mapCacheRegistry, <-ttlMapChan)
 
-	return mapCacheRegistryTTL, errTTl // err=nil by default, if everything is alright
+	return mapCacheRegistry, nil // err=nil by default, if everything is alright
 }
 
 //Recover current ttl information about registry
@@ -98,6 +117,21 @@ func (s RedisCacheStorage) GetTTL(key string) (int, error) {
 }
 
 //Recover current ttl information about registries
+func (s RedisCacheStorage) zipTTL(mapCacheRegistry map[string]CacheRegistry, ttlMap map[string]int) (map[string]CacheRegistry) {
+	//prepare a keyval pair array
+	for key, cacheRegistry := range mapCacheRegistry {
+		if ttl, hasTtl := ttlMap[key]; hasTtl {
+			cacheRegistry.Ttl = ttl
+		} else {
+			cacheRegistry.Ttl = -1
+		}
+		mapCacheRegistry[key]=cacheRegistry
+	}
+
+	return mapCacheRegistry
+}
+
+//Recover current ttl information about registries
 func (s RedisCacheStorage) GetActualTTL(mapCacheRegistry map[string]CacheRegistry) (map[string]CacheRegistry, error) {
 
 	conn := s.redisPool.Get()
@@ -107,7 +141,7 @@ func (s RedisCacheStorage) GetActualTTL(mapCacheRegistry map[string]CacheRegistr
 	for keyMap, cacheRegistry := range mapCacheRegistry {
 
 		respTtl, err := conn.Do("ttl", s.getKey(keyMap))
-		log.Debug("TTL %s that came from redis %d", keyMap, respTtl)
+		log.Debug("TTL %v that came from redis %v", keyMap, respTtl)
 
 		if err != nil {
 			log.Error("Error trying to retrieve ttl of key "+keyMap, err)
@@ -123,6 +157,34 @@ func (s RedisCacheStorage) GetActualTTL(mapCacheRegistry map[string]CacheRegistr
 	}
 
 	return mapCacheRegistry, nil
+}
+
+//Recover current ttl information about registries
+func (s RedisCacheStorage) GetTTLMap(keys []string) map[string]int {
+
+	ttlMap := make(map[string]int, len(keys))
+
+	conn := s.redisPool.Get()
+	defer conn.Close()
+
+	//prepare a keyval pair array
+	for _, key := range keys {
+
+		respTtl, err := conn.Do("ttl", s.getKey(key))
+		log.Debug("TTL %v that came from redis %v", key, respTtl)
+
+		if err != nil {
+			log.Error("Error trying to retrieve ttl of key "+key, err)
+			ttlMap[key] = -2
+
+		} else {
+			intResp, _ := respTtl.(int64)
+			ttlMap[key] = int(intResp)
+		}
+
+	}
+
+	return ttlMap
 }
 
 //transfer the ttl information from cacheRegistry to paylaod interface, if it is ExposeTTL
@@ -161,6 +223,7 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) error {
 
 	keyValPairs := make([]interface{}, 2*len(registries))
 
+	buffer := new(bytes.Buffer)
 	//prepare a keyval pair array
 	for index, cacheRegistry = range registries {
 
@@ -169,14 +232,11 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) error {
 			//panic(errors.New("cache key vazio"))
 		}
 
-		buffer := new(bytes.Buffer)
-
-		//gob.Register(cacheRegistry.Payload)
-
+		buffer.Reset()
 		e := gob.NewEncoder(buffer)
 		err := e.Encode(cacheRegistry)
 		if err != nil {
-			log.Error("Error trying to save registry! %v", err)
+			log.Error("Error trying to save registry! x %v", err)
 			return err
 		}
 
@@ -186,21 +246,19 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) error {
 			log.Error("Error trying to decode value for key %v", cacheRegistry.CacheKey)
 		}
 
-		buffer.Reset()
-
 		keyValPairs[(index * 2)] = s.getKey(cacheRegistry.CacheKey)
 		keyValPairs[(index*2)+1] = bytes
 
 		_, errDo := conn.Do("SET", s.getKey(cacheRegistry.CacheKey), bytes)
 		if errDo != nil {
-			log.Error("Error trying to save registry! %v", errDo)
+			log.Error("Error trying to save registry! y %v", errDo)
 			return errDo
 		}
 
 	}
 	errF := conn.Flush()
 	if errF != nil {
-		log.Error("Error trying to save registry! %v", errF)
+		log.Error("Error trying to flush connection! %v", errF)
 		return errF
 	}
 	s.SetExpireTTL(registries...)
@@ -218,7 +276,7 @@ func (s RedisCacheStorage) SetExpireTTL(cacheRegistries ...CacheRegistry) {
 			log.Debug("Setting ttl to key %s ", cacheRegistry.CacheKey)
 			_, err := conn.Do("expire", s.getKey(cacheRegistry.CacheKey), cacheRegistry.GetTTL())
 			if err != nil {
-				log.Error("Error trying to save cache registry! %v", err)
+				log.Error("Error trying to save cache registry w! %v", err)
 				return
 			}
 
@@ -229,7 +287,7 @@ func (s RedisCacheStorage) SetExpireTTL(cacheRegistries ...CacheRegistry) {
 
 	err := conn.Flush()
 	if err != nil {
-		log.Error("Error trying to save cache registry! %v", err)
+		log.Error("Error trying to save cache registry z! %v", err)
 		return
 	}
 }

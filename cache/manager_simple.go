@@ -27,10 +27,10 @@ func (c SimpleCacheManager) Invalidate(cacheKeys ...string) error {
 }
 
 //set cache implementation
-func (c SimpleCacheManager) SetCache(cacheRegistry CacheRegistry) error {
+func (c SimpleCacheManager) SetCache(cacheRegistry ...CacheRegistry) error {
 
 	//call cachestorage to store data
-	err := c.Ps.SetValues(cacheRegistry)
+	err := c.Ps.SetValues(cacheRegistry...)
 
 	return err
 }
@@ -45,7 +45,7 @@ func (c SimpleCacheManager) GetCache(cacheKey string) (CacheRegistry, error) {
 
 	//get the raw value from cache storage
 	//this registry maybe missed some child reference, that will be check some lines below
-	cacheRegistries, err := c.Ps.GetValues(cacheKey)
+	cacheRegistries, err := c.GetCaches(cacheKey)
 	if err != nil {
 		log.Error("Error trying to recover value from cache storage! %s", cacheKey)
 		St.Miss()
@@ -69,4 +69,9 @@ func (c SimpleCacheManager) GetCache(cacheKey string) (CacheRegistry, error) {
 	St.Hit()
 	return cacheRegistry, nil
 
+}
+
+//implement getCache operation that can recover child data in other cache registries.
+func (c SimpleCacheManager) GetCaches(cacheKeys ...string) (map[string]CacheRegistry, error) {
+	return c.Ps.GetValuesMap(cacheKeys...)
 }
