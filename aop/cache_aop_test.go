@@ -34,9 +34,9 @@ func TestAutoValidation(t *testing.T) {
 
 	//join all resources for cache
 	cacheSpot := CacheSpot{
-		CachedFunc: &cachedFinder,
-		HotFunc:    FindCustomer,
-		CacheManager:   cacheManager,
+		CachedFunc:   &cachedFinder,
+		HotFunc:      FindCustomer,
+		CacheManager: cacheManager,
 	}
 
 	cacheSpot.StartCache()
@@ -89,9 +89,9 @@ func TestCustomValidation(t *testing.T) {
 	var cachedFinderSimple FindCustomerSimpleType
 
 	cacheSpot := CacheSpot{
-		CachedFunc: &cachedFinderSimple,
-		HotFunc:    FindCustomerSimple,
-		CacheManager:   cacheManager,
+		CachedFunc:   &cachedFinderSimple,
+		HotFunc:      FindCustomerSimple,
+		CacheManager: cacheManager,
 	}
 
 	cacheSpot.StartCache()
@@ -125,9 +125,9 @@ func TestTTL(t *testing.T) {
 
 	var cachedFindUser FindUserType
 	cacheSpot := CacheSpot{
-		CachedFunc: &cachedFindUser,
-		HotFunc:    FindUser,
-		CacheManager:   cacheManager,
+		CachedFunc:   &cachedFindUser,
+		HotFunc:      FindUser,
+		CacheManager: cacheManager,
 	}
 
 	//prepared a cached function, using the original one

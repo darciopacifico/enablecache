@@ -6,9 +6,9 @@ import (
 	"reflect"
 
 	"github.com/darciopacifico/cachengo/cache"
-	"strconv"
-	"runtime"
 	"regexp"
+	"runtime"
+	"strconv"
 )
 
 //regex that substitute the start of full function name
@@ -137,14 +137,11 @@ func valIntToString(value reflect.Value) (string, error) {
 	return strVal, nil
 }
 
-
-
 func mustBeCompatible(a, b reflect.Type) {
 	if !a.ConvertibleTo(b) || !a.AssignableTo(b) {
 		panic(errors.New(fmt.Sprintf(
-			"Types '%v' and '%v' is not compatile to each other! " +
-			"It is no possible to make a swap function that " +
-			"return or receive different kinds of objects!", a.Name(), b.Name())))
+			"Types '%v' and '%v' is not compatile to each other! "+
+				"It is no possible to make a swap function that "+
+				"return or receive different kinds of objects!", a.Name(), b.Name())))
 	}
 }
-

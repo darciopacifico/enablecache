@@ -1,32 +1,32 @@
 package main
 
-import "fmt"
-import "unsafe"
-import "strconv"
-
-
-
-func castStr(v *string) string {
-	return fmt.Sprint(uintptr(unsafe.Pointer(v)))
-}
-
-func uncastStr(s string) string {
-	p, _ := strconv.ParseInt(s, 10, 64)
-	return *((*string)(unsafe.Pointer(uintptr(p))))
-}
+import (
+	"fmt"
+	"github.com/golang/groupcache"
+)
 
 func main() {
-	onevar := "something"
-	other := "something else"
-	sa := []string{castStr(&onevar), castStr(&other)}
 
-	for _, v := range sa {
-		fmt.Printf("{{%s}}\n", v)
-		fmt.Printf("%v\n", uncastStr(v))
-	}
+	thumb := groupcache.NewGroup("dlp", 64<<20, groupcache.GetterFunc(
+		func(ctx groupcache.Context, key string, dest groupcache.Sink) error {
+			fileName := key
+			dest.SetBytes(generateThumb(fileName))
+			return nil
+		}))
 
-	//for _, v := range sa {
-	//  vName := fmt.Sprintf("{{%s}}", v)
-	//  msg = strings.Replace(msg, vName, uncastStr(v) -1)
-	//}
+	groupcache.RegisterServerStart(func() { fmt.Println("chamando funcao q nao sei pra q eh...") })
+
+	var data []byte
+	thumb.Get(nil, "product:123", groupcache.AllocatingByteSliceSink(&data))
+
+	fmt.Println(fmt.Sprintf("resultado retornado pelo get: %v", string(data)))
+
+}
+
+func generateThumb(fileName string) []byte {
+
+	fmt.Println("gerando bytes para serem cacheados")
+
+	return []byte("Um array de bytes para img ... " + fileName)
+
 }
