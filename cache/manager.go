@@ -42,6 +42,9 @@ type CacheManager interface {
 	//meaning that all cache registry is inconsistent.
 	//To represent a delete operation, updating parent registries, use exclusively the DeleteCache operation in UpdaterCacheManager interface.
 	Invalidate(cacheKey ...string) error
+
+	//validate readiness of cache operation
+	Validade() bool
 }
 
 // Define a extension contract to CacheManager, with DeleteCache operation.

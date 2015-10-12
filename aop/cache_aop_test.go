@@ -34,13 +34,12 @@ func TestAutoValidation(t *testing.T) {
 
 	//join all resources for cache
 	cacheSpot := CacheSpot{
-		CachedSpotFunction: &cachedFinder,
-		OriginalFunction:   FindCustomer,
-		CacheManager:       cacheManager,
-		TakeCache:          true,
+		CachedFunction: &cachedFinder,
+		HotFunction:    FindCustomer,
+		CacheManager:   cacheManager,
 	}
 
-	MakeCachedSpotFunction(cacheSpot)
+	cacheSpot.StartCache()
 
 	//first finding, must be cached
 	_, _, creationTime := cachedFinder(idTest, "teste", true)
@@ -90,13 +89,12 @@ func TestCustomValidation(t *testing.T) {
 	var cachedFinderSimple FindCustomerSimpleType
 
 	cacheSpot := CacheSpot{
-		CachedSpotFunction: &cachedFinderSimple,
-		OriginalFunction:   FindCustomerSimple,
-		CacheManager:       cacheManager,
-		TakeCache:          true,
+		CachedFunction: &cachedFinderSimple,
+		HotFunction:    FindCustomerSimple,
+		CacheManager:   cacheManager,
 	}
 
-	MakeCachedSpotFunction(cacheSpot)
+	cacheSpot.StartCache()
 
 	//first finding, must be cached
 	cpCache := cachedFinderSimple(idTest)
@@ -127,14 +125,13 @@ func TestTTL(t *testing.T) {
 
 	var cachedFindUser FindUserType
 	cacheSpot := CacheSpot{
-		CachedSpotFunction: &cachedFindUser,
-		OriginalFunction:   FindUser,
-		CacheManager:       cacheManager,
-		TakeCache:          true,
+		CachedFunction: &cachedFindUser,
+		HotFunction:    FindUser,
+		CacheManager:   cacheManager,
 	}
 
 	//prepared a cached function, using the original one
-	MakeCachedSpotFunction(cacheSpot)
+	cacheSpot.StartCache()
 
 	//first search will be uncached
 	user1 := cachedFindUser(idUser)

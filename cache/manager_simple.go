@@ -14,6 +14,10 @@ type SimpleCacheManager struct {
 	Ps CacheStorage
 }
 
+func (c SimpleCacheManager) Validade() bool {
+	return true
+}
+
 //invalidate cache registry
 func (c SimpleCacheManager) Invalidate(cacheKeys ...string) error {
 

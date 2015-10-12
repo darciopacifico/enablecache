@@ -8,16 +8,30 @@ import (
 	"time"
 
 	"code.google.com/p/go-uuid/uuid"
+	"fmt"
 	"github.com/darciopacifico/cachengo/cache"
+	"github.com/op/go-logging"
+	"os"
 )
 
 var (
 	cacheAreaAuto     = "dyna_test"
 	cacheStorageRedis = cache.NewRedisCacheStorage("localhost:6379", "", 8, cacheAreaAuto)
-	cacheManagerAuto  = cache.SimpleCacheManager{
+	cmAuto            = cache.SimpleCacheManager{
 		cacheStorageRedis,
 	}
 )
+
+func init() {
+
+	format := logging.MustStringFormatter("%{color}%{time:15:04:05.000} PID:%{pid} %{shortfunc} ▶ %{level:.4s} %{id:03x}%{color:reset} %{message}")
+	backend1 := logging.NewLogBackend(os.Stdout, "", 0)
+	backend1Formatter := logging.NewBackendFormatter(backend1, format)
+	logging.SetBackend(backend1Formatter)
+
+	logging.SetLevel(logging.DEBUG, "cache")
+
+}
 
 type People struct {
 	Id   int
@@ -106,18 +120,16 @@ func BenchmarkDynaSwap(b *testing.B) {
 
 var cFindOne FindOneType
 var cFindOneB FindOneType
-
 var cFindMany FindManyType
 var cFindManyB FindManyType
 
 func init() {
 	gob.Register(People{})
 
-	MakeSwap(&cFindOne, FindOneCustomer, cacheManagerAuto, true)
-	MakeSwap(&cFindMany, FindManyCustomers, cacheManagerAuto, true)
-
-	MakeSwap(&cFindOneB, FindManyCustomers, cacheManagerAuto, true)
-	MakeSwap(&cFindManyB, FindOneCustomer, cacheManagerAuto, true)
+	CacheSpot{CachedFunction: &cFindOne, HotFunction: FindOneCustomer, CacheManager: cmAuto}.StartCache()
+	CacheSpot{CachedFunction: &cFindMany, HotFunction: FindManyCustomers, CacheManager: cmAuto}.StartCache()
+	CacheSpot{CachedFunction: &cFindOneB, HotFunction: FindManyCustomers, CacheManager: cmAuto}.StartCache()
+	CacheSpot{CachedFunction: &cFindManyB, HotFunction: FindOneCustomer, CacheManager: cmAuto}.StartCache()
 }
 
 func FindOneCustomer(id int) (People, error, bool) {
@@ -130,4 +142,38 @@ func FindManyCustomers(ids []int) ([]People, error) {
 		cs[idx], _, _ = FindOneCustomer(id)
 	}
 	return cs, nil
+}
+
+func TestAllSwaps(t *testing.T) {
+	var f bool
+
+	format := logging.MustStringFormatter("%{color}%{time:15:04:05.000} PID:%{pid} %{shortfunc} ▶ %{level:.4s} %{id:03x}%{color:reset} %{message}")
+	backend1 := logging.NewLogBackend(os.Stdout, "", 0)
+	backend1Formatter := logging.NewBackendFormatter(backend1, format)
+	logging.SetBackend(backend1Formatter)
+
+	logging.SetLevel(logging.DEBUG, "xxx")
+
+	log := *logging.MustGetLogger("xxx")
+
+	log.Debug("teste 23")
+
+	ps, errM := cFindMany([]int{1, 2, 3})
+	fmt.Sprintf("procurando pessoas %v err = %v", ps, errM)
+
+	ps, errM = cFindManyB([]int{2, 3, 4, 5})
+	fmt.Sprintf("procurando pessoas %v err = %v", ps, errM)
+
+	p, err, f := cFindOne(2)
+	fmt.Sprintf("procurando pessoa %v err = %v, f=%v", p, err, f)
+
+	p, err, f = cFindOne(6)
+	fmt.Sprintf("procurando pessoa %v err = %v, f=%v", p, err, f)
+
+	p, err, f = cFindOneB(4)
+	fmt.Sprintf("procurando pessoa %v err = %v, f=%v", p, err, f)
+
+	p, err, f = cFindOneB(9)
+	fmt.Sprintf("procurando pessoa %v err = %v, f=%v", p, err, f)
+
 }
