@@ -8,7 +8,7 @@ import (
 	"github.com/darciopacifico/cachengo/cache"
 )
 
-func FromWrappedToArray(wrappedResponseArray reflect.Value) []reflect.Value {
+func fromWrappedToArray(wrappedResponseArray reflect.Value) []reflect.Value {
 
 	hotResponseLen := wrappedResponseArray.Len()
 	hotReturnedValues := make([]reflect.Value, hotResponseLen)
@@ -19,7 +19,7 @@ func FromWrappedToArray(wrappedResponseArray reflect.Value) []reflect.Value {
 	return hotReturnedValues
 }
 
-func FromArrayToWrapped(arrayVales []reflect.Value, typeDestinySlice reflect.Type) reflect.Value {
+func fromArrayToWrapped(arrayVales []reflect.Value, typeDestinySlice reflect.Type) reflect.Value {
 	wrappedArray := reflect.MakeSlice(typeDestinySlice, len(arrayVales), len(arrayVales))
 
 	for index, value := range arrayVales {
@@ -29,25 +29,21 @@ func FromArrayToWrapped(arrayVales []reflect.Value, typeDestinySlice reflect.Typ
 	return wrappedArray
 }
 
-func CallHotFunction(allInputParams []reflect.Value, notCachedIns []reflect.Value, concreteFunction interface{}, emptyFunction interface{}, typeDestiny reflect.Type) []reflect.Value {
-
-	//inType, outType := getInOutTypes(concreteFunction)
-
+func callHotFunction(allInputParams []reflect.Value, notCachedIns []reflect.Value, cacheSpot CacheSpot) []reflect.Value {
 	if len(notCachedIns) > 0 {
-		newAllParams := ResumeFoundedItens(allInputParams, notCachedIns, typeDestiny)
-		fullResponse := dynamicCall(concreteFunction, emptyFunction, newAllParams)
-		hotReturnedValues := FromWrappedToArray(fullResponse[0])
-
+		newAllParams := resumeFoundedItens(allInputParams, notCachedIns, cacheSpot)
+		fullResponse := dynamicCall(cacheSpot, newAllParams)
+		hotReturnedValues := fromWrappedToArray(fullResponse[0])
 		return hotReturnedValues
 	} else {
-
 		return []reflect.Value{}
 	}
-
 }
 
-func dynamicCall(concreteFunction interface{}, emptyFunction interface{}, inputs []reflect.Value) []reflect.Value {
+func dynamicCall(cacheSpot CacheSpot, inputs []reflect.Value) []reflect.Value {
 
+	emptyFunction := cacheSpot.CachedSpotFunction
+	concreteFunction := cacheSpot.OriginalFunction
 	inTypes, _ := getInOutTypes(reflect.TypeOf(concreteFunction))
 	_, outTypes := getInOutTypes(reflect.TypeOf(emptyFunction))
 
@@ -61,7 +57,7 @@ func dynamicCall(concreteFunction interface{}, emptyFunction interface{}, inputs
 
 	} else if ei_IsMany && !ci_IsMany {
 
-		arrInputs := FromWrappedToArray(inputs[0])
+		arrInputs := fromWrappedToArray(inputs[0])
 
 		responses := make([]reflect.Value, len(arrInputs))
 
@@ -70,7 +66,7 @@ func dynamicCall(concreteFunction interface{}, emptyFunction interface{}, inputs
 			responses[index] = response[0] // take only first return value
 		}
 
-		wrappedResp := FromArrayToWrapped(responses, outTypes[0])
+		wrappedResp := fromArrayToWrapped(responses, outTypes[0])
 
 		newDefVal := defaultValues(emptyFunction, outTypes, true) //TODO: checkPositiveResponse() function
 
@@ -88,11 +84,12 @@ func dynamicCall(concreteFunction interface{}, emptyFunction interface{}, inputs
 
 }
 
-func ResumeFoundedItens(allInputParams []reflect.Value, nfIns []reflect.Value, typeSliceDestiny reflect.Type) []reflect.Value {
+func resumeFoundedItens(allInputParams []reflect.Value, nfIns []reflect.Value, cacheSpot CacheSpot) []reflect.Value {
 
+	typeDestiny := cacheSpot.spotInType[0]
 	newAllParams := make([]reflect.Value, len(allInputParams))
 
-	newAllParams[0] = FromArrayToWrapped(nfIns, typeSliceDestiny)
+	newAllParams[0] = fromArrayToWrapped(nfIns, typeDestiny)
 
 	for i := 1; i < len(allInputParams); i++ {
 		newAllParams[i] = allInputParams[i]
@@ -133,8 +130,10 @@ func getKeysForOuts(outs []reflect.Value, emptyBodyFunction interface{}) ([]stri
 	}
 }
 
-func convertOneCallToManyCall(oneCallIns []reflect.Value, eI []reflect.Type, cI []reflect.Type) []reflect.Value {
+func convertOneCallToManyCall(cacheSpot CacheSpot, oneCallIns []reflect.Value) []reflect.Value {
 
+	eI := cacheSpot.spotInType
+	cI := cacheSpot.realInType
 	qtdInputs := len(eI)
 	manyCallIns := make([]reflect.Value, qtdInputs)
 
@@ -164,7 +163,10 @@ func convertManyReturnToOneReturn(manyOuts reflect.Value, eO []reflect.Type) (re
 
 //check whether it's possible to swap between this functions at application loading
 //must panic if is not
-func mustBePossibleToSwap(emptyFunction interface{}, concreteFunction interface{}) {
+func mustBePossibleToSwap(cacheSpot CacheSpot) {
+
+	emptyFunction := cacheSpot.CachedSpotFunction
+	concreteFunction := cacheSpot.OriginalFunction
 
 	//basic validation of emptyBodyFunction pre requirements
 	mustBeCompatibleSignatures(emptyFunction, concreteFunction)
@@ -172,7 +174,7 @@ func mustBePossibleToSwap(emptyFunction interface{}, concreteFunction interface{
 	mustHaveValidationMethod(emptyFunction)
 
 	//basic validation of emptyBodyFunction pre requirements
-	mustHaveKeyDefiner(emptyFunction)
+	mustHaveKeyDefiner(cacheSpot)
 
 	eI, eO := getInOutTypes(reflect.TypeOf(emptyFunction))
 	cI, cO := getInOutTypes(reflect.TypeOf(concreteFunction))
@@ -196,11 +198,11 @@ func mustBeCompatibleSignatures(emptyFunction interface{}, concreteFunction inte
 		log.Warning("In multiple input functions, only the first paramater will be considered as cache key!")
 	}
 
-	firstIAType := getArrayInnerType(ins_a[0])
-	firstIBType := getArrayInnerType(ins_b[0])
+	firstIAType := getArrayInnerType__(ins_a[0])
+	firstIBType := getArrayInnerType__(ins_b[0])
 
-	firstOAType := getArrayInnerType(outs_a[0])
-	firstOBType := getArrayInnerType(outs_b[0])
+	firstOAType := getArrayInnerType__(outs_a[0])
+	firstOBType := getArrayInnerType__(outs_b[0])
 
 	mustBeCompatible(firstIAType, firstIBType)
 	mustBeCompatible(firstOAType, firstOBType)

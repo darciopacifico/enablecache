@@ -7,7 +7,7 @@ import (
 var log = logging.MustGetLogger("cache")
 
 // define statistics util for iro
-var St *Stats = NewStats("iro-cache")
+var st *Stats = NewStats("iro-cache")
 
 //
 type SimpleCacheManager struct {
@@ -48,12 +48,12 @@ func (c SimpleCacheManager) GetCache(cacheKey string) (CacheRegistry, error) {
 	cacheRegistries, err := c.GetCaches(cacheKey)
 	if err != nil {
 		log.Error("Error trying to recover value from cache storage! %s", cacheKey)
-		St.Miss()
+		st.Miss()
 		return CacheRegistry{cacheKey, nil, -2, false}, err
 	}
 	if len(cacheRegistries) == 0 {
 		log.Debug("Cache registry not found! %s", cacheKey)
-		St.Miss()
+		st.Miss()
 		return CacheRegistry{cacheKey, nil, -2, false}, nil
 	}
 
@@ -61,12 +61,12 @@ func (c SimpleCacheManager) GetCache(cacheKey string) (CacheRegistry, error) {
 
 	//cache miss for raw cache value!
 	if !cacheRegistry.HasValue {
-		St.Miss()
+		st.Miss()
 		return cacheRegistry, nil // empty, hasValue=false, cacheRegistry
 	}
 
 	//return final cache registry
-	St.Hit()
+	st.Hit()
 	return cacheRegistry, nil
 
 }

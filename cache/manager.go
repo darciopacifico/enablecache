@@ -60,7 +60,7 @@ type ExposeTTL interface { //teste
 	SetTtl(int) interface{}
 }
 
-//Implementation of this interface means that struct nows how to update his
+//Implementation of this interface means that struct knows how to update his
 // relateds Cached, when the struct is deleted or inserted. There is nothing to do when struct is updated
 type UpdateCachedRelated interface {
 	//who is my parent

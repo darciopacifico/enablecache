@@ -3,31 +3,50 @@ package aop
 import (
 	"errors"
 	"fmt"
-	"os"
 	"reflect"
 	"strconv"
 
 	"github.com/darciopacifico/cachengo/cache"
 	"github.com/op/go-logging"
+	"os"
 )
 
 var typeCacheable = reflect.TypeOf((*cache.Cacheable)(nil)).Elem()
 var log = logging.MustGetLogger("cache")
 var errorInterfaceModel = reflect.TypeOf((*error)(nil)).Elem()
 
-//just to formalize the signature of swap function
-type TypeSwapFunc func(ins []reflect.Value) []reflect.Value
+//reflect objects need to reflect function call
+type callContext struct {
+	spotOutType    []reflect.Type
+	spotInType     []reflect.Type
+	realInType     []reflect.Type
+	spotInnOutType []reflect.Type
+	spotInnInType  []reflect.Type
+	realInnInType  []reflect.Type
+	defaultVals    []reflect.Value
+	isManyOuts     bool //compose cardinality of swap call
+	isManyIns      bool //compose cardinality of swap call
 
-type CacheSpot struct {
-	CachedSpotFunction interface{}        //empty function ref, that will contain cacheable function. Pass a nil reference
-	OriginalFunction   interface{}        //real hot function, that will have results cached
-	CacheManager       cache.CacheManager //cache manager implementation
-	TakeCache          bool               //mark if cache manager can take cached values or just store results
-
-	Name          string  //(Optional) cache spot config for log and metrics.
-	CacheIdPrefix *string //(Optional) cache prefix for cache registries
 }
 
+//makes a swap function for reflection operations
+func MakeCachedSpotFunction(cacheSpot CacheSpot) {
+	//gracefull exit at panic
+	defer func() { //assure for not panicking
+		if r := recover(); r != nil {
+			log.Error("Error trying to make a swap function! %v", r)
+			os.Exit(1)
+		}
+	}()
+
+	//analyse functions and check possibilities. Fill reflect stuffs, like in and out arr types. panic if is not possible!
+	cacheSpot = cacheSpot.prepareSwapFunction()
+
+	//set emptyBodyFunction body with swapFunction containing cache mechanism
+	setSwapAsFunctionBody(cacheSpot.CachedSpotFunction, cacheSpot.swapFunction)
+}
+
+//
 func MakeSwapPrefix(CachedSpotFunction interface{}, OriginalFunction interface{}, CacheManager cache.CacheManager, TakeCache bool, Prefix string) {
 	MakeCachedSpotFunction(CacheSpot{
 		CachedSpotFunction: CachedSpotFunction,
@@ -47,55 +66,81 @@ func MakeSwap(CachedSpotFunction interface{}, OriginalFunction interface{}, Cach
 	})
 }
 
-//makes a swap function for reflection operations
-func MakeCachedSpotFunction(cacheSpot CacheSpot) {
+//template to make a cache spot function
+type CacheSpot struct {
+	CachedSpotFunction interface{}        //empty function ref, that will contain cacheable function. Pass a nil reference
+	OriginalFunction   interface{}        //real hot function, that will have results cached
+	CacheManager       cache.CacheManager //cache manager implementation
+	TakeCache          bool               //mark if cache manager can take cached values or just store results
+	Name               string             //(Optional) cache spot config for log and metrics.
+	CacheIdPrefix      *string            //(Optional) cache prefix for cache registries
+	callContext                           // will be mounted at start up nothing to do
+}
 
-	defer func() { //assure for not panicking
-		if r := recover(); r != nil {
-			log.Error("Error trying to make a swap function! %v", r)
-			os.Exit(1)
-		}
-	}()
+//Cache spot swap function. Used as a swap function in reflect calls
+//Four swap calls combinations are possible: One-one, Many-Many, Many-One, One-Many.
+func (c CacheSpot) swapFunction(inputParams []reflect.Value) []reflect.Value {
+	var retVals []reflect.Value
 
-	//assure for swap possibilities
-	mustBePossibleToSwap(cacheSpot.CachedSpotFunction, cacheSpot.OriginalFunction)
+	//make a fit swap function
+	if !c.isManyOuts && !c.isManyIns { //one to one
+		retVals = c.callOneToOne(inputParams)
 
-	eI, eO := getInOutTypes(reflect.TypeOf(cacheSpot.CachedSpotFunction))
-	cI, _ := getInOutTypes(reflect.TypeOf(cacheSpot.OriginalFunction))
+	} else if c.isManyOuts && c.isManyIns { // many to many
+		retVals = c.callManyToMany(inputParams)
 
-	eIM, cIM := isMany(eI[0]), isMany(cI[0])
+	} else if c.isManyOuts && !c.isManyIns { //many to one
+		retVals = c.callManyToOne(inputParams)
 
-	defaultVals := defaultValues(cacheSpot.CachedSpotFunction, eO, true)
+	} else if !c.isManyOuts && c.isManyIns { //one to many
+		retVals = c.callOneToMany(inputParams)
 
-	swap := func(originalIns []reflect.Value) []reflect.Value {
-
-		var retVals []reflect.Value
-
-		//make a fit swap function
-		if !eIM && !cIM { //one to one
-			retVals = executeOneToOne(cacheSpot, originalIns, eO, defaultVals)
-
-		} else if eIM && cIM { // many to many
-			retVals = executeManyToMany(cacheSpot, originalIns, eO, eI, defaultVals)
-
-		} else if eIM && !cIM { //many to one
-			retVals = executeManyToOne(cacheSpot, originalIns, eO, eI, defaultVals)
-
-		} else if !eIM && cIM { //one to many
-			retVals = executeOneToMany(cacheSpot, originalIns, eO, eI, cI, defaultVals)
-
-		} else {
-			log.Critical("I is not logically supposed to be possible to reach this code! Something really wrong happened!")
-			retVals = defaultVals
-		}
-
-		//fix return value type: there is no polimorphism in go
-		return fixReturnTypes(eO, retVals)
-
+	} else {
+		log.Critical("I is not logically supposed to be possible to reach this code! Something really wrong happened!")
+		retVals = c.defaultVals
 	}
 
-	//set emptyBodyFunction body with swapFunction containing cache mechanism
-	setSwapAsFunctionBody(cacheSpot.CachedSpotFunction, swap)
+	//fix return value type. Emulates a polimorphic behaviour not present in golang
+	// ex: an struct Customer{} returned as an interface{} wouldn't work,
+	// after be recovered by the cache mechanism and used in an reflect return operation
+	return fixReturnTypes(c.spotOutType, retVals)
+}
+
+
+//analize functions and fill reflect objects as need
+func (cacheSpot CacheSpot) prepareSwapFunction() CacheSpot {
+	//take inputs and output types
+	SpotInType, SpotOutType := getInOutTypes(reflect.TypeOf(cacheSpot.CachedSpotFunction))
+	RealInType, _ := getInOutTypes(reflect.TypeOf(cacheSpot.OriginalFunction))
+
+	//take default values
+	defaultVals := defaultValues(cacheSpot.CachedSpotFunction, SpotOutType, true)
+
+	//take array element type,
+	// ex: []string => string
+	// []Products => Product
+	SpotInnOutType := getArrayInnerTypes(SpotOutType)
+	SpotInnInType := getArrayInnerTypes(SpotInType)
+	RealInnInType := getArrayInnerTypes(RealInType)
+
+	//Assembly an callContext object
+	cacheSpot.callContext = callContext{
+		spotOutType:    SpotOutType,
+		spotInType:     SpotInType,
+		realInType:     RealInType,
+		spotInnOutType: SpotInnOutType,
+		spotInnInType:  SpotInnInType,
+		realInnInType:  RealInnInType,
+		defaultVals:    defaultVals}
+
+	//adjust cardinality
+	cacheSpot.isManyOuts = isMany(cacheSpot.spotInType[0])
+	cacheSpot.isManyIns = isMany(cacheSpot.realInType[0])
+
+	//assure for swap possibilities. panic at startup if is not possible!
+	mustBePossibleToSwap(cacheSpot)
+
+	return cacheSpot
 }
 
 //check if is array
@@ -131,7 +176,7 @@ func getInOutTypes(someFunction reflect.Type) ([]reflect.Type, []reflect.Type) {
 }
 
 //split array results in another two arrays: found and not found
-func splitFoundNotFound(ins []reflect.Value, outType reflect.Type, cacheRegs map[string]cache.CacheRegistry, prefix *string) ([]reflect.Value, []reflect.Value) {
+func splitFoundNotFound(cacheSpot CacheSpot, ins []reflect.Value, cacheRegs map[string]cache.CacheRegistry) ([]reflect.Value, []reflect.Value) {
 
 	nfKeys := []string{}
 	fKeys := []string{}
@@ -144,7 +189,7 @@ func splitFoundNotFound(ins []reflect.Value, outType reflect.Type, cacheRegs map
 
 		in := valEntrada.Index(i)
 
-		key := getKeyForInput(outType, in, prefix)
+		key := getKeyForInput(cacheSpot, in)
 
 		cacheReg, hasMap := cacheRegs[key]
 
@@ -163,10 +208,12 @@ func splitFoundNotFound(ins []reflect.Value, outType reflect.Type, cacheRegs map
 }
 
 // search for cached values
-func getCachedMap(emptyBodyFunction interface{}, in reflect.Value, outType reflect.Type, cacheManager cache.CacheManager, prefix *string) map[string]cache.CacheRegistry {
+func getCachedMap(cacheSpot CacheSpot, in reflect.Value) map[string]cache.CacheRegistry {
+
+	cacheManager := cacheSpot.CacheManager
 
 	//keys array, based on inputs and return types
-	keys, errCK := cacheKeysDyn(emptyBodyFunction, in, outType, prefix)
+	keys, errCK := cacheKeysDyn(cacheSpot, in)
 	if errCK != nil {
 		log.Error("Error trying to solve cache keys! Is not possible to proceed with cache operations!", errCK)
 		emptyMap := make(map[string]cache.CacheRegistry, 0)
@@ -186,12 +233,13 @@ func getCachedMap(emptyBodyFunction interface{}, in reflect.Value, outType refle
 }
 
 //execute an one to one reflection + cache operation
-func executeOneToOne(cacheSpot CacheSpot, originalIns []reflect.Value, eO []reflect.Type, defaultVals []reflect.Value) (returnValue []reflect.Value) {
+func (cacheSpot CacheSpot) callOneToOne(originalIns []reflect.Value) (returnValue []reflect.Value) {
+
+	defaultVals := cacheSpot.defaultVals
 
 	emptyFunction := cacheSpot.CachedSpotFunction
 	concreteFunction := cacheSpot.OriginalFunction
 	cacheManager := cacheSpot.CacheManager
-	prefix := cacheSpot.CacheIdPrefix
 
 	defer func() { //assure for not panicking
 		if r := recover(); r != nil {
@@ -203,8 +251,8 @@ func executeOneToOne(cacheSpot CacheSpot, originalIns []reflect.Value, eO []refl
 		}
 	}()
 
-	cacheRegMap := getCachedMap(emptyFunction, originalIns[0], eO[0], cacheManager, prefix)
-	strKey := getKeyForInput(eO[0], originalIns[0], prefix)
+	cacheRegMap := getCachedMap(cacheSpot, originalIns[0])
+	strKey := getKeyForInput(cacheSpot, originalIns[0])
 	cachedVal, hasCacheVal := cacheRegMap[strKey]
 
 	if hasCacheVal {
@@ -234,12 +282,9 @@ func executeOneToOne(cacheSpot CacheSpot, originalIns []reflect.Value, eO []refl
 }
 
 //execute an many to many call
-func executeManyToMany(cacheSpot CacheSpot, originalIns []reflect.Value, eO []reflect.Type, eI []reflect.Type, defaultVals []reflect.Value) (returnVal []reflect.Value) {
+func (cacheSpot CacheSpot) callManyToMany(originalIns []reflect.Value) (returnVal []reflect.Value) {
 
-	emptyFunction := cacheSpot.CachedSpotFunction
 	concreteFunction := cacheSpot.OriginalFunction
-	cacheManager := cacheSpot.CacheManager
-	prefix := cacheSpot.CacheIdPrefix
 
 	defer func() {
 		if r := recover(); r != nil {
@@ -252,7 +297,7 @@ func executeManyToMany(cacheSpot CacheSpot, originalIns []reflect.Value, eO []re
 		}
 	}()
 
-	return executeManyToAny(emptyFunction, originalIns, eO, eI, cacheManager, defaultVals, concreteFunction, prefix)
+	return cacheSpot.executeManyToAny(originalIns)
 }
 
 //fix return type acoordingly to out type
@@ -263,7 +308,7 @@ func fixReturnTypes(outTypes []reflect.Type, values []reflect.Value) []reflect.V
 	}
 
 	if values[0].Type().AssignableTo(outTypes[0]) &&
-		values[0].Type().ConvertibleTo(outTypes[0]) {
+	values[0].Type().ConvertibleTo(outTypes[0]) {
 
 		newVal := reflect.New(outTypes[0])
 		newVal.Elem().Set(values[0])
@@ -274,48 +319,46 @@ func fixReturnTypes(outTypes []reflect.Type, values []reflect.Value) []reflect.V
 }
 
 //execute an many to one call
-func executeManyToOne(cacheSpot CacheSpot, originalIns []reflect.Value, eO []reflect.Type, eI []reflect.Type, defaultVals []reflect.Value) (returnValue []reflect.Value) {
-	emptyFunction := cacheSpot.CachedSpotFunction
-	concreteFunction := cacheSpot.OriginalFunction
-	cacheManager := cacheSpot.CacheManager
-	prefix := cacheSpot.CacheIdPrefix
+func (cacheSpot CacheSpot) callManyToOne(originalIns []reflect.Value) (returnValue []reflect.Value) {
 
 	defer func() { //assure for not panicking
 		if r := recover(); r != nil {
-
 			log.Error("Recovering! Error trying to call a swap function!! y %v", r)
 			log.Error("Falling back this request to direct hot function call, without cache!")
 
-			hotReturnedValues := CallHotFunction(originalIns, FromWrappedToArray(originalIns[0]), concreteFunction, emptyFunction, eI[0])
-			returnValue = putFirstArrResultEvidence(eO, hotReturnedValues, defaultVals)
+			hotReturnedValues := callHotFunction(originalIns, fromWrappedToArray(originalIns[0]), cacheSpot)
+			returnValue = putFirstArrResultEvidence(hotReturnedValues, cacheSpot)
 			return
 		}
 	}()
 
-	return executeManyToAny(emptyFunction, originalIns, eO, eI, cacheManager, defaultVals, concreteFunction, prefix)
+	return cacheSpot.executeManyToAny(originalIns)
 }
 
 //call from Many function interface to any kind of concrete funcition (many or one)
-func executeManyToAny(emptyFunction interface{}, originalIns []reflect.Value, eO []reflect.Type, eI []reflect.Type,
-	cacheManager cache.CacheManager, defaultVals []reflect.Value, concreteFunction interface{}, prefix *string) (returnValue []reflect.Value) {
+func (cacheSpot CacheSpot) executeManyToAny(originalIns []reflect.Value) (returnValue []reflect.Value) {
 
-	outType := getArrayInnerType(eO[0])
-	cacheRegMap := getCachedMap(emptyFunction, originalIns[0], eO[0], cacheManager, prefix)
-	cachedOuts, notCachedIns := splitFoundNotFound(originalIns, outType, cacheRegMap, prefix)
-	hotReturnedValues := CallHotFunction(originalIns, notCachedIns, concreteFunction, emptyFunction, eI[0])
+	cacheRegMap := getCachedMap(cacheSpot, originalIns[0])
+
+	cachedOuts, notCachedIns := splitFoundNotFound(cacheSpot, originalIns, cacheRegMap)
+	hotReturnedValues := callHotFunction(originalIns, notCachedIns, cacheSpot)
 
 	if len(hotReturnedValues) > 0 {
-		go newStoreInCache(hotReturnedValues, emptyFunction, cacheManager)
+		go newStoreInCache(cacheSpot, hotReturnedValues)
 	}
 
 	joinedReturn := append(cachedOuts, hotReturnedValues...)
 
-	return putFirstArrResultEvidence(eO, joinedReturn, defaultVals)
+	return putFirstArrResultEvidence(joinedReturn, cacheSpot)
 }
 
 //Take the substitute for first value and join with default values for other results
-func putFirstArrResultEvidence(eO []reflect.Type, hotResult []reflect.Value, defaultVals []reflect.Value) []reflect.Value {
-	firstResult := FromArrayToWrapped(hotResult, eO[0]) // set first value as joined return
+func putFirstArrResultEvidence(hotResult []reflect.Value, cacheSpot CacheSpot) []reflect.Value {
+
+	eO := cacheSpot.spotOutType
+	defaultVals := cacheSpot.defaultVals
+
+	firstResult := fromArrayToWrapped(hotResult, eO[0]) // set first value as joined return
 	return putFirstResultEvidence(firstResult, defaultVals)
 }
 
@@ -329,12 +372,13 @@ func putFirstResultEvidence(firstResult reflect.Value, defaultVals []reflect.Val
 	return arrOuts
 }
 
-func executeOneToMany(cacheSpot CacheSpot, originalIns []reflect.Value, eO []reflect.Type, eI []reflect.Type, cI []reflect.Type, defaultVals []reflect.Value) (returnValue []reflect.Value) {
+func (cacheSpot CacheSpot) callOneToMany(originalIns []reflect.Value) (returnValue []reflect.Value) {
 
+	eO := cacheSpot.spotOutType
+	defaultVals := cacheSpot.defaultVals
 	emptyFunction := cacheSpot.CachedSpotFunction
 	concreteFunction := cacheSpot.OriginalFunction
 	cacheManager := cacheSpot.CacheManager
-	prefix := cacheSpot.CacheIdPrefix
 
 	defer func() { //assure for not panicking out
 		if r := recover(); r != nil {
@@ -342,7 +386,7 @@ func executeOneToMany(cacheSpot CacheSpot, originalIns []reflect.Value, eO []ref
 			log.Error("Recovering! Error trying to call a swap function!! y %v", r)
 			log.Error("Falling back this request to direct hot function call, without cache!")
 
-			fakeIns := convertOneCallToManyCall(originalIns, eI, cI)
+			fakeIns := convertOneCallToManyCall(cacheSpot, originalIns)
 			manyOuts := reflect.ValueOf(concreteFunction).Call(fakeIns)
 			oneReturn, _ := convertManyReturnToOneReturn(manyOuts[0], eO)
 
@@ -352,9 +396,9 @@ func executeOneToMany(cacheSpot CacheSpot, originalIns []reflect.Value, eO []ref
 		}
 	}()
 
-	cacheRegMap := getCachedMap(emptyFunction, originalIns[0], eO[0], cacheManager, prefix)
+	cacheRegMap := getCachedMap(cacheSpot, originalIns[0])
 
-	strKey := getKeyForInput(eO[0], originalIns[0], prefix)
+	strKey := getKeyForInput(cacheSpot, originalIns[0])
 	cachedVal, hasCacheVal := cacheRegMap[strKey]
 
 	var valToReturn reflect.Value
@@ -366,7 +410,7 @@ func executeOneToMany(cacheSpot CacheSpot, originalIns []reflect.Value, eO []ref
 		returnBool = true
 	} else {
 
-		fakeIns := convertOneCallToManyCall(originalIns, eI, cI)
+		fakeIns := convertOneCallToManyCall(cacheSpot, originalIns)
 		manyOuts := reflect.ValueOf(concreteFunction).Call(fakeIns)
 		oneOut, hasReturn := convertManyReturnToOneReturn(manyOuts[0], eO)
 
@@ -396,7 +440,11 @@ func executeOneToMany(cacheSpot CacheSpot, originalIns []reflect.Value, eO []ref
 }
 
 //store results in cache
-func newStoreInCache(origOuts []reflect.Value, emptyFunction interface{}, cacheManager cache.CacheManager) error {
+func newStoreInCache(cacheSpot CacheSpot, origOuts []reflect.Value) error {
+
+	emptyFunction := cacheSpot.CachedSpotFunction
+	cacheManager := cacheSpot.CacheManager
+
 	keys, outs := getKeysForOuts(origOuts, emptyFunction)
 
 	return cacheValues(outs, keys, cacheManager)
@@ -478,36 +526,50 @@ func discoverTTL(valRet interface{}, defaultTTL int) int {
 }
 
 //Determine cache keys, based on function parameters (in array) and outTypes
-func cacheKeysDyn(emptyBodyFunction interface{}, in reflect.Value, outType reflect.Type, prefix *string) ([]string, error) {
+func cacheKeysDyn(cacheSpot CacheSpot, in reflect.Value) ([]string, error) {
+
 	if isMany(in.Type()) {
 		qtdIns := in.Len() // how many ids was requested
 		keys := make([]string, qtdIns)
-		outType := getArrayInnerType(outType) // get the return prefix
 
 		for i := 0; i < qtdIns; i++ {
-			keys[i] = getKeyForInput(outType, in.Index(i), prefix)
+			keys[i] = getKeyForInput(cacheSpot, in.Index(i))
 		}
 
 		return keys, nil
 
 	} else {
-		key := getKeyForInput(outType, in, prefix)
+		key := getKeyForInput(cacheSpot, in)
 		return []string{key}, nil
 
 	}
 }
 
 //recursivelly iterate over a type until find a non array type
-func getArrayInnerType(arrType reflect.Type) reflect.Type {
+func getArrayInnerTypes(arrTypes []reflect.Type) []reflect.Type {
+	arrInnTypes := make([]reflect.Type, len(arrTypes))
+
+	for i, arrType := range arrTypes {
+		arrInnTypes[i] = getArrayInnerType__(arrType)
+	}
+
+	return arrInnTypes
+}
+
+//recursivelly iterate over a type until find a non array type
+func getArrayInnerType__(arrType reflect.Type) reflect.Type {
 	if isMany(arrType) {
-		return getArrayInnerType(arrType.Elem())
+		return getArrayInnerType__(arrType.Elem())
 	} else {
 		return arrType
 	}
 }
 
 //retur a equivalent cache key for a input parameter
-func getKeyForInput(outType reflect.Type, valueIn reflect.Value, prefix *string) string {
+func getKeyForInput(cacheSpot CacheSpot, valueIn reflect.Value) string {
+
+	outType := cacheSpot.spotInnOutType[0]
+
 	//if is not possible to turn the first paramate to string, fail! Cache wll be missed!!
 	strVal, err := valIntToString(valueIn)
 	if err != nil {
@@ -516,8 +578,8 @@ func getKeyForInput(outType reflect.Type, valueIn reflect.Value, prefix *string)
 	}
 
 	var keyPrefix string
-	if prefix != nil {
-		keyPrefix = *prefix
+	if cacheSpot.CacheIdPrefix != nil {
+		keyPrefix = *cacheSpot.CacheIdPrefix
 	} else {
 		keyPrefix = outType.Name()
 	}
@@ -558,8 +620,8 @@ func validateResults(emptyBodyFunction interface{}, in []reflect.Value, out []re
 
 		//has some return value
 		if len(out) > 1 &&
-			out[1].IsValid() &&
-			out[1].Kind() == reflect.Bool {
+		out[1].IsValid() &&
+		out[1].Kind() == reflect.Bool {
 
 			boolVal, _ := out[1].Interface().(bool)
 
@@ -568,14 +630,16 @@ func validateResults(emptyBodyFunction interface{}, in []reflect.Value, out []re
 
 		log.Error("Erro ", emptyBodyFunction)
 		funcName := reflect.TypeOf(emptyBodyFunction).Name()
-		log.Error("", errors.New("Its not possible to infer a return value validation. Your function "+funcName+" need to implement ValidateResults inferface!"))
+		log.Error("", errors.New("Its not possible to infer a return value validation. Your function " + funcName + " need to implement ValidateResults inferface!"))
 		return false
 	}
 
 }
 
 //return value validation
-func mustHaveKeyDefiner(emptyBodyFunction interface{}) {
+func mustHaveKeyDefiner(cacheSpot CacheSpot) {
+
+	emptyBodyFunction := cacheSpot.CachedSpotFunction
 
 	if reflect.ValueOf(emptyBodyFunction).Kind() != reflect.Ptr {
 		log.Error("emptyBodyFunction needs to be a pointer!")
@@ -591,12 +655,11 @@ func mustHaveKeyDefiner(emptyBodyFunction interface{}) {
 		log.Debug("Function %v implements SpecifyOutKeys! Its OK!", funcName)
 	} else {
 
-		_, outTypes := getInOutTypes(reflect.TypeOf(emptyBodyFunction))
-		firstType := outTypes[0] // get the first return type and check...
+		firstType := cacheSpot.spotOutType[0]
 
 		if isMany(firstType) {
 
-			innerType := getArrayInnerType(firstType)
+			innerType := cacheSpot.spotInnOutType[0]
 
 			//... is a Cacheable implementation??
 			// Cacheable is capable to define its own cache key

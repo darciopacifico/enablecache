@@ -48,7 +48,7 @@ func (c AutoCacheManager) SetCache(cacheRegistries ...CacheRegistry) error {
 
 	for _, cacheRegistry := range cacheRegistries {
 
-		_, err := c.MapAttributesToCacheKeys(cacheRegistry.CacheKey, &cacheRegistry, &mapToSave)
+		_, err := c.mapAttributesToCacheKeys(cacheRegistry.CacheKey, &cacheRegistry, &mapToSave)
 		if err != nil {
 			return err
 		}
@@ -433,7 +433,7 @@ func typeForAttribute(attribute reflect.Value) reflect.Type {
 
 //range over object attributes, determining which cachekey each attribute contains
 //return a map of attributes->cacheKeys->attribues->cachekeys ... and so on, and fill mapVisits
-func (c AutoCacheManager) MapAttributesToCacheKeys(cacheKey string, cacheRegistry *CacheRegistry, mapVisits *map[string]CacheRegistry) (map[string]interface{}, error) {
+func (c AutoCacheManager) mapAttributesToCacheKeys(cacheKey string, cacheRegistry *CacheRegistry, mapVisits *map[string]CacheRegistry) (map[string]interface{}, error) {
 
 	mapAttribute := make(map[string]interface{})
 	//check whether already visited this value before...
@@ -480,7 +480,7 @@ func (c AutoCacheManager) MapAttributesToCacheKeys(cacheKey string, cacheRegistr
 			cacheRegistryField := CacheRegistry{cacheKey, fieldValue.Interface(), cacheRegistry.Ttl, true}
 
 			//mapAttributes, err := c.MapAttributesToCacheKeys(cacheKey, fieldValue, mapVisits)
-			mapAttributes, err := c.MapAttributesToCacheKeys(cacheKey, &cacheRegistryField, mapVisits)
+			mapAttributes, err := c.mapAttributesToCacheKeys(cacheKey, &cacheRegistryField, mapVisits)
 
 			if err != nil {
 				return nil, err

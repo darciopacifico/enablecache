@@ -93,7 +93,7 @@ func TestReflexiveTypeAssertion(t *testing.T) {
 
 	mapVisits := make(map[string]CacheRegistry)
 
-	_, err := cacheManagerAuto.MapAttributesToCacheKeys(cr.CacheKey, &cr, &mapVisits)
+	_, err := cacheManagerAuto.mapAttributesToCacheKeys(cr.CacheKey, &cr, &mapVisits)
 
 	if err != nil {
 		log.Error("Eror trying to teardown dependency tree!", err)
