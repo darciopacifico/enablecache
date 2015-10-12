@@ -858,7 +858,6 @@ func (cacheSpot CacheSpot) setSwapAsFunctionBody() {
 	fn.Set(reflect.MakeFunc(fn.Type(), cacheSpot.swapFunction))
 
 	//	Creating cache spot for Swap aop.FindOneType to calling aop.FindOneCustomer
-
 	log.Debug("Creating cache spot: %v->(cache return)->%v ", cacheSpot.cachedFuncName, cacheSpot.hotFunctName)
 
 }
