@@ -7,7 +7,12 @@ import (
 
 	"github.com/darciopacifico/cachengo/cache"
 	"strconv"
+	"runtime"
+	"regexp"
 )
+
+//regex that substitute the start of full function name
+var RGX_FUNCNAME = regexp.MustCompile(`(.*\/)`)
 
 //check if is array
 func isMany(vType reflect.Type) bool {
@@ -17,6 +22,16 @@ func isMany(vType reflect.Type) bool {
 //check if some value is an array
 func isValMany(value reflect.Value) bool {
 	return isMany(value.Type())
+}
+
+//return function name
+func GetFunctionName(i interface{}) string {
+
+	reflect.ValueOf(i).String()
+
+	fullName := runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
+
+	return string(RGX_FUNCNAME.ReplaceAll([]byte(fullName), []byte{}))
 }
 
 //Retrieve ttl value, if interfaca implements cache.ExposeTTL

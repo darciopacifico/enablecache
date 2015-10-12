@@ -126,10 +126,10 @@ var cFindManyB FindManyType
 func init() {
 	gob.Register(People{})
 
-	CacheSpot{CachedFunction: &cFindOne, HotFunction: FindOneCustomer, CacheManager: cmAuto}.StartCache()
-	CacheSpot{CachedFunction: &cFindMany, HotFunction: FindManyCustomers, CacheManager: cmAuto}.StartCache()
-	CacheSpot{CachedFunction: &cFindOneB, HotFunction: FindManyCustomers, CacheManager: cmAuto}.StartCache()
-	CacheSpot{CachedFunction: &cFindManyB, HotFunction: FindOneCustomer, CacheManager: cmAuto}.StartCache()
+	CacheSpot{CachedFunc: &cFindOne, HotFunc: FindOneCustomer, CacheManager: cmAuto}.StartCache()
+	CacheSpot{CachedFunc: &cFindMany, HotFunc: FindManyCustomers, CacheManager: cmAuto}.StartCache()
+	CacheSpot{CachedFunc: &cFindOneB, HotFunc: FindManyCustomers, CacheManager: cmAuto}.StartCache()
+	CacheSpot{CachedFunc: &cFindManyB, HotFunc: FindOneCustomer, CacheManager: cmAuto}.StartCache()
 }
 
 func FindOneCustomer(id int) (People, error, bool) {

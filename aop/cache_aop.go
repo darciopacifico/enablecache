@@ -14,6 +14,17 @@ var typeCacheable = reflect.TypeOf((*cache.Cacheable)(nil)).Elem()
 var log = logging.MustGetLogger("cache")
 var errorInterfaceModel = reflect.TypeOf((*error)(nil)).Elem()
 
+
+//template to make a cache spot function
+type CacheSpot struct {
+	CachedFunc    interface{}        //(required) empty function ref, that will contain cacheable function. Pass a nil reference
+	HotFunc       interface{}        //(required) real hot function, that will have results cached
+	CacheManager  cache.CacheManager //(required) cache manager for cache swaped function
+	StoreOnly     bool               //(Optional) mark if cache manager can take cached values or just store results
+	CacheIdPrefix *string            //(Optional) cache prefix for cache registries
+	callContext                      // will be mounted at start up nothing to do
+}
+
 //reflect objects need to reflect function call
 type callContext struct {
 	spotOutType    []reflect.Type
@@ -23,8 +34,10 @@ type callContext struct {
 	realInType     []reflect.Type
 	realInInnType  []reflect.Type
 	defaultVals    []reflect.Value
-	isManyOuts     bool //compose cardinality of swap call
-	isManyIns      bool //compose cardinality of swap call
+	cachedFuncName string // cached func name
+	hotFunctName string // hot func name
+	isManyOuts     bool   //compose cardinality of swap call
+	isManyIns      bool   //compose cardinality of swap call
 
 }
 
@@ -42,11 +55,11 @@ func (cacheSpot CacheSpot) StartCache() {
 		panic(errors.New(fmt.Sprintf("You must provide a ready and valid cache manager!")))
 	}
 
-	if cacheSpot.CachedFunction == nil {
+	if cacheSpot.CachedFunc == nil {
 		panic(errors.New(fmt.Sprintf("CachedFunction attribute not provided! Please set a pointer to a function type, compatible with OriginalFunction, to receive cacheable function!")))
 	}
 
-	if cacheSpot.HotFunction == nil {
+	if cacheSpot.HotFunc == nil {
 		panic(errors.New(fmt.Sprintf("HotFunction attribute not provided! Please set function to be cached!")))
 	}
 
@@ -54,16 +67,6 @@ func (cacheSpot CacheSpot) StartCache() {
 	cacheSpot.parseFunctionsForSwap()
 }
 
-//template to make a cache spot function
-type CacheSpot struct {
-	CachedFunction interface{}        //(required) empty function ref, that will contain cacheable function. Pass a nil reference
-	HotFunction    interface{}        //(required) real hot function, that will have results cached
-	CacheManager   cache.CacheManager //(required) cache manager for cache swaped function
-	StoreOnly      bool               //(Optional) mark if cache manager can take cached values or just store results
-	Name           string             //(Optional) cache spot config for log and metrics.
-	CacheIdPrefix  *string            //(Optional) cache prefix for cache registries
-	callContext                       // will be mounted at start up nothing to do
-}
 
 //Cache spot swap function. Used as a swap function in reflect calls
 //Four swap calls combinations are possible: One-one, Many-Many, Many-One, One-Many.
@@ -98,8 +101,8 @@ func (c CacheSpot) swapFunction(inputParams []reflect.Value) []reflect.Value {
 func (cacheSpot CacheSpot) parseFunctionsForSwap() {
 
 	//take inputs and output types
-	SpotInType, SpotOutType := getInOutTypes(reflect.TypeOf(cacheSpot.CachedFunction))
-	RealInType, _ := getInOutTypes(reflect.TypeOf(cacheSpot.HotFunction))
+	SpotInType, SpotOutType := getInOutTypes(reflect.TypeOf(cacheSpot.CachedFunc))
+	RealInType, _ := getInOutTypes(reflect.TypeOf(cacheSpot.HotFunc))
 
 	//take array element type,
 	// ex: []string => string
@@ -125,6 +128,10 @@ func (cacheSpot CacheSpot) parseFunctionsForSwap() {
 	cacheSpot.isManyOuts = isMany(cacheSpot.spotInType[0])
 	cacheSpot.isManyIns = isMany(cacheSpot.realInType[0])
 
+	//adjust func names, they differ because one is a type and other a real function
+	cacheSpot.cachedFuncName = reflect.TypeOf(cacheSpot.CachedFunc).Elem().String()
+	cacheSpot.hotFunctName = GetFunctionName(cacheSpot.HotFunc)
+
 	//assure for swap possibilities. panic at startup if is not possible!
 	cacheSpot.mustBePossibleToSwap()
 
@@ -132,7 +139,7 @@ func (cacheSpot CacheSpot) parseFunctionsForSwap() {
 	cacheSpot.setSwapAsFunctionBody()
 }
 
-//split array results in another two arrays: found and not found
+//split array results in another two arrays: found and not founded values
 func (cacheSpot CacheSpot) splitFoundNotFound(ins []reflect.Value, cacheRegs map[string]cache.CacheRegistry) ([]reflect.Value, []reflect.Value) {
 
 	nfKeys := []string{}
@@ -193,13 +200,12 @@ func (cacheSpot CacheSpot) getCachedMap(in reflect.Value) map[string]cache.Cache
 
 //execute an one to one reflection + cache operation
 func (cacheSpot CacheSpot) callOneToOne(originalIns []reflect.Value) (returnValue []reflect.Value) {
-
 	defer func() { //assure for not panicking
 		if r := recover(); r != nil {
 			log.Error("Recovering! Error trying to call a swap function!! y %v", r)
 			log.Error("Falling back this request to direct hot function call, without cache!")
 
-			returnValue = reflect.ValueOf(cacheSpot.HotFunction).Call(originalIns)
+			returnValue = reflect.ValueOf(cacheSpot.HotFunc).Call(originalIns)
 			return
 		}
 	}()
@@ -213,7 +219,7 @@ func (cacheSpot CacheSpot) callOneToOne(originalIns []reflect.Value) (returnValu
 
 	} else {
 		//hot call
-		hotOuts := reflect.ValueOf(cacheSpot.HotFunction).Call(originalIns)
+		hotOuts := reflect.ValueOf(cacheSpot.HotFunc).Call(originalIns)
 
 		//store in cache
 		go func() {
@@ -237,7 +243,7 @@ func (cacheSpot CacheSpot) callOneToOne(originalIns []reflect.Value) (returnValu
 //execute an many to many call
 func (cacheSpot CacheSpot) callManyToMany(originalIns []reflect.Value) (returnVal []reflect.Value) {
 
-	concreteFunction := cacheSpot.HotFunction
+	concreteFunction := cacheSpot.HotFunc
 
 	defer func() {
 		if r := recover(); r != nil {
@@ -338,7 +344,7 @@ func (cacheSpot CacheSpot) callOneToMany(originalIns []reflect.Value) (returnVal
 			log.Error("Falling back this request to direct hot function call, without cache!")
 
 			fakeIns := cacheSpot.convertOneCallToManyCall(originalIns)
-			manyOuts := reflect.ValueOf(cacheSpot.HotFunction).Call(fakeIns)
+			manyOuts := reflect.ValueOf(cacheSpot.HotFunc).Call(fakeIns)
 			oneReturn, _ := cacheSpot.convertManyReturnToOneReturn(manyOuts[0])
 
 			returnValue = cacheSpot.putFirstResultEvidence(oneReturn, true) //TODO: DEFINIR COMO DETERMINAR SUCESSO OU FALHA
@@ -362,7 +368,7 @@ func (cacheSpot CacheSpot) callOneToMany(originalIns []reflect.Value) (returnVal
 	} else {
 
 		fakeIns := cacheSpot.convertOneCallToManyCall(originalIns)
-		manyOuts := reflect.ValueOf(cacheSpot.HotFunction).Call(fakeIns)
+		manyOuts := reflect.ValueOf(cacheSpot.HotFunc).Call(fakeIns)
 		oneOut, hasReturn := cacheSpot.convertManyReturnToOneReturn(manyOuts[0])
 
 		if hasReturn { // returned array is greater that 0
@@ -516,8 +522,8 @@ func (cacheSpot CacheSpot) getKeyForInput(valueIn reflect.Value) string {
 
 func (cacheSpot CacheSpot)dynamicCall(inputs []reflect.Value) []reflect.Value {
 
-	emptyFunction := cacheSpot.CachedFunction
-	concreteFunction := cacheSpot.HotFunction
+	emptyFunction := cacheSpot.CachedFunc
+	concreteFunction := cacheSpot.HotFunc
 	inTypes, _ := getInOutTypes(reflect.TypeOf(concreteFunction))
 	_, outTypes := getInOutTypes(reflect.TypeOf(emptyFunction))
 
@@ -577,7 +583,7 @@ func (cacheSpot CacheSpot)resumeFoundedItens(allInputParams []reflect.Value, nfI
 //return value validation
 func (cacheSpot CacheSpot)getKeysForOuts(outs []reflect.Value) ([]string, []reflect.Value) {
 	//try to convert a function in a ValidateResults interface
-	functionValidator, hasValidatorImpl := cacheSpot.CachedFunction.(SpecifyOutKeys)
+	functionValidator, hasValidatorImpl := cacheSpot.CachedFunc.(SpecifyOutKeys)
 
 	if hasValidatorImpl {
 		return functionValidator.KeysForCache(outs)
@@ -661,10 +667,10 @@ func (cacheSpot CacheSpot) callHotFunction(allInputParams []reflect.Value, notCa
 //check whether functions are compatible or not
 func (c CacheSpot) mustBeCompatibleSignatures() {
 
-	mustBePointer(c.CachedFunction)
+	mustBePointer(c.CachedFunc)
 
-	ins_a, outs_a := getInOutTypes(reflect.TypeOf(c.CachedFunction))
-	ins_b, outs_b := getInOutTypes(reflect.TypeOf(c.HotFunction))
+	ins_a, outs_a := getInOutTypes(reflect.TypeOf(c.CachedFunc))
+	ins_b, outs_b := getInOutTypes(reflect.TypeOf(c.HotFunc))
 
 	if len(ins_a) > 1 || len(ins_b) > 1 {
 		log.Warning("In multiple input functions, only the first paramater will be considered as cache key!")
@@ -683,8 +689,8 @@ func (c CacheSpot) mustBeCompatibleSignatures() {
 
 func (c CacheSpot) validateCardinality() {
 
-	ine, oute := getInOutTypes(reflect.TypeOf(c.CachedFunction))
-	ino, outo := getInOutTypes(reflect.TypeOf(c.HotFunction))
+	ine, oute := getInOutTypes(reflect.TypeOf(c.CachedFunc))
+	ino, outo := getInOutTypes(reflect.TypeOf(c.HotFunc))
 
 	//validate returns
 	if len(ine) == 0 || len(oute) == 0 || len(ino) == 0 || len(outo) == 0 {
@@ -707,7 +713,7 @@ func (c CacheSpot) validateCardinality() {
 func (c CacheSpot) validateResults(in []reflect.Value, out []reflect.Value) bool {
 
 	//try to convert a function in a ValidateResults interface
-	functionValidator, hasValidatorImpl := c.CachedFunction.(ValidateResults)
+	functionValidator, hasValidatorImpl := c.CachedFunc.(ValidateResults)
 
 	//if function has a function with validation behaviour
 	if hasValidatorImpl {
@@ -726,8 +732,8 @@ func (c CacheSpot) validateResults(in []reflect.Value, out []reflect.Value) bool
 			return boolVal
 		}
 
-		log.Error("Erro ", c.CachedFunction)
-		funcName := reflect.TypeOf(c.CachedFunction).Name()
+		log.Error("Erro ", c.CachedFunc)
+		funcName := reflect.TypeOf(c.CachedFunc).Name()
 		log.Error("", errors.New("Its not possible to infer a return value validation. Your function " + funcName + " need to implement ValidateResults inferface!"))
 		return false
 	}
@@ -737,7 +743,7 @@ func (c CacheSpot) validateResults(in []reflect.Value, out []reflect.Value) bool
 //return value validation
 func (cacheSpot CacheSpot) mustHaveKeyDefiner() {
 
-	emptyBodyFunction := cacheSpot.CachedFunction
+	emptyBodyFunction := cacheSpot.CachedFunc
 
 	if reflect.ValueOf(emptyBodyFunction).Kind() != reflect.Ptr {
 		log.Error("emptyBodyFunction needs to be a pointer!")
@@ -774,7 +780,7 @@ func (cacheSpot CacheSpot) mustHaveKeyDefiner() {
 //return value validation
 func (c CacheSpot) mustHaveValidationMethod() {
 
-	emptyBodyFunction := c.CachedFunction
+	emptyBodyFunction := c.CachedFunc
 
 	if reflect.ValueOf(emptyBodyFunction).Kind() != reflect.Ptr {
 		log.Error("emptyBodyFunction needs to be a pointer!")
@@ -805,7 +811,7 @@ func (c CacheSpot) mustHaveValidationMethod() {
 func (cacheSpot CacheSpot) defaultValues(defBool bool) []reflect.Value {
 
 	outTypes := cacheSpot.spotOutType
-	emptyFunction := cacheSpot.CachedFunction
+	emptyFunction := cacheSpot.CachedFunc
 
 	defValuable, isDefValuable := emptyFunction.(DefaultValubleFunction)
 
@@ -854,8 +860,15 @@ func (cacheSpot CacheSpot) defaultValues(defBool bool) []reflect.Value {
 func (cacheSpot CacheSpot) setSwapAsFunctionBody() {
 
 	//recover the value for function in the pointer
-	fn := reflect.ValueOf(cacheSpot.CachedFunction).Elem()
+	fn := reflect.ValueOf(cacheSpot.CachedFunc).Elem()
 
 	//put a recently created swap function as a function body for the emptyBodyFunction
 	fn.Set(reflect.MakeFunc(fn.Type(), cacheSpot.swapFunction))
+
+
+	//	Creating cache spot for Swap aop.FindOneType to calling aop.FindOneCustomer
+
+
+	log.Debug("Creating cache spot: %v->(cache return)->%v ", cacheSpot.cachedFuncName, cacheSpot.hotFunctName)
+
 }
