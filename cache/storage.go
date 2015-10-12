@@ -12,9 +12,6 @@ type CacheStorage interface {
 	//GetValues(keys ...string) (map[string]interface{}, map[string]bool, map[string]int, error)
 	GetValuesMap(keys ...string) (map[string]CacheRegistry, error)
 
-	//recover cache values (cache val, ttl, hasVal)
-	//	GetValue(keys string) CacheRegistry
-
 	//recover ttl of registry
 	GetTTL(keys string) (int, error)
 

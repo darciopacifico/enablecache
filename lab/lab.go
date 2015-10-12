@@ -4,6 +4,8 @@ import "fmt"
 import "unsafe"
 import "strconv"
 
+
+
 func castStr(v *string) string {
 	return fmt.Sprint(uintptr(unsafe.Pointer(v)))
 }

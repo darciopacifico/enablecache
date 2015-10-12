@@ -20,23 +20,17 @@ func (c SimpleCacheManager) Validade() bool {
 
 //invalidate cache registry
 func (c SimpleCacheManager) Invalidate(cacheKeys ...string) error {
-
 	errDel := c.Ps.DeleteValues(cacheKeys...)
-
 	if errDel != nil {
 		log.Error("Error trying to delete values from cache %v", errDel)
 	}
-
 	return errDel
 }
 
 //set cache implementation
 func (c SimpleCacheManager) SetCache(cacheRegistry ...CacheRegistry) error {
-
 	//call cachestorage to store data
-	err := c.Ps.SetValues(cacheRegistry...)
-
-	return err
+	return c.Ps.SetValues(cacheRegistry...)
 }
 
 //return time to live
