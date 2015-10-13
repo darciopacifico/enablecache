@@ -21,7 +21,7 @@ type CacheSpot struct {
 	HotFunc       interface{}        //(required) real hot function, that will have results cached
 	CacheManager  cache.CacheManager //(required) cache manager for cache swaped function
 	StoreOnly     bool               //(Optional) mark if cache manager can take cached values or just store results
-	CacheIdPrefix *string            //(Optional) cache prefix for cache registries
+	CacheIdPrefix string            //(Optional) cache prefix for cache registries
 	CallContext                      // will be mounted at start up nothing to do
 	Wg            *sync.WaitGroup
 }
@@ -533,8 +533,8 @@ func (cacheSpot CacheSpot) getKeyForInput(valueIn reflect.Value) string {
 	}
 
 	var keyPrefix string
-	if cacheSpot.CacheIdPrefix != nil {
-		keyPrefix = *cacheSpot.CacheIdPrefix
+	if len(cacheSpot.CacheIdPrefix)>0 {
+		keyPrefix = cacheSpot.CacheIdPrefix
 	} else {
 		keyPrefix = outType.Name()
 	}
