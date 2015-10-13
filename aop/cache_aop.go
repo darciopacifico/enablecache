@@ -238,7 +238,6 @@ func (cacheSpot CacheSpot) callOneToOne(originalIns []reflect.Value) (returnValu
 				if r := recover(); r != nil {
 					log.Error("Recovering! Error trying to save cache registry y! %v", r)
 				}
-				log.Error("done no wait group")
 			}()
 
 			// check whether results are valid and must be cached
