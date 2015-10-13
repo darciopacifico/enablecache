@@ -41,6 +41,9 @@ func (c AutoCacheManager) Invalidate(cacheKeys ...string) error {
 	return errDel
 }
 
+func (c AutoCacheManager) Validade() bool {
+	return true
+}
 //set cache implementation
 func (c AutoCacheManager) SetCache(cacheRegistries ...CacheRegistry) error {
 
