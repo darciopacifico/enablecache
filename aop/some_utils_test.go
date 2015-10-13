@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/darciopacifico/cachengo/cache"
+	"github.com/darciopacifico/enablecache/cache"
 )
 
 var (

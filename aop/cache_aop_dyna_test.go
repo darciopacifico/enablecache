@@ -9,7 +9,7 @@ import (
 
 	"code.google.com/p/go-uuid/uuid"
 	"fmt"
-	"github.com/darciopacifico/cachengo/cache"
+	"github.com/darciopacifico/enablecache/cache"
 	"github.com/op/go-logging"
 	"os"
 )

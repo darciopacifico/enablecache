@@ -3,7 +3,7 @@ package aop
 import (
 	"errors"
 	"fmt"
-	"github.com/darciopacifico/cachengo/cache"
+	"github.com/darciopacifico/enablecache/cache"
 	"github.com/op/go-logging"
 	"os"
 	"reflect"
@@ -23,7 +23,7 @@ type CacheSpot struct {
 	StoreOnly     bool               //(Optional) mark if cache manager can take cached values or just store results
 	CacheIdPrefix *string            //(Optional) cache prefix for cache registries
 	CallContext                      // will be mounted at start up nothing to do
-	Wg *sync.WaitGroup
+	Wg            *sync.WaitGroup
 }
 
 //reflect objects need to reflect function call
@@ -74,7 +74,6 @@ func (cacheSpot CacheSpot) StartCache() CacheSpot {
 func (cacheSpot CacheSpot) WaitAllParallelOps() {
 	cacheSpot.Wg.Wait()
 }
-
 
 //Cache spot swap function. Used as a swap function in reflect calls
 //Four swap calls combinations are possible: One-one, Many-Many, Many-One, One-Many.
@@ -316,8 +315,8 @@ func (cacheSpot CacheSpot) callManyToAny(originalIns []reflect.Value) (returnVal
 	if len(hotReturnedValues) > 0 {
 		cacheSpot.Wg.Add(1)
 		log.Debug("ADD ONE EVENT TO WAIT TO")
-		go func () {
-			defer func(){
+		go func() {
+			defer func() {
 				if r := recover(); r != nil {
 					log.Error("Recovering! Error trying to save cache registry y! %v", r)
 				}
@@ -331,9 +330,6 @@ func (cacheSpot CacheSpot) callManyToAny(originalIns []reflect.Value) (returnVal
 
 	return cacheSpot.putFirstArrResultEvidence(joinedReturn)
 }
-
-
-
 
 //Take the substitute for first value and join with default values for other results
 func (cacheSpot CacheSpot) putFirstArrResultEvidence(hotResult []reflect.Value) []reflect.Value {
@@ -424,8 +420,6 @@ func (cacheSpot CacheSpot) storeInCache(notCachedIns []reflect.Value, origOuts [
 	return cacheSpot.cacheValues(notCachedIns, origOuts)
 }
 
-
-
 func (cacheSpot CacheSpot) convertManyReturnToOneReturn(manyOuts reflect.Value) (reflect.Value, bool) {
 
 	var hotOut reflect.Value
@@ -445,7 +439,7 @@ func (cacheSpot CacheSpot) cacheValues(notCachedIns []reflect.Value, origOuts []
 
 	numOut := len(values)
 
-	cacheRegs := make([]cache.CacheRegistry, 0,numOut)
+	cacheRegs := make([]cache.CacheRegistry, 0, numOut)
 
 	//iterate over all function returns. All of then can be stored
 	for index := 0; index < numOut; index++ {
@@ -460,14 +454,14 @@ func (cacheSpot CacheSpot) cacheValues(notCachedIns []reflect.Value, origOuts []
 			//get raw value
 			valRet := values[index].Interface()
 
-			if(cacheSpot.validateResults(notCachedIns,origOuts,cacheId,valRet)){
+			if cacheSpot.validateResults(notCachedIns, origOuts, cacheId, valRet) {
 
 				ttl := discoverTTL(valRet, -1)
 				log.Debug("TTL for reg %v %v!", cacheId, ttl)
 				//invoke cache manager to persist returned value
-				cacheRegs = append(cacheRegs , cache.CacheRegistry{CacheKey: cacheId, Payload: valRet, Ttl: ttl, HasValue: true})
+				cacheRegs = append(cacheRegs, cache.CacheRegistry{CacheKey: cacheId, Payload: valRet, Ttl: ttl, HasValue: true})
 
-			}else{
+			} else {
 
 				log.Warning("Reg %v is not valid to cache!", cacheId)
 
@@ -484,9 +478,6 @@ func (cacheSpot CacheSpot) cacheValues(notCachedIns []reflect.Value, origOuts []
 
 	return nil
 }
-
-
-
 
 //store results in cache
 func (cacheSpot CacheSpot) singleStoreInCache(hotOut reflect.Value, cacheKey string) {
@@ -741,8 +732,6 @@ func (c CacheSpot) validateCardinality() {
 
 }
 
-
-
 //analyze and define if some result is valid. Usually used before a cache operation
 func (c CacheSpot) validateResults(allIns []reflect.Value, allOuts []reflect.Value, cacheKey string, value interface{}) bool {
 
@@ -821,7 +810,6 @@ func (c CacheSpot) mustHaveValidationMethod() {
 
 	functionType := reflect.TypeOf(emptyBodyFunction)
 	numOut := functionType.Elem().NumOut()
-
 
 	//try to convert a function in a ValidateResults interface
 	_, hasValidatorImpl := emptyBodyFunction.(ValidateResults)

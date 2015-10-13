@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/darciopacifico/cachengo/aop"
-	"github.com/darciopacifico/cachengo/cache"
+	"github.com/darciopacifico/enablecache/aop"
+	"github.com/darciopacifico/enablecache/cache"
 	"strconv"
 )
 
@@ -21,12 +21,10 @@ func FindProduct(id int) string {
 	return "product:" + strconv.Itoa(id)
 }
 
-
 func main() {
-	cacheSpot:=aop.CacheSpot{CachedFunc: &CachedFindProduct, HotFunc: FindProduct, CacheManager: cacheManager}.StartCache()
+	cacheSpot := aop.CacheSpot{CachedFunc: &CachedFindProduct, HotFunc: FindProduct, CacheManager: cacheManager}.StartCache()
 
 	fmt.Println(CachedFindProduct(9))
 
 	cacheSpot.WaitAllParallelOps()
 }
-

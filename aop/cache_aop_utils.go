@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/darciopacifico/cachengo/cache"
+	"github.com/darciopacifico/enablecache/cache"
 	"regexp"
 	"runtime"
 	"strconv"
