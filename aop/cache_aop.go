@@ -7,6 +7,7 @@ import (
 	"github.com/op/go-logging"
 	"os"
 	"reflect"
+	"sync"
 )
 
 var EMPTY_MAP = make(map[string]cache.CacheRegistry)
@@ -21,11 +22,12 @@ type CacheSpot struct {
 	CacheManager  cache.CacheManager //(required) cache manager for cache swaped function
 	StoreOnly     bool               //(Optional) mark if cache manager can take cached values or just store results
 	CacheIdPrefix *string            //(Optional) cache prefix for cache registries
-	callContext                      // will be mounted at start up nothing to do
+	CallContext                      // will be mounted at start up nothing to do
+	Wg *sync.WaitGroup
 }
 
 //reflect objects need to reflect function call
-type callContext struct {
+type CallContext struct {
 	spotOutType    []reflect.Type
 	spotOutInnType []reflect.Type
 	spotInType     []reflect.Type
@@ -41,7 +43,7 @@ type callContext struct {
 }
 
 //makes a swap function for reflection operations
-func (cacheSpot CacheSpot) StartCache() {
+func (cacheSpot CacheSpot) StartCache() CacheSpot {
 	//gracefull exit at panic
 	defer func() { //assure for not panicking
 		if r := recover(); r != nil {
@@ -64,7 +66,15 @@ func (cacheSpot CacheSpot) StartCache() {
 
 	//analyse functions and check possibilities. Fill reflect stuffs, like in and out arr types. panic if is not possible!
 	cacheSpot.parseFunctionsForSwap()
+
+	return cacheSpot
 }
+
+//Wait for all store goroutines.
+func (cacheSpot CacheSpot) StopCache() {
+	cacheSpot.Wg.Wait()
+}
+
 
 //Cache spot swap function. Used as a swap function in reflect calls
 //Four swap calls combinations are possible: One-one, Many-Many, Many-One, One-Many.
@@ -96,7 +106,9 @@ func (c CacheSpot) swapFunction(inputParams []reflect.Value) []reflect.Value {
 }
 
 //analize functions and fill reflect objects as need
-func (cacheSpot CacheSpot) parseFunctionsForSwap() {
+func (cacheSpot *CacheSpot) parseFunctionsForSwap() {
+	//wait group must be a pointer
+	cacheSpot.Wg = &sync.WaitGroup{}
 
 	//take inputs and output types
 	SpotInType, SpotOutType := getInOutTypes(reflect.TypeOf(cacheSpot.CachedFunc))
@@ -110,7 +122,7 @@ func (cacheSpot CacheSpot) parseFunctionsForSwap() {
 	RealInnInType := getArrayInnerTypes(RealInType)
 
 	//Assembly an callContext object
-	cacheSpot.callContext = callContext{
+	cacheSpot.CallContext = CallContext{
 		spotOutType:    SpotOutType,
 		spotInType:     SpotInType,
 		realInType:     RealInType,
@@ -220,18 +232,21 @@ func (cacheSpot CacheSpot) callOneToOne(originalIns []reflect.Value) (returnValu
 		hotOuts := cacheSpot.callHotFunc(originalIns)
 
 		//store in cache
+		cacheSpot.Wg.Add(1)
+		log.Debug("ADD ONE EVENT TO WAIT TO")
 		go func() {
 			defer func() { //assure for not panicking
 				if r := recover(); r != nil {
 					log.Error("Recovering! Error trying to save cache registry y! %v", r)
-					return
 				}
+				log.Error("done no wait group")
 			}()
 
 			// check whether results are valid and must be cached
 			if cacheSpot.validateResults(originalIns, hotOuts, cacheKey, hotOuts[0].Interface()) {
 				cacheSpot.singleStoreInCache(hotOuts[0], cacheKey)
 			}
+			cacheSpot.Wg.Done()
 		}()
 
 		return hotOuts
@@ -299,8 +314,15 @@ func (cacheSpot CacheSpot) callManyToAny(originalIns []reflect.Value) (returnVal
 	hotReturnedValues := cacheSpot.callNotFoundedInputs(originalIns, notCachedIns)
 
 	if len(hotReturnedValues) > 0 {
+		cacheSpot.Wg.Add(1)
+		log.Debug("ADD ONE EVENT TO WAIT TO")
 		go func () {
-
+			defer func(){
+				if r := recover(); r != nil {
+					log.Error("Recovering! Error trying to save cache registry y! %v", r)
+				}
+				cacheSpot.Wg.Done()
+			}()
 			cacheSpot.storeInCache(notCachedIns, hotReturnedValues)
 		}()
 	}
@@ -374,11 +396,14 @@ func (cacheSpot CacheSpot) callOneToMany(originalIns []reflect.Value) (returnVal
 		oneOut, hasReturn := cacheSpot.convertManyReturnToOneReturn(manyOuts[0])
 
 		if hasReturn { // returned array is greater that 0
+			cacheSpot.Wg.Add(1)
+			log.Debug("ADD ONE EVENT TO WAIT TO")
 			go func() {
 				defer func() { //assure for not panicking
 					if r := recover(); r != nil {
 						log.Error("Recovering! Error trying to save cache registry y! %v", r)
 					}
+					cacheSpot.Wg.Done()
 				}()
 				// check whether results are valid and must be cached
 				if cacheSpot.validateResults(fakeIns, manyOuts, strKey, oneOut.Interface()) {
@@ -396,10 +421,6 @@ func (cacheSpot CacheSpot) callOneToMany(originalIns []reflect.Value) (returnVal
 
 //store results in cache
 func (cacheSpot CacheSpot) storeInCache(notCachedIns []reflect.Value, origOuts []reflect.Value) error {
-
-
-
-
 	return cacheSpot.cacheValues(notCachedIns, origOuts)
 }
 

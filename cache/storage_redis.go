@@ -78,7 +78,7 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRe
 						log.Error("ATENCAO! NENHUM PAYLOAD FOI RETORNADO DO REDIS!")
 					} else {
 
-						log.Debug("Retornando cache key %v, payload nil %v, do redis!", cacheRegistry.CacheKey, cacheRegistry.Payload == nil)
+						log.Debug("Retornando cache key %v do redis!", cacheRegistry.CacheKey)
 					}
 
 					//Everything is alright
