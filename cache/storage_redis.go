@@ -104,12 +104,7 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRe
 func (s RedisCacheStorage) GetTTL(key string) (int, error) {
 	oneItemMap := make(map[string]CacheRegistry, 1)
 
-	oneItemMap[key] = CacheRegistry{
-		key,
-		"",
-		-2, //not found
-		true,
-	}
+	oneItemMap[key] = CacheRegistry{key,"",-2 /*not found*/, true,}
 
 	respMap, errTTL := s.GetActualTTL(oneItemMap)
 	return respMap[key].Ttl, errTTL
@@ -209,6 +204,7 @@ func setTTLToPayload(cacheRegistry *CacheRegistry) CacheRegistry {
 //save informed registries on redis
 func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) error {
 
+
 	var cacheRegistry CacheRegistry
 	var index int
 
@@ -294,8 +290,11 @@ func (s RedisCacheStorage) SetExpireTTL(cacheRegistries ...CacheRegistry) {
 
 //delete values from redis
 func (s RedisCacheStorage) DeleteValues(cacheKeys ...string) error {
+
 	c := s.redisPool.Get()
-	defer c.Close()
+	defer func (){
+		c.Close()
+	}()
 
 	//apply a prefix to cache area
 	keys := s.getKeys(cacheKeys)

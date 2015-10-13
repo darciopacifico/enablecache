@@ -45,6 +45,7 @@ type CacheManager interface {
 
 	//validate readiness of cache operation
 	Validade() bool
+
 }
 
 // Define a extension contract to CacheManager, with DeleteCache operation.

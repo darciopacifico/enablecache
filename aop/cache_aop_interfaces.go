@@ -8,7 +8,7 @@ import (
 //denotes that this function has a validator function
 type ValidateResults interface {
 	//check whether results must be cached
-	IsValidResults(in []reflect.Value, out []reflect.Value) bool
+	IsValidResults(allIns []reflect.Value, allOuts []reflect.Value, cacheKey string, valueToCache interface{}) bool
 }
 
 //contract to be implemented by a function that will need to define keys for cache

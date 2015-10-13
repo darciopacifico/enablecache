@@ -229,7 +229,7 @@ func (cacheSpot CacheSpot) callOneToOne(originalIns []reflect.Value) (returnValu
 			}()
 
 			// check whether results are valid and must be cached
-			if cacheSpot.validateResults(originalIns, hotOuts) {
+			if cacheSpot.validateResults(originalIns, hotOuts, cacheKey, hotOuts[0].Interface()) {
 				cacheSpot.singleStoreInCache(hotOuts[0], cacheKey)
 			}
 		}()
@@ -299,13 +299,19 @@ func (cacheSpot CacheSpot) callManyToAny(originalIns []reflect.Value) (returnVal
 	hotReturnedValues := cacheSpot.callNotFoundedInputs(originalIns, notCachedIns)
 
 	if len(hotReturnedValues) > 0 {
-		go cacheSpot.storeInCache(hotReturnedValues)
+		go func () {
+
+			cacheSpot.storeInCache(notCachedIns, hotReturnedValues)
+		}()
 	}
 
 	joinedReturn := append(cachedOuts, hotReturnedValues...)
 
 	return cacheSpot.putFirstArrResultEvidence(joinedReturn)
 }
+
+
+
 
 //Take the substitute for first value and join with default values for other results
 func (cacheSpot CacheSpot) putFirstArrResultEvidence(hotResult []reflect.Value) []reflect.Value {
@@ -375,7 +381,7 @@ func (cacheSpot CacheSpot) callOneToMany(originalIns []reflect.Value) (returnVal
 					}
 				}()
 				// check whether results are valid and must be cached
-				if cacheSpot.validateResults(originalIns, []reflect.Value{oneOut}) {
+				if cacheSpot.validateResults(fakeIns, manyOuts, strKey, oneOut.Interface()) {
 					cacheSpot.singleStoreInCache(oneOut, strKey)
 				}
 			}()
@@ -389,12 +395,15 @@ func (cacheSpot CacheSpot) callOneToMany(originalIns []reflect.Value) (returnVal
 }
 
 //store results in cache
-func (cacheSpot CacheSpot) storeInCache(origOuts []reflect.Value) error {
+func (cacheSpot CacheSpot) storeInCache(notCachedIns []reflect.Value, origOuts []reflect.Value) error {
 
-	keys, values := cacheSpot.getKeysForOuts(origOuts)
 
-	return cacheSpot.cacheValues(keys, values)
+
+
+	return cacheSpot.cacheValues(notCachedIns, origOuts)
 }
+
+
 
 func (cacheSpot CacheSpot) convertManyReturnToOneReturn(manyOuts reflect.Value) (reflect.Value, bool) {
 
@@ -410,10 +419,12 @@ func (cacheSpot CacheSpot) convertManyReturnToOneReturn(manyOuts reflect.Value) 
 }
 
 //store results in cache
-func (cacheSpot CacheSpot) cacheValues(keys []string, values []reflect.Value) error {
+func (cacheSpot CacheSpot) cacheValues(notCachedIns []reflect.Value, origOuts []reflect.Value) error {
+	keys, values := cacheSpot.getKeysForOuts(origOuts)
+
 	numOut := len(values)
 
-	cacheRegs := make([]cache.CacheRegistry, numOut)
+	cacheRegs := make([]cache.CacheRegistry, 0,numOut)
 
 	//iterate over all function returns. All of then can be stored
 	for index := 0; index < numOut; index++ {
@@ -428,13 +439,18 @@ func (cacheSpot CacheSpot) cacheValues(keys []string, values []reflect.Value) er
 			//get raw value
 			valRet := values[index].Interface()
 
-			ttl := discoverTTL(valRet, -1)
+			if(cacheSpot.validateResults(notCachedIns,origOuts,cacheId,valRet)){
 
-			log.Debug("TTL for reg %v %v!", cacheId, ttl)
+				ttl := discoverTTL(valRet, -1)
+				log.Debug("TTL for reg %v %v!", cacheId, ttl)
+				//invoke cache manager to persist returned value
+				cacheRegs = append(cacheRegs , cache.CacheRegistry{CacheKey: cacheId, Payload: valRet, Ttl: ttl, HasValue: true})
 
-			//invoke cache manager to persist returned value
-			cacheRegs[index] = cache.CacheRegistry{CacheKey: cacheId, Payload: valRet, Ttl: ttl, HasValue: true}
+			}else{
 
+				log.Warning("Reg %v is not valid to cache!", cacheId)
+
+			}
 		}
 	}
 
@@ -447,6 +463,9 @@ func (cacheSpot CacheSpot) cacheValues(keys []string, values []reflect.Value) er
 
 	return nil
 }
+
+
+
 
 //store results in cache
 func (cacheSpot CacheSpot) singleStoreInCache(hotOut reflect.Value, cacheKey string) {
@@ -701,8 +720,10 @@ func (c CacheSpot) validateCardinality() {
 
 }
 
+
+
 //analyze and define if some result is valid. Usually used before a cache operation
-func (c CacheSpot) validateResults(in []reflect.Value, out []reflect.Value) bool {
+func (c CacheSpot) validateResults(allIns []reflect.Value, allOuts []reflect.Value, cacheKey string, value interface{}) bool {
 
 	//try to convert a function in a ValidateResults interface
 	functionValidator, hasValidatorImpl := c.CachedFunc.(ValidateResults)
@@ -710,24 +731,22 @@ func (c CacheSpot) validateResults(in []reflect.Value, out []reflect.Value) bool
 	//if function has a function with validation behaviour
 	if hasValidatorImpl {
 		//custom validation
-		return functionValidator.IsValidResults(in, out)
+		return functionValidator.IsValidResults(allIns, allOuts, cacheKey, value)
 
 	} else {
 
 		//has some return value
-		if len(out) > 1 &&
-			out[1].IsValid() &&
-			out[1].Kind() == reflect.Bool {
+		if len(allOuts) > 1 &&
+			allOuts[1].IsValid() &&
+			allOuts[1].Kind() == reflect.Bool {
 
-			boolVal, _ := out[1].Interface().(bool)
+			boolVal, _ := allOuts[1].Interface().(bool)
 
 			return boolVal
 		}
 
-		log.Error("Erro ", c.CachedFunc)
-		funcName := reflect.TypeOf(c.CachedFunc).Name()
-		log.Error("", errors.New("Its not possible to infer a return value validation. Your function "+funcName+" need to implement ValidateResults inferface!"))
-		return false
+		log.Debug("Function '%v' doesn't implement ValidateResults inferface! All return will be cached!", c.cachedFuncName)
+		return true
 	}
 
 }
@@ -781,19 +800,20 @@ func (c CacheSpot) mustHaveValidationMethod() {
 
 	functionType := reflect.TypeOf(emptyBodyFunction)
 	numOut := functionType.Elem().NumOut()
-	funcName := functionType.Elem().Name()
+
 
 	//try to convert a function in a ValidateResults interface
 	_, hasValidatorImpl := emptyBodyFunction.(ValidateResults)
 
 	//if function has a function with validation behaviour
 	if !hasValidatorImpl {
-		log.Debug("Function %s dont implements ValidateResults", funcName)
+		log.Debug("Function '%s' doesn't implements ValidateResults!", c.cachedFuncName)
 		if numOut > 1 && functionType.Elem().Out(1).Kind() == reflect.Bool { //for more than one outs, the second one must be a boolean
-			log.Debug("Function is a self validator!")
+			log.Warning("Atention! The second return value (a boolean) will be used as validation criteria! Implement ValidateResults inferface to define a special criteria!")
 
 		} else {
-			panic(errors.New("Its not possible to infer a return value validation. Your function '" + funcName + "' needs to implement ValidateResults inferface!"))
+			log.Warning("Atention! Your function has no validation criteria! Implement ValidateResults inferface to define a special validation criteria!")
+			log.Warning("All returns will be cached!")
 		}
 	}
 }
@@ -819,7 +839,7 @@ func (cacheSpot CacheSpot) defaultValues(defBool bool) []reflect.Value {
 
 		switch outType.Kind() {
 
-		case reflect.Struct:
+		case reflect.Struct, reflect.String:
 			defaultValues[i] = reflect.New(outType).Elem()
 
 		case reflect.Bool:
