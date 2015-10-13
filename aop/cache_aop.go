@@ -71,7 +71,7 @@ func (cacheSpot CacheSpot) StartCache() CacheSpot {
 }
 
 //Wait for all store goroutines.
-func (cacheSpot CacheSpot) StopCache() {
+func (cacheSpot CacheSpot) WaitAllParallelOps() {
 	cacheSpot.Wg.Wait()
 }
 

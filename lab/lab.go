@@ -27,6 +27,6 @@ func main() {
 
 	fmt.Println(CachedFindProduct(9))
 
-	cacheSpot.StopCache()
+	cacheSpot.WaitAllParallelOps()
 }
 
