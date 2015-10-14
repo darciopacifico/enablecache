@@ -218,9 +218,9 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) error {
 
 	keyValPairs := make([]interface{}, 2*len(registries))
 
-	buffer := new(bytes.Buffer)
 	//prepare a keyval pair array
 	for index, cacheRegistry = range registries {
+		buffer := new(bytes.Buffer)
 
 		if len(cacheRegistry.CacheKey) == 0 {
 			log.Error("cache key vazio !!!")
@@ -244,15 +244,16 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) error {
 		keyValPairs[(index * 2)] = s.getKey(cacheRegistry.CacheKey)
 		keyValPairs[(index*2)+1] = bytes
 
-		_, errDo := conn.Do("SET", s.getKey(cacheRegistry.CacheKey), bytes)
-		if errDo != nil {
-			log.Error("Error trying to save registry! %v %v",s.getKey(cacheRegistry.CacheKey), errDo)
-			return errDo
-		}else{
-			log.Debug("Updating cache reg key %v ", s.getKey(cacheRegistry.CacheKey))
-		}
-
 	}
+
+	_, errDo := conn.Do("MSET", keyValPairs...)
+	if errDo != nil {
+		log.Error("Error trying to save registry! %v %v",s.getKey(cacheRegistry.CacheKey), errDo)
+		return errDo
+	}else{
+		log.Debug("Updating cache reg key %v ", s.getKey(cacheRegistry.CacheKey))
+	}
+
 	errF := conn.Flush()
 	if errF != nil {
 		log.Error("Error trying to flush connection! %v", errF)
