@@ -7,11 +7,11 @@ import (
 	"testing"
 	"time"
 
-	"code.google.com/p/go-uuid/uuid"
 	"fmt"
 	"github.com/darciopacifico/enablecache/cache"
 	"github.com/op/go-logging"
 	"os"
+	"math/rand"
 )
 
 var (
@@ -133,7 +133,10 @@ func init() {
 }
 
 func FindOneCustomer(id int) (People, error, bool) {
-	return People{Id: id, Name: "Some name ", Uuid: uuid.New()}, nil, true
+
+
+
+	return People{Id: id, Name: "Some name ", Uuid: "randon" +strconv.Itoa(rand.Int())}, nil, true
 }
 
 func FindManyCustomers(ids []int) ([]People, error) {

@@ -246,8 +246,10 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) error {
 
 		_, errDo := conn.Do("SET", s.getKey(cacheRegistry.CacheKey), bytes)
 		if errDo != nil {
-			log.Error("Error trying to save registry! y %v", errDo)
+			log.Error("Error trying to save registry! %v %v",s.getKey(cacheRegistry.CacheKey), errDo)
 			return errDo
+		}else{
+			log.Debug("Updating cache reg key %v ", s.getKey(cacheRegistry.CacheKey))
 		}
 
 	}
