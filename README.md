@@ -21,7 +21,7 @@ func FindProduct(id int) string {
 	return "product:" + strconv.Itoa(id)
 }
 
-//empty function that will receive cache spot, with same signature of FindProduct
+//empty function, currently pointing to nil, that will receive cache spot, with same signature of FindProduct
 var CachedFindProduct func(id int) string
 
 //cache spot configuration
@@ -42,7 +42,6 @@ func init(){
 	}.MustStartCache()
 }
 
-
 func main() {
 	//call new cached find product as usually call original FindProduct
 	fmt.Println(CachedFindProduct(9))
@@ -52,6 +51,8 @@ func main() {
 	cacheSpot.WaitAllParallelOps()
 }
 ```
+It's important to call `cacheSpot.MustStartCache()` at an `func init(){...}`. It's need to fail at startup if some cache config goes wrong!
+
 Check your Redis registries after. Some new keys was stored.
 
 Allways call `cacheSpot.WaitAllParallelOps()` at the end of yor program, or when need to sincronize pending store operations.
