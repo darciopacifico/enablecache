@@ -60,10 +60,10 @@ func main() {
 - Allways call `cacheSpot.WaitAllParallelOps()` at the end of yor program, or when need to sincronize pending store operations.
 
 ### Used in Production 
-Currently in production in a big retailer e-commerce environment ;-)
+Currently in production in some big retailer e-commerce environment that i have worked to ;-)
 
 ### Performance
-- Proved performance for almost 300 simultaneous requests per 1Gb RAM and 1 CPU Core. No leaks, minimum CPU overhead.
+- Proven performance for at least 300 simultaneous requests per second on 1Gb RAM and 1 CPU Core, with no leaks and minimum CPU overhead.
 
 ### Detailed function
 - Independent and cohesive layers, with well defined interfaces.
