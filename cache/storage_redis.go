@@ -3,7 +3,6 @@ package cache
 import (
 	"bytes"
 	"encoding/gob"
-	"errors"
 	"time"
 
 	"github.com/garyburd/redigo/redis"
@@ -24,13 +23,11 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRe
 		defer func() {
 			if r := recover(); r != nil {
 				log.Critical("Error trying to get ttl for registries %v!", cacheKeys)
-				panic(errors.New("panicking"))
+				//panic(errors.New("panicking"))
 				//return no ttl
 				ttlMapChan <- make(map[string]int, 0)
 			}
 		}()
-
-		ttlMapChan <- s.GetTTLMap(cacheKeys)
 	}()
 
 	mapCacheRegistry := make(map[string]CacheRegistry)

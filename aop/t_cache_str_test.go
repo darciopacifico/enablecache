@@ -22,7 +22,7 @@ func (u UserEmail) GetCacheKey() string {
 var (
 	csRedis = cache.NewRedisCacheStorage("localhost:6379", "", 8, "str_test")
 	cmStr   = cache.SimpleCacheManager{
-		csRedis,
+		CacheStorage: csRedis,
 	}
 
 	cs CacheSpot

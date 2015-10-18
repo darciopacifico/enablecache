@@ -25,9 +25,6 @@ func isValMany(value reflect.Value) bool {
 
 //return function name
 func GetFunctionName(i interface{}) string {
-
-	reflect.ValueOf(i).String()
-
 	fullName := runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
 
 	return string(RGX_FUNCNAME.ReplaceAll([]byte(fullName), []byte{}))

@@ -17,7 +17,7 @@ func (cacheSpot CacheSpot) getCachedMap(in reflect.Value) map[string]cache.Cache
 	if errCK != nil {
 		log.Error("Error trying to solve cache keys! Is not possible to proceed with cache operations!", errCK)
 		emptyMap := make(map[string]cache.CacheRegistry, 0)
-		panic(errCK) // fckp
+		//panic(errCK) // fckp
 		return emptyMap
 	}
 
@@ -25,7 +25,7 @@ func (cacheSpot CacheSpot) getCachedMap(in reflect.Value) map[string]cache.Cache
 	if err != nil {
 		log.Error("Error trying to retrieve cache data x", errCK)
 		emptyMap := make(map[string]cache.CacheRegistry, 0)
-		panic(err) // fckp
+		//panic(err) // fckp
 		return emptyMap
 	}
 

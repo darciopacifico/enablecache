@@ -123,6 +123,21 @@ func (cacheSpot CacheSpot) storeCacheOneOne(originalIns []reflect.Value, hotOuts
 	}()
 }
 
+func (cacheSpot CacheSpot) storeManyToAny( notCachedIns []reflect.Value, hotReturnedValues []reflect.Value ){
+	cacheSpot.wg.Add(1)
+	go func() {
+		defer func() {
+			if r := recover(); r != nil {
+				log.Error("Recovering! Error trying to save cache registry y! %v", r)
+			}
+			cacheSpot.wg.Done()
+		}()
+		cacheSpot.cacheValues(notCachedIns, hotReturnedValues)
+	}()
+}
+
+
+
 //analyze and define if some result is valid. Usually used before a cache operation
 func (c CacheSpot) validateResults(allIns []reflect.Value, allOuts []reflect.Value, cacheKey string, value interface{}) bool {
 
@@ -148,3 +163,4 @@ func (c CacheSpot) validateResults(allIns []reflect.Value, allOuts []reflect.Val
 	}
 
 }
+
