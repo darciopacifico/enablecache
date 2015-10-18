@@ -4,7 +4,14 @@ import (
 	"github.com/darciopacifico/enablecache/cache"
 	"reflect"
 	"sync"
+	"github.com/op/go-logging"
 )
+
+var EMPTY_MAP = make(map[string]cache.CacheRegistry)
+var typeCacheable = reflect.TypeOf((*cache.Cacheable)(nil)).Elem()
+var log = logging.MustGetLogger("cache")
+var errorInterfaceModel = reflect.TypeOf((*error)(nil)).Elem()
+
 
 //template to make a cache spot function
 type CacheSpot struct {
