@@ -1,3 +1,5 @@
+//documentation for package sample
+
 package main
 
 import (
