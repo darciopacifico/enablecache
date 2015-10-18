@@ -2,7 +2,6 @@ package aop
 
 import (
 	"encoding/gob"
-	"reflect"
 	"strconv"
 	"testing"
 	"time"
@@ -10,8 +9,8 @@ import (
 	"fmt"
 	"github.com/darciopacifico/enablecache/cache"
 	"github.com/op/go-logging"
-	"os"
 	"math/rand"
+	"os"
 )
 
 var (
@@ -34,70 +33,14 @@ func init() {
 }
 
 type People struct {
-	Id   int
-	Name string
-	Uuid string
+	Id    int
+	Name  string
+	Email string
+	Uuid  string
 }
 
-type FindOneType func(int) (People, error, bool)
-type FindManyType func([]int) ([]People, error)
-
-func (FindOneType) IsValidResults(in []reflect.Value, out []reflect.Value) bool {
-	return true
-}
-
-func (FindOneType) KeysForCache(outs []reflect.Value) ([]string, []reflect.Value) {
-
-	numOuts := len(outs)
-
-	keysToCache := []string{}
-	outsToCache := []reflect.Value{}
-
-	for i := 0; i < numOuts; i++ {
-		out := outs[i]
-		realVal := out.Interface()
-		customer, isCustomer := realVal.(People)
-
-		if isCustomer {
-			keysToCache = append(keysToCache, strconv.Itoa(customer.Id))
-			outsToCache = append(outsToCache, out)
-
-		} else {
-			log.Warning("The object %v is not a customer!")
-		}
-	}
-
-	return keysToCache, outsToCache
-
-}
-
-func (FindManyType) IsValidResults(in []reflect.Value, out []reflect.Value) bool {
-	return true
-}
-
-func (FindManyType) KeysForCache(outs []reflect.Value) ([]string, []reflect.Value) {
-
-	numOuts := len(outs)
-
-	keysToCache := []string{}
-	outsToCache := []reflect.Value{}
-
-	for i := 0; i < numOuts; i++ {
-		out := outs[i]
-		realVal := out.Interface()
-		customer, isCustomer := realVal.(People)
-
-		if isCustomer {
-			keysToCache = append(keysToCache, "Customer:"+strconv.Itoa(customer.Id))
-			outsToCache = append(outsToCache, out)
-
-		} else {
-			log.Warning("The object %v is not a customer!")
-		}
-	}
-
-	return keysToCache, outsToCache
-
+func (p People) GetCacheKey() string {
+	return "People:" + strconv.Itoa(p.Id)
 }
 
 func BenchmarkDynaSwap(b *testing.B) {
@@ -118,25 +61,47 @@ func BenchmarkDynaSwap(b *testing.B) {
 
 }
 
-var cFindOne FindOneType
-var cFindOneB FindOneType
-var cFindMany FindManyType
-var cFindManyB FindManyType
+var cFindOne func(int) (People, error, bool)
+var cFindOneB func(int) (People, error, bool)
+var cFindMany func([]int) ([]People, error)
+var cFindManyB func([]int) ([]People, error)
 
 func init() {
 	gob.Register(People{})
 
-	CacheSpot{CachedFunc: &cFindOne, HotFunc: FindOneCustomer, CacheManager: cmAuto}.StartCache()
-	CacheSpot{CachedFunc: &cFindMany, HotFunc: FindManyCustomers, CacheManager: cmAuto}.StartCache()
-	CacheSpot{CachedFunc: &cFindOneB, HotFunc: FindManyCustomers, CacheManager: cmAuto}.StartCache()
-	CacheSpot{CachedFunc: &cFindManyB, HotFunc: FindOneCustomer, CacheManager: cmAuto}.StartCache()
+	CacheSpot{
+		CachedFunc:   &cFindOne,
+		HotFunc:      FindOneCustomer,
+		CacheManager: cmAuto,
+		//ValidateResults: func (allIns []reflect.Value, allOuts []reflect.Value, cacheKey string, singleValueToCache interface{}) bool{return true},
+		//SpecifyOutputKeys:KeysForCache,
+	}.MustStartCache()
+
+	CacheSpot{
+		CachedFunc:   &cFindOneB,
+		HotFunc:      FindManyCustomers,
+		CacheManager: cmAuto,
+		//ValidateResults:IsValidResults,
+		//SpecifyOutputKeys:KeysForCache,
+	}.MustStartCache()
+
+	CacheSpot{CachedFunc: &cFindMany,
+		HotFunc:      FindManyCustomers,
+		CacheManager: cmAuto,
+		//ValidateResults:ManyIsValidResults,
+		//SpecifyOutputKeys:ManyKeysForCache,
+	}.MustStartCache()
+
+	CacheSpot{CachedFunc: &cFindManyB,
+		HotFunc:      FindOneCustomer,
+		CacheManager: cmAuto,
+		//ValidateResults:ManyIsValidResults,
+		//SpecifyOutputKeys:ManyKeysForCache,
+	}.MustStartCache()
 }
 
 func FindOneCustomer(id int) (People, error, bool) {
-
-
-
-	return People{Id: id, Name: "Some name ", Uuid: "randon" +strconv.Itoa(rand.Int())}, nil, true
+	return People{Id: id, Name: "Some name ", Uuid: "randon" + strconv.Itoa(rand.Int())}, nil, true
 }
 
 func FindManyCustomers(ids []int) ([]People, error) {

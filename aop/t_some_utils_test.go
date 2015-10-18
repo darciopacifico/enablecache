@@ -11,7 +11,7 @@ import (
 var (
 	cacheStorage = cache.NewRedisCacheStorage("localhost:6379", "", 8, strconv.Itoa(rand.Int()))
 	cacheManager = cache.SimpleCacheManager{
-		Ps: cacheStorage,
+		CacheStorage: cacheStorage,
 	}
 )
 

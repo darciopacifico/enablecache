@@ -8,7 +8,6 @@ import (
 	"github.com/darciopacifico/enablecache/cache"
 	"regexp"
 	"runtime"
-	"strconv"
 )
 
 //regex that substitute the start of full function name
@@ -122,17 +121,11 @@ func getArrayInnerTypes(arrTypes []reflect.Type) []reflect.Type {
 }
 
 // Try to convert a int value to string. if is not a integer raise error
-func valIntToString(value reflect.Value) (string, error) {
+func valToString(value reflect.Value) (string, error) {
 
 	var strVal string
 
-	switch value.Type().Kind() {
-	case reflect.Int, reflect.Int16, reflect.Int32, reflect.Int64:
-		strVal = strconv.Itoa(int(value.Int()))
-	default:
-		log.Error("Error trying to convert value to string!", value)
-		return "", errors.New("Error trying to convert value to string!" + value.String())
-	}
+	strVal = fmt.Sprintf("%v", value.Interface())
 
 	return strVal, nil
 }
@@ -144,4 +137,16 @@ func mustBeCompatible(a, b reflect.Type) {
 				"It is no possible to make a swap function that "+
 				"return or receive different kinds of objects!", a.Name(), b.Name())))
 	}
+}
+
+//fix return type acoordingly to out type
+func fixReturnTypes(rtype reflect.Type, value reflect.Value) reflect.Value {
+
+	if value.Type().AssignableTo(rtype) && value.Type().ConvertibleTo(rtype) {
+		newVal := reflect.New(rtype)
+		newVal.Elem().Set(value)
+		value = newVal.Elem()
+	}
+
+	return value
 }

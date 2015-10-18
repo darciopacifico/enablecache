@@ -2,7 +2,6 @@ package aop
 
 import (
 	"encoding/gob"
-	"fmt"
 	"reflect"
 	"strconv"
 	"testing"
@@ -39,7 +38,7 @@ func TestAutoValidation(t *testing.T) {
 		CacheManager: cacheManager,
 	}
 
-	cacheSpot.StartCache()
+	cacheSpot.MustStartCache()
 
 	//first finding, must be cached
 	_, _, creationTime := cachedFinder(idTest, "teste", true)
@@ -94,7 +93,7 @@ func TestCustomValidation(t *testing.T) {
 		CacheManager: cacheManager,
 	}
 
-	cacheSpot.StartCache()
+	cacheSpot.MustStartCache()
 
 	//first finding, must be cached
 	cpCache := cachedFinderSimple(idTest)
@@ -131,7 +130,7 @@ func TestTTL(t *testing.T) {
 	}
 
 	//prepared a cached function, using the original one
-	cacheSpot.StartCache()
+	cacheSpot.MustStartCache()
 
 	//first search will be uncached
 	user1 := cachedFindUser(idUser)
@@ -175,12 +174,6 @@ func TestTTL(t *testing.T) {
 
 	//a final sleep to flush data
 	time.Sleep(time.Millisecond * 10)
-}
-
-func isFunc(myInt interface{}) {
-	defValuable, isDefValuable := myInt.(DefaultValubleFunction)
-
-	fmt.Println(defValuable, isDefValuable)
 }
 
 func init() {

@@ -11,7 +11,7 @@ var st *Stats = NewStats("iro-cache")
 
 //
 type SimpleCacheManager struct {
-	Ps CacheStorage
+	CacheStorage CacheStorage
 }
 
 func (c SimpleCacheManager) Validade() bool {
@@ -20,7 +20,7 @@ func (c SimpleCacheManager) Validade() bool {
 
 //invalidate cache registry
 func (c SimpleCacheManager) Invalidate(cacheKeys ...string) error {
-	errDel := c.Ps.DeleteValues(cacheKeys...)
+	errDel := c.CacheStorage.DeleteValues(cacheKeys...)
 	if errDel != nil {
 		log.Error("Error trying to delete values from cache %v", errDel)
 	}
@@ -30,12 +30,12 @@ func (c SimpleCacheManager) Invalidate(cacheKeys ...string) error {
 //set cache implementation
 func (c SimpleCacheManager) SetCache(cacheRegistry ...CacheRegistry) error {
 	//call cachestorage to store data
-	return c.Ps.SetValues(cacheRegistry...)
+	return c.CacheStorage.SetValues(cacheRegistry...)
 }
 
 //return time to live
 func (c SimpleCacheManager) GetCacheTTL(cacheKey string) (int, error) {
-	return c.Ps.GetTTL(cacheKey)
+	return c.CacheStorage.GetTTL(cacheKey)
 }
 
 //implement getCache operation that can recover child data in other cache registries.
@@ -71,5 +71,5 @@ func (c SimpleCacheManager) GetCache(cacheKey string) (CacheRegistry, error) {
 
 //implement getCache operation that can recover child data in other cache registries.
 func (c SimpleCacheManager) GetCaches(cacheKeys ...string) (map[string]CacheRegistry, error) {
-	return c.Ps.GetValuesMap(cacheKeys...)
+	return c.CacheStorage.GetValuesMap(cacheKeys...)
 }

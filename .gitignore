@@ -5,6 +5,7 @@
 
 .idea
 
+**/*.out
 # Folders
 _obj
 _test

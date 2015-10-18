@@ -231,7 +231,7 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) error {
 		e := gob.NewEncoder(buffer)
 		err := e.Encode(cacheRegistry)
 		if err != nil {
-			log.Error("Error trying to save registry! x %v", err)
+			log.Error("Error trying to save registry! %v", err)
 			return err
 		}
 
@@ -248,9 +248,9 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) error {
 
 	_, errDo := conn.Do("MSET", keyValPairs...)
 	if errDo != nil {
-		log.Error("Error trying to save registry! %v %v",s.getKey(cacheRegistry.CacheKey), errDo)
+		log.Error("Error trying to save registry! %v %v", s.getKey(cacheRegistry.CacheKey), errDo)
 		return errDo
-	}else{
+	} else {
 		log.Debug("Updating cache reg key %v ", s.getKey(cacheRegistry.CacheKey))
 	}
 
