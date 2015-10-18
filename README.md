@@ -1,4 +1,6 @@
-    
+*Enablecache lib.
+
+*Allow to enable cache in almost any golang function easily
     
     package main
     
@@ -14,8 +16,7 @@
     	fmt.Println("calling a very expensive function...")
     	return "product:" + strconv.Itoa(id)
     }
-    
-    
+
     func main() {
     
     	//cache manager that will intermediate the operations
