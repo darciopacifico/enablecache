@@ -29,7 +29,7 @@ var cacheSpot aop.CacheSpot
 
 //initialize cache
 func init(){
-	//cache manager that will intermediate the operations
+	//cache manager that will intermediate the store and read cache operations
 	cacheManager := cache.SimpleCacheManager{
 		CacheStorage: cache.NewRedisCacheStorage("localhost:6379", "", 8, "lab"),
 	}
