@@ -1,8 +1,5 @@
-#EnableCache lib.
-
+#EnableCache lib. [![GoDoc](https://godoc.org/github.com/darciopacifico/enablecache?status.svg)](https://godoc.org/github.com/darciopacifico/enablecache)
 Allow to enable cache in almost any golang function easily.
-
-[![GoDoc](https://godoc.org/github.com/darciopacifico/enablecache?status.svg)](https://godoc.org/github.com/darciopacifico/enablecache)
 
 ### Minimum example
 ```go
