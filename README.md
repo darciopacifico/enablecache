@@ -51,7 +51,7 @@ func main() {
 	cacheSpot.WaitAllParallelOps()
 }
 ```
-- It's important to call `cacheSpot.MustStartCache()` at an `func init(){...}`. It's need to fail at startup if some cache config goes wrong!
+- It's important to call `go cacheSpot.MustStartCache()` at an `func init(){...}`. It's need to fail at startup if some cache config goes wrong!
 
 - Check your Redis registries after. Some new keys was stored.
 
