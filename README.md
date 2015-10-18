@@ -20,24 +20,30 @@ func FindProduct(id int) string {
 	return "product:" + strconv.Itoa(id)
 }
 
-func main() {
+//empty function that will receive cache spot, with same signature of FindProduct
+var CachedFindProduct func(id int) string
+
+//cache spot configuration
+var cacheSpot aop.CacheSpot
+
+//initialize cache
+func init(){
 	//cache manager that will intermediate the operations
 	cacheManager := cache.SimpleCacheManager{
 		CacheStorage: cache.NewRedisCacheStorage("localhost:6379", "", 8, "lab"),
 	}
 
-	//empty function that will receive cache spot, with same signature of FindProduct
-	//pass as reference
-	var CachedFindProduct func(id int) string
-
 	//start cache spot reference.
-	cacheSpot := aop.CacheSpot{
-		CachedFunc: &CachedFindProduct, 
-		HotFunc: FindProduct, 
-		CacheManager: cacheManager
-		}.StartCache()
+	cacheSpot = aop.CacheSpot{
+		CachedFunc: &CachedFindProduct,
+		HotFunc: FindProduct,
+		CacheManager: cacheManager,
+	}.MustStartCache()
+}
 
-	//call new cached find product as usual
+
+func main() {
+	//call new cached find product as usually call original FindProduct
 	fmt.Println(CachedFindProduct(9))
 
 	//cache storage is started in a separated go routine.
@@ -47,13 +53,13 @@ func main() {
 ```
 Check your Redis registries after. Some new keys was stored.
 
-Setup and start a cache spot in a `func init(){...}` rather, and allways call at the end of yor program, or when need to sincronize pending operations.
+Allways call `cacheSpot.WaitAllParallelOps()` at the end of yor program, or when need to sincronize pending store operations.
 
 ### Used in Production 
-Currently in production in a big retailer e-commerce environment.
+Currently in production in a big retailer e-commerce environment ;-)
 
 ### Performance
-Proved performance for almost 300 simultaneous requests per 1Gb RAM / 1 CPU Core. No leaks, very low processor overhead.
+Proved performance for almost 300 simultaneous requests per 1Gb RAM and 1 CPU Core. No leaks, minimum CPU overhead.
 
 ### Detailed function
 Independent and cohesive layers, with well defined interfaces.
