@@ -1,4 +1,4 @@
-#Enablecache lib.
+#EnableCache lib.
 ================
 
 Allow to enable cache in almost any golang function easily.
