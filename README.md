@@ -51,23 +51,23 @@ func main() {
 	cacheSpot.WaitAllParallelOps()
 }
 ```
-It's important to call `cacheSpot.MustStartCache()` at an `func init(){...}`. It's need to fail at startup if some cache config goes wrong!
+- It's important to call `cacheSpot.MustStartCache()` at an `func init(){...}`. It's need to fail at startup if some cache config goes wrong!
 
-Check your Redis registries after. Some new keys was stored.
+- Check your Redis registries after. Some new keys was stored.
 
-Allways call `cacheSpot.WaitAllParallelOps()` at the end of yor program, or when need to sincronize pending store operations.
+- Allways call `cacheSpot.WaitAllParallelOps()` at the end of yor program, or when need to sincronize pending store operations.
 
 ### Used in Production 
 Currently in production in a big retailer e-commerce environment ;-)
 
 ### Performance
-Proved performance for almost 300 simultaneous requests per 1Gb RAM and 1 CPU Core. No leaks, minimum CPU overhead.
+- Proved performance for almost 300 simultaneous requests per 1Gb RAM and 1 CPU Core. No leaks, minimum CPU overhead.
 
 ### Detailed function
-Independent and cohesive layers, with well defined interfaces.
-- Cache Spot: AOP like instrumentation, allowing almost any golang function to be transparently cached.
-- Cache Manager: implements cache split algorithm.
-- Cache Storage: interact with an external big memory layer (Redis).
+- Independent and cohesive layers, with well defined interfaces.
+	- Cache Spot: AOP like instrumentation, allowing almost any golang function to be transparently cached.
+	- Cache Manager: implements cache split algorithm.
+	- Cache Storage: interact with an external big memory layer (Redis).
 
 ### License
-Enablecache is free software, licensed under the Apache License, Version 2.0 (the "License"). Commercial and non-commercial use are permitted in compliance with the License.
+- Enablecache is free software, licensed under the Apache License, Version 2.0 (the "License"). Commercial and non-commercial use are permitted in compliance with the License.
