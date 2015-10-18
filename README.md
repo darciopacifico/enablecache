@@ -1,7 +1,7 @@
 #Enablecache lib.
 ================
 
-## Allow to enable cache in almost any golang function easily
+Allow to enable cache in almost any golang function easily.
 
 ### Minimum example
 ```go
