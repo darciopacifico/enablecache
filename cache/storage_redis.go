@@ -17,17 +17,21 @@ type RedisCacheStorage struct {
 //recover all cacheregistries of keys
 func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRegistry, error) {
 
+
 	ttlMapChan := make(chan map[string]int)
 
 	go func() {
 		defer func() {
 			if r := recover(); r != nil {
 				log.Critical("Error trying to get ttl for registries %v!", cacheKeys)
-				//panic(errors.New("panicking"))
-				//return no ttl
+
+				//in case of error, retur an empty map
 				ttlMapChan <- make(map[string]int, 0)
 			}
 		}()
+
+		//put result on channel
+		ttlMapChan <- s.GetTTLMap(cacheKeys)
 	}()
 
 	mapCacheRegistry := make(map[string]CacheRegistry)
