@@ -9,9 +9,10 @@ package main
 
 import (
 	"fmt"
+	"strconv"
+	
 	"github.com/darciopacifico/enablecache/aop"
 	"github.com/darciopacifico/enablecache/cache"
-	"strconv"
 )
 
 //concrete no cached function
