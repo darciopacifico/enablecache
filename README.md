@@ -4,7 +4,7 @@
 ## Allow to enable cache in almost any golang function easily
 
 ### Minimum example
-    
+    ```go
     package main
     
     import (
@@ -42,6 +42,7 @@
     	//Wait for finish
     	cacheSpot.WaitAllParallelOps()
     }
+    ```
 
 ### Used in Production 
 Currently in production in a big retailer e-commerce environment.
