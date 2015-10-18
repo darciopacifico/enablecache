@@ -46,8 +46,8 @@ func main() {
 	//call new cached find product as usually call original FindProduct
 	fmt.Println(CachedFindProduct(9))
 
-	//cache storage is started in a separated go routine.
-	//Wait for finish
+	//Cache storage operations is started in separateds go routines.
+	//A waiting group ensure for all operations to finish.
 	cacheSpot.WaitAllParallelOps()
 }
 ```
