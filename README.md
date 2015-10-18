@@ -37,7 +37,7 @@ func main() {
 		CacheManager: cacheManager
 		}.StartCache()
 
-	//call cached find product
+	//call new cached find product as usual
 	fmt.Println(CachedFindProduct(9))
 
 	//cache storage is started in a separated go routine.
