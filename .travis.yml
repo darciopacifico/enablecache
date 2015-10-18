@@ -1,0 +1,11 @@
+language: go
+
+sudo: false
+
+services:
+  - redis-server
+
+go:
+  - 1.4.2
+  - 1.5.1
+  - tip
