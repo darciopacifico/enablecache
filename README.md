@@ -51,9 +51,11 @@ func main() {
 	cacheSpot.WaitAllParallelOps()
 }
 ```
-- It's important to call `go cacheSpot.MustStartCache()` at an `func init(){...}`. It's need to fail at startup if some cache config goes wrong!
+- It's important to call `cacheSpot.MustStartCache()` at an `func init(){...}`. It's need to fail at startup if some cache config goes wrong!
 
 - Check your Redis registries after. Some new keys was stored.
+
+- Call `CachedFindProduct` many times and note that the fake "expensive operation" will not be called anymore, until cache expires.
 
 - Allways call `cacheSpot.WaitAllParallelOps()` at the end of yor program, or when need to sincronize pending store operations.
 
