@@ -31,7 +31,11 @@ func main() {
 	var CachedFindProduct func(id int) string
 
 	//start cache spot reference.
-	cacheSpot := aop.CacheSpot{CachedFunc: &CachedFindProduct, HotFunc: FindProduct, CacheManager: cacheManager}.StartCache()
+	cacheSpot := aop.CacheSpot{
+		CachedFunc: &CachedFindProduct, 
+		HotFunc: FindProduct, 
+		CacheManager: cacheManager
+		}.StartCache()
 
 	//call cached find product
 	fmt.Println(CachedFindProduct(9))
