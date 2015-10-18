@@ -1,3 +1,4 @@
+// Package Cache contains ...
 package cache
 
 import (
