@@ -21,28 +21,29 @@ func FindProduct(id int) string {
 }
 
 func main() {
-
 	//cache manager that will intermediate the operations
 	cacheManager := cache.SimpleCacheManager{
 		CacheStorage: cache.NewRedisCacheStorage("localhost:6379", "", 8, "lab"),
 	}
 
 	//empty function that will receive cache spot, with same signature of FindProduct
+	//pass as reference
 	var CachedFindProduct func(id int) string
 
 	//start cache spot reference.
 	cacheSpot := aop.CacheSpot{CachedFunc: &CachedFindProduct, HotFunc: FindProduct, CacheManager: cacheManager}.StartCache()
 
-
 	//call cached find product
 	fmt.Println(CachedFindProduct(9))
-
 
 	//cache storage is started in a separated go routine.
 	//Wait for finish
 	cacheSpot.WaitAllParallelOps()
 }
 ```
+Check your Redis registries after. Some new keys was stored.
+
+Setup and start a cache spot in a `func init(){...}` rather, and allways call at the end of yor program, or when need to sincronize pending operations.
 
 ### Used in Production 
 Currently in production in a big retailer e-commerce environment.
