@@ -28,17 +28,17 @@ var cacheSpot aop.CacheSpot
 
 //initialize cache
 func init(){
-	//cache manager that will intermediate the store and read cache operations
+	//cache manager that will intermediate all operations for cache store/read.
 	cacheManager := cache.SimpleCacheManager{
 		CacheStorage: cache.NewRedisCacheStorage("localhost:6379", "", 8, "lab"),
 	}
 
 	//start cache spot reference.
 	cacheSpot = aop.CacheSpot{
-		CachedFunc: &CachedFindProduct,
-		HotFunc: FindProduct,
-		CacheManager: cacheManager,
-	}.MustStartCache()
+		HotFunc: FindProduct,		// concrete FindProduct function
+		CachedFunc: &CachedFindProduct, // Empty cached function as ref. Will receive a swap function
+		CacheManager: cacheManager,	// Cache Manager implementation
+	}.MustStartCache()			// Validate function signatures, assoaciate swap to CachedFunc
 }
 
 func main() {
