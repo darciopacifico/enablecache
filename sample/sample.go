@@ -1,5 +1,6 @@
 //documentation for package sample
 
+//package sample from sample.go
 package main
 
 import (
