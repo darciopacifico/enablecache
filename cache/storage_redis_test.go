@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	cacheStorageRedis_test = NewRedisCacheStorage("localhost:6379", "", 8, "cachetest")
+	cacheStorageRedis_test = NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000,  "cachetest")
 )
 
 func TestDelete(t *testing.T) {

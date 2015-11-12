@@ -11,14 +11,14 @@ import (
 //Cache storage implementation using redis as key/value storage
 type RedisCacheStorage struct {
 	redisPool  redis.Pool
+	ttlReadTimeout int
 	cacheAreaa string
 }
 
 //recover all cacheregistries of keys
 func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRegistry, error) {
 
-
-	ttlMapChan := make(chan map[string]int)
+	ttlMapChan := make(chan map[string]int, 1)
 
 	go func() {
 		defer func() {
@@ -95,9 +95,15 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRe
 		return make(map[string]CacheRegistry), nil
 	}
 
-	//wait for ttl channel
-	mapCacheRegistry = s.zipTTL(mapCacheRegistry, <-ttlMapChan)
-
+	select {
+		//wait for ttl channel
+		case ttlMap := <-ttlMapChan:
+			mapCacheRegistry = s.zipTTL(mapCacheRegistry, ttlMap)
+		//in case of timeout, returt an empty map
+		case <-time.After(time.Duration(s.ttlReadTimeout) * time.Millisecond):
+			log.Warning("Retrieve TTL for cachekeys %v from redis timeout after %dms, continuing without it.", cacheKeys, s.ttlReadTimeout)
+			mapCacheRegistry = s.zipTTL(mapCacheRegistry, make(map[string]int, 0))
+	}
 	return mapCacheRegistry, nil // err=nil by default, if everything is alright
 }
 
@@ -338,10 +344,11 @@ func (s RedisCacheStorage) getKeys(keys []string) []interface{} {
 }
 
 //instantiate a new cachestorage redis
-func NewRedisCacheStorage(hostPort string, password string, maxIdle int, cacheArea string) RedisCacheStorage {
+func NewRedisCacheStorage(hostPort string, password string, maxIdle int, readTimeout int, ttlReadTimeout int, cacheArea string) RedisCacheStorage {
 
 	redisCacheStorage := RedisCacheStorage{
-		*newPoolRedis(hostPort, password, maxIdle),
+		*newPoolRedis(hostPort, password, maxIdle, readTimeout),
+		ttlReadTimeout,
 		cacheArea,
 	}
 
@@ -349,14 +356,14 @@ func NewRedisCacheStorage(hostPort string, password string, maxIdle int, cacheAr
 }
 
 //create a redis connection pool
-func newPoolRedis(server, password string, maxIdle int) *redis.Pool {
+func newPoolRedis(server, password string, maxIdle int, readTimeout int) *redis.Pool {
 
 	return &redis.Pool{
 		MaxIdle:     maxIdle,
 		IdleTimeout: 240 * time.Second,
 		Dial: func() (redis.Conn, error) {
 
-			c, err := redis.Dial("tcp", server)
+			c, err := redis.Dial("tcp", server, redis.DialReadTimeout(time.Duration(readTimeout) * time.Millisecond))
 			if err != nil {
 				log.Error("Erro ao tentar se conectar ao redis! ", err)
 				return nil, err
