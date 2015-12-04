@@ -58,7 +58,7 @@ func (cacheSpot CacheSpot) callManyToOne(originalIns []reflect.Value) (returnVal
 
 	defer func() { //assure for not panicking
 		if r := recover(); r != nil {
-			log.Error("Recovering! Error trying to call a swap function!! y %v", r)
+			log.Error("Recovering! Error trying to call a swap function!! (callManyToOne) %v", r)
 			log.Error("Falling back this request to direct hot function call, without cache!")
 
 			hotReturnedValues := cacheSpot.callNotFoundedInputs(originalIns, fromWrappedToArray(originalIns[0]))
@@ -93,7 +93,7 @@ func (cacheSpot CacheSpot) callOneToMany(originalIns []reflect.Value) (returnVal
 	defer func() { //assure for not panicking out
 		if r := recover(); r != nil {
 
-			log.Error("Recovering! Error trying to call a swap function!! y %v", r)
+			log.Error("Recovering! Error trying to call a swap function!! (callOneToMany) %v", r)
 			log.Error("Falling back this request to direct hot function call, without cache!")
 
 			fakeIns := cacheSpot.convertOneCallToManyCall(originalIns)
@@ -168,7 +168,12 @@ func (cacheSpot CacheSpot) dynamicCall(inputs []reflect.Value) []reflect.Value {
 		responses := make([]reflect.Value, len(arrInputs))
 
 		for index, input := range arrInputs {
-			response := cacheSpot.callHotFunc([]reflect.Value{input})
+
+			inputs[0] = input
+			response := cacheSpot.callHotFunc(inputs) //TODO USE A POOL OF GO ROUTINES TO CALL HOT FUNCTION CONCURRENTLY
+//			response := cacheSpot.callHotFunc([]reflect.Value{input}) //TODO USE A POOL OF GO ROUTINES TO CALL HOT FUNCTION CONCURRENTLY
+
+
 			responses[index] = response[0] // take only first return value
 		}
 
