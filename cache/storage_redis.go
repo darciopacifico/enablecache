@@ -10,21 +10,20 @@ import (
 
 //Cache storage implementation using redis as key/value storage
 type RedisCacheStorage struct {
-	redisPool      redis.Pool
-	ttlReadTimeout int
-	cacheAreaa     string
-	Serializer     Serializer // usually SerializerGOB implementation
+	redisPool      	redis.Pool
+	ttlReadTimeout 	int
+	cacheArea      	string
+	enableTTL	 	bool
+	Serializer     	Serializer // usually SerializerGOB implementation
 }
 
 var _=SerializerGOB{} // this is the usual serializer used above!!
-
-var enableTTL = false // setup a external config
 
 //recover all cacheregistries of keys
 func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRegistry, error) {
 
 	ttlMapChan := make(chan map[string]int, 1)
-	if (enableTTL) {
+	if (s.enableTTL) {
 		go func() {
 			defer func() {
 				if r := recover(); r != nil {
@@ -112,7 +111,7 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRe
 		}
 	}
 
-	if (enableTTL) {
+	if (s.enableTTL) {
 		select {
 		//wait for ttl channel
 		case ttlMap := <-ttlMapChan:
@@ -337,8 +336,8 @@ func (s RedisCacheStorage) DeleteValues(cacheKeys ...string) error {
 func (s RedisCacheStorage) getKey(key string) string {
 	var newKey string
 
-	if len(s.cacheAreaa) > 0 {
-		newKey = s.cacheAreaa + ":" + key
+	if len(s.cacheArea) > 0 {
+		newKey = s.cacheArea + ":" + key
 	} else {
 		newKey = key
 	}
@@ -366,6 +365,7 @@ func NewRedisCacheStorage(hostPort string, password string, maxIdle int, readTim
 		*newPoolRedis(hostPort, password, maxIdle, readTimeout),
 		ttlReadTimeout,
 		cacheArea,
+		true,
 		serializer,
 	}
 

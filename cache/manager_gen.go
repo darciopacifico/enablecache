@@ -42,6 +42,11 @@ func (z *CacheRegistry) DecodeMsg(dc *msgp.Reader) (err error) {
 			if err != nil {
 				return
 			}
+		case "TypeName":
+			z.TypeName, err = dc.ReadString()
+			if err != nil {
+				return
+			}
 		default:
 			err = dc.Skip()
 			if err != nil {
@@ -54,9 +59,9 @@ func (z *CacheRegistry) DecodeMsg(dc *msgp.Reader) (err error) {
 
 // EncodeMsg implements msgp.Encodable
 func (z *CacheRegistry) EncodeMsg(en *msgp.Writer) (err error) {
-	// map header, size 4
+	// map header, size 5
 	// write "CacheKey"
-	err = en.Append(0x84, 0xa8, 0x43, 0x61, 0x63, 0x68, 0x65, 0x4b, 0x65, 0x79)
+	err = en.Append(0x85, 0xa8, 0x43, 0x61, 0x63, 0x68, 0x65, 0x4b, 0x65, 0x79)
 	if err != nil {
 		return err
 	}
@@ -91,15 +96,24 @@ func (z *CacheRegistry) EncodeMsg(en *msgp.Writer) (err error) {
 	if err != nil {
 		return
 	}
+	// write "TypeName"
+	err = en.Append(0xa8, 0x54, 0x79, 0x70, 0x65, 0x4e, 0x61, 0x6d, 0x65)
+	if err != nil {
+		return err
+	}
+	err = en.WriteString(z.TypeName)
+	if err != nil {
+		return
+	}
 	return
 }
 
 // MarshalMsg implements msgp.Marshaler
 func (z *CacheRegistry) MarshalMsg(b []byte) (o []byte, err error) {
 	o = msgp.Require(b, z.Msgsize())
-	// map header, size 4
+	// map header, size 5
 	// string "CacheKey"
-	o = append(o, 0x84, 0xa8, 0x43, 0x61, 0x63, 0x68, 0x65, 0x4b, 0x65, 0x79)
+	o = append(o, 0x85, 0xa8, 0x43, 0x61, 0x63, 0x68, 0x65, 0x4b, 0x65, 0x79)
 	o = msgp.AppendString(o, z.CacheKey)
 	// string "Payload"
 	o = append(o, 0xa7, 0x50, 0x61, 0x79, 0x6c, 0x6f, 0x61, 0x64)
@@ -113,6 +127,9 @@ func (z *CacheRegistry) MarshalMsg(b []byte) (o []byte, err error) {
 	// string "HasValue"
 	o = append(o, 0xa8, 0x48, 0x61, 0x73, 0x56, 0x61, 0x6c, 0x75, 0x65)
 	o = msgp.AppendBool(o, z.HasValue)
+	// string "TypeName"
+	o = append(o, 0xa8, 0x54, 0x79, 0x70, 0x65, 0x4e, 0x61, 0x6d, 0x65)
+	o = msgp.AppendString(o, z.TypeName)
 	return
 }
 
@@ -152,6 +169,11 @@ func (z *CacheRegistry) UnmarshalMsg(bts []byte) (o []byte, err error) {
 			if err != nil {
 				return
 			}
+		case "TypeName":
+			z.TypeName, bts, err = msgp.ReadStringBytes(bts)
+			if err != nil {
+				return
+			}
 		default:
 			bts, err = msgp.Skip(bts)
 			if err != nil {
@@ -164,6 +186,6 @@ func (z *CacheRegistry) UnmarshalMsg(bts []byte) (o []byte, err error) {
 }
 
 func (z *CacheRegistry) Msgsize() (s int) {
-	s = 1 + 9 + msgp.StringPrefixSize + len(z.CacheKey) + 8 + msgp.GuessSize(z.Payload) + 4 + msgp.IntSize + 9 + msgp.BoolSize
+	s = 1 + 9 + msgp.StringPrefixSize + len(z.CacheKey) + 8 + msgp.GuessSize(z.Payload) + 4 + msgp.IntSize + 9 + msgp.BoolSize + 9 + msgp.StringPrefixSize + len(z.TypeName)
 	return
 }
