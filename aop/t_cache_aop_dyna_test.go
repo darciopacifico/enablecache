@@ -15,7 +15,7 @@ import (
 
 var (
 	cacheAreaAuto     = "dyna_test"
-	cacheStorageRedis = cache.NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, cacheAreaAuto)
+	cacheStorageRedis = cache.NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, cacheAreaAuto, cache.SerializerGOB{})
 	cmAuto            = cache.SimpleCacheManager{
 		CacheStorage: cacheStorageRedis,
 	}

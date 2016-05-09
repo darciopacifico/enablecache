@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	cacheStorage = cache.NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, strconv.Itoa(rand.Int()))
+	cacheStorage = cache.NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, strconv.Itoa(rand.Int()), cache.SerializerGOB{})
 	cacheManager = cache.SimpleCacheManager{
 		CacheStorage: cacheStorage,
 	}

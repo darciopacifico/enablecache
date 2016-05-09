@@ -16,7 +16,7 @@ var (
 	cacheArea               = strconv.Itoa(rand.Int())
 	//all registries will be deleted, if test success
 
-	cacheStorage = NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, cacheArea)
+	cacheStorage = NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, cacheArea, SerializerGOB{})
 
 	cacheManager = SimpleCacheManager{
 		cacheStorage,
