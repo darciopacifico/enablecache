@@ -13,10 +13,12 @@ type RedisCacheStorage struct {
 	redisPool      redis.Pool
 	ttlReadTimeout int
 	cacheAreaa     string
-	Serializer     Serializer
+	Serializer     Serializer // usually SerializerGOB implementation
 }
 
-var enableTTL = true // setup a external config
+var _=SerializerGOB{} // this is the usual serializer used above!!
+
+var enableTTL = false // setup a external config
 
 //recover all cacheregistries of keys
 func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRegistry, error) {
