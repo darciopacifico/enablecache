@@ -1,23 +1,19 @@
 package cache
 
-
 import (
 	"testing"
 	"time"
 	"github.com/garyburd/redigo/redis"
+	"reflect"
 )
 
 var (
 	_=redis.ErrNil
 	cacheStorageRedis_test = NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, "cachetest")
 	qtdChaves = 100
-
 )
 
-
-
 func TestDelete(t *testing.T) {
-
 	//cleanup repository
 	cacheStorageRedis_test.DeleteValues("valtestdel1", "valtestdel2", "valtestdel3")
 
@@ -35,9 +31,9 @@ func TestDelete(t *testing.T) {
 
 	//insert some registries
 	cacheStorageRedis_test.SetValues(
-		CacheRegistry{"valtestdel1", "valor1", -1, true},
-		CacheRegistry{"valtestdel2", "valor2", -1, true},
-		CacheRegistry{"valtestdel3", "valor3", -1, true})
+		CacheRegistry{"valtestdel1", "valor1", -1, true,""},
+		CacheRegistry{"valtestdel2", "valor2", -1, true,""},
+		CacheRegistry{"valtestdel3", "valor3", -1, true,""})
 
 	//check insertion
 	cpsNew, err := cacheStorageRedis_test.GetValuesMap("valtestdel1", "valtestdel2", "valtestdel3")
@@ -70,8 +66,6 @@ func TestDelete(t *testing.T) {
 	} else {
 		log.Debug("OK! dados deletados!")
 	}
-	/*
-	 */
 }
 
 func TestSetTTL(t *testing.T) {
@@ -83,6 +77,7 @@ func TestSetTTL(t *testing.T) {
 		"some val",
 		ttl,
 		true,
+		"",
 	})
 
 	log.Debug("Waiting for 2 seconds to test ttl update at get operation!")
@@ -106,18 +101,18 @@ func TestSetTTL(t *testing.T) {
 }
 
 
-
-
-
 func TestSetGet(t *testing.T) {
-	cacheKey := "testSetGet"
+	cacheKey := "testSetGet_order1234"
 	ttl := 100
+
+	orderOrig := createOrder(1234)
 
 	cacheStorageRedis_test.SetValues(CacheRegistry{
 		cacheKey,
-		"some val",
+		orderOrig,
 		ttl,
 		true,
+		"",
 	})
 
 	log.Debug("Waiting for 2 seconds to test ttl update at get operation!")
@@ -132,8 +127,15 @@ func TestSetGet(t *testing.T) {
 
 	cacheReg := cacheRegs[cacheKey]
 
+	orderCast, _ := cacheReg.Payload.(Order)
 
-	log.Debug("OK, key returned %v ",cacheReg.CacheKey)
+	log.Debug("order casted, customer name %v", orderCast.Customer.Name)
 
+	log.Debug("OK, key     returned %v ",cacheReg.CacheKey)
+	log.Debug("OK, payload returned %v ",cacheReg.Payload)
+	log.Debug("OK, type name  returned %v ",reflect.TypeOf(cacheReg.Payload).Name())
+
+	log.Debug("OK, orig %v ",orderOrig)
+	log.Debug("OK, orig type name %v ",reflect.TypeOf(orderOrig).Name())
 
 }

@@ -47,12 +47,12 @@ func (c SimpleCacheManager) GetCache(cacheKey string) (CacheRegistry, error) {
 	if err != nil {
 		log.Error("Error trying to recover value from cache storage! %s", cacheKey)
 		st.Miss()
-		return CacheRegistry{cacheKey, nil, -2, false}, err
+		return CacheRegistry{cacheKey, nil, -2, false, ""}, err
 	}
 	if len(cacheRegistries) == 0 {
 		log.Debug("Cache registry not found! %s", cacheKey)
 		st.Miss()
-		return CacheRegistry{cacheKey, nil, -2, false}, nil
+		return CacheRegistry{cacheKey, nil, -2, false, ""}, nil
 	}
 
 	cacheRegistry := cacheRegistries[cacheKey]

@@ -12,9 +12,10 @@ import (
 // Cachemanager operation must return cache registry always
 type CacheRegistry struct {
 	CacheKey string      //unique key in cache
-	Payload  interface{} //payload to be cached
+	Payload  interface{} //payload to be cached, usually an byte array
 	Ttl      int         //time to live
 	HasValue bool        //return the presence of cached value on cache storage. Useful in batch operations and to avoid nil errors
+	TypeName string 	 //type name of payload. Only serializer implementation can see this attribute
 }
 
 //Define an basic contract for CacheManager

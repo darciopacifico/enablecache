@@ -111,6 +111,8 @@ func BenchmarkCarMSGP(b *testing.B) {
 		fmt.Println("Erro %v",err)
 	}
 
+	//fmt.Println("MSGP bytes:",len(bytesFromCar))
+
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
@@ -133,6 +135,8 @@ func BenchmarkCarGOB(b *testing.B) {
 	e := gob.NewEncoder(bufferE)
 	e.Encode(carOriginal)
 	destBytes = bufferE.Bytes()
+
+	//fmt.Println("GOB bytes:",len(destBytes))
 
 	b.ResetTimer()
 
@@ -158,14 +162,14 @@ func BenchmarkCarGOB(b *testing.B) {
 func BenchmarkCarJSON(b *testing.B) {
 	var carOriginal = GetCar(234234234)
 
-
-
 	var destBytes []byte
 	bufferE := bytes.NewBuffer(destBytes)
 	e := json.NewEncoder(bufferE)
 
 	e.Encode(carOriginal)
 	destBytes = bufferE.Bytes()
+
+	//fmt.Println("Bytes from JSON:",len(destBytes))
 
 	b.ResetTimer()
 

@@ -2,15 +2,50 @@ package cache
 import (
 	"bytes"
 	"encoding/gob"
+	"reflect"
 )
 
 
 type SerializerGOB struct {
-
+	MapSerializer map[string]reflect.Type
 }
+
+//
+func (s SerializerGOB) Register(value interface{}){
+	name, rt := getNameType(value)
+	s.MapSerializer[name]=rt
+}
+
+//
+func getNameType(value interface{})(string, reflect.Type){
+	rt := reflect.TypeOf(value)
+	name := rt.String()
+
+	star := ""
+	if rt.Name() == "" {
+		if pt := rt; pt.Kind() == reflect.Ptr {
+			star = "*"
+			rt = pt
+		}
+	}
+	if rt.Name() != "" {
+		if rt.PkgPath() == "" {
+			name = star + rt.Name()
+		} else {
+			name = star + rt.PkgPath() + "." + rt.Name()
+		}
+	}
+
+	return name, rt
+}
+
 
 // seralize an objeto to byte array
 func (SerializerGOB) MarshalMsg(src CacheRegistry, b []byte) (o []byte, err error){
+
+	typeName, _ := getNameType(src.Payload)
+
+	src.TypeName = typeName
 
 	buffer := new(bytes.Buffer)
 	buffer.Reset()
@@ -21,24 +56,43 @@ func (SerializerGOB) MarshalMsg(src CacheRegistry, b []byte) (o []byte, err erro
 		return []byte{}, err
 	}
 	bytes := buffer.Bytes()
-
-
 	return bytes,err
-
 }
-
-
 
 // deserialize an byte array to object
 func (SerializerGOB) UnmarshalMsg(dest CacheRegistry, bts []byte) (resp interface{}, o []byte, err error){
-
 	bufferResp := bytes.NewBuffer(bts)
+	dest.Payload = &(SOrder{})
 
 	d := gob.NewDecoder(bufferResp) //instantiate a decoder base on bytes
-
 	err = d.Decode(&dest) // try to decode this bytes in a cacheRegistry object
 
 	return dest, bts, err
 }
 
+type SOrder struct {
+	Id       int
+	Customer SCustomer
+	OrderObs string
+	ItensIds []string
+	Itens    []SOrderItem
+	Ttl      int
+}
 
+type SCustomer struct {
+	Id   int
+	Name string
+	Ttl  int
+}
+
+type SOrderItem struct {
+	Id       int
+	Name     string
+	OrderAtt []SOrderItemAtt
+}
+
+type SOrderItemAtt struct {
+	Id  int
+	Key string
+	Val string
+}

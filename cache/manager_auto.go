@@ -83,13 +83,13 @@ func (c AutoCacheManager) GetCacheTTL(cacheKey string) (int, error) {
 func (c AutoCacheManager) GetCache(cacheKey string) (CacheRegistry, error) {
 	cacheRegs, err := c.GetCaches(cacheKey)
 	if err != nil {
-		return CacheRegistry{cacheKey, nil, -2, false}, err
+		return CacheRegistry{cacheKey, nil, -2, false, ""}, err
 	}
 
 	if len(cacheRegs) > 0 {
 		return cacheRegs[cacheKey], nil
 	} else {
-		return CacheRegistry{cacheKey, nil, -2, false}, nil
+		return CacheRegistry{cacheKey, nil, -2, false, ""}, nil
 	}
 }
 
@@ -481,7 +481,7 @@ func (c AutoCacheManager) mapAttributesToCacheKeys(cacheKey string, cacheRegistr
 			}
 
 			//recursivelly inspect this fieldValue as same as value passed to this function before
-			cacheRegistryField := CacheRegistry{cacheKey, fieldValue.Interface(), cacheRegistry.Ttl, true}
+			cacheRegistryField := CacheRegistry{cacheKey, fieldValue.Interface(), cacheRegistry.Ttl, true, ""}
 
 			//mapAttributes, err := c.MapAttributesToCacheKeys(cacheKey, fieldValue, mapVisits)
 			mapAttributes, err := c.mapAttributesToCacheKeys(cacheKey, &cacheRegistryField, mapVisits)
@@ -520,7 +520,7 @@ func (c AutoCacheManager) mapAttributesToCacheKeys(cacheKey string, cacheRegistr
 	if len(mapAttribute) > 0 {
 		//put the tree of references
 		treeCacheKey := getKeyForDependencies(cacheKey)
-		(*mapVisits)[treeCacheKey] = CacheRegistry{treeCacheKey, mapAttribute, -1, true}
+		(*mapVisits)[treeCacheKey] = CacheRegistry{treeCacheKey, mapAttribute, -1, true, ""}
 	}
 
 	//return all stuff

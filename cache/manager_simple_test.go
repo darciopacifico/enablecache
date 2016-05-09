@@ -71,6 +71,7 @@ func init() {
 		order,
 		ttlDefaultTestOrderItem,
 		true,
+		"",
 	}
 
 	cacheManager.SetCache(cacheRegistry)
@@ -112,6 +113,7 @@ func TestCacheManager(t *testing.T) {
 		orderUpdated,
 		ttlDefaultTestOrder,
 		true,
+		"",
 	}
 	cacheManager.SetCache(newCacheRegistry)
 

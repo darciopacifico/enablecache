@@ -107,10 +107,8 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRe
 				//Everything is alright
 				mapCacheRegistry[cacheRegistry.CacheKey] = cacheRegistry
 			}
-
 		}
 	}
-
 
 	if (enableTTL) {
 		select {
@@ -131,7 +129,7 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRe
 func (s RedisCacheStorage) GetTTL(key string) (int, error) {
 	oneItemMap := make(map[string]CacheRegistry, 1)
 
-	oneItemMap[key] = CacheRegistry{key, "", -2 /*not found*/, true}
+	oneItemMap[key] = CacheRegistry{key, "", -2 /*not found*/, true, ""}
 
 	respMap, errTTL := s.GetActualTTL(oneItemMap)
 	return respMap[key].Ttl, errTTL

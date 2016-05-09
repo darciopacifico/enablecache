@@ -3,7 +3,6 @@ import (
 	"fmt"
 )
 
-
 //go:generate msgp
 
 type Attribute struct {
@@ -28,6 +27,7 @@ func GetReg(id int) CacheRegistry {
 		Payload :GetCar(id),
 		Ttl: 90000000,
 		HasValue:true,
+		TypeName:"",
 	}
 	return cr
 }
@@ -39,6 +39,11 @@ func GetCar(id int) Car {
 		CarName  : "BMW 540",
 		Attributes : []Attribute{
 			Attribute{1, "deckoker", "true", },
+			Attribute{2, "actionMode", "simple/double", },
+			Attribute{3, "lock", "bolt locker", },
+			Attribute{1, "deckoker", "true", },
+			Attribute{2, "actionMode", "simple/double", },
+			Attribute{2, "actionMode", "simple/double", },
 			Attribute{2, "actionMode", "simple/double", },
 			Attribute{3, "lock", "bolt locker", },
 			Attribute{1, "deckoker", "true", },

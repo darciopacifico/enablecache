@@ -31,7 +31,7 @@ func (cacheSpot CacheSpot) cacheValues(notCachedIns []reflect.Value, origOuts []
 				ttl := discoverTTL(valRet, -1)
 				log.Debug("TTL for reg %v %v!", cacheId, ttl)
 				//invoke cache manager to persist returned value
-				cacheRegs = append(cacheRegs, cache.CacheRegistry{CacheKey: cacheId, Payload: valRet, Ttl: ttl, HasValue: true})
+				cacheRegs = append(cacheRegs, cache.CacheRegistry{CacheKey: cacheId, Payload: valRet, Ttl: ttl, HasValue: true, TypeName: ""})
 
 			} else {
 
