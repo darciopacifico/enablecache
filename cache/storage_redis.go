@@ -13,7 +13,7 @@ type RedisCacheStorage struct {
 	redisPool      redis.Pool
 	ttlReadTimeout int
 	cacheAreaa     string
-	Serializer     SerializerGOB
+	Serializer     Serializer
 }
 
 var enableTTL = true // setup a external config
