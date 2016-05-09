@@ -1,0 +1,19 @@
+struct Person {
+  Name string
+  Age uint32
+}
+
+
+struct Attribute {
+	Id    int32
+	Name  string
+	Value string
+}
+
+struct Gun{
+
+	GunId int32
+	GunName string
+	Attributes []Attribute
+	Ttl             int32
+}

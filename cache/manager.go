@@ -5,6 +5,8 @@ import (
 	"math"
 )
 
+//go:generate msgp
+
 // CacheRegistry:
 // Contains struct payload to be cached and additional information about cache registry
 // Cachemanager operation must return cache registry always

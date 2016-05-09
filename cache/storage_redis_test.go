@@ -1,13 +1,20 @@
 package cache
 
+
 import (
 	"testing"
 	"time"
+	"github.com/garyburd/redigo/redis"
 )
 
 var (
-	cacheStorageRedis_test = NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000,  "cachetest")
+	_=redis.ErrNil
+	cacheStorageRedis_test = NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, "cachetest")
+	qtdChaves = 100
+
 )
+
+
 
 func TestDelete(t *testing.T) {
 
@@ -96,4 +103,37 @@ func TestSetTTL(t *testing.T) {
 	} else {
 		log.Debug("TTL setting was updated in return val! %v, %v", cacheReg.Ttl, ttl)
 	}
+}
+
+
+
+
+
+func TestSetGet(t *testing.T) {
+	cacheKey := "testSetGet"
+	ttl := 100
+
+	cacheStorageRedis_test.SetValues(CacheRegistry{
+		cacheKey,
+		"some val",
+		ttl,
+		true,
+	})
+
+	log.Debug("Waiting for 2 seconds to test ttl update at get operation!")
+	time.Sleep(time.Second * 2)
+
+	cacheRegs, err := cacheStorageRedis_test.GetValuesMap(cacheKey)
+	if err != nil {
+		log.Error("Erro ao tentar recuperar cache registry!")
+		t.Fail()
+		return
+	}
+
+	cacheReg := cacheRegs[cacheKey]
+
+
+	log.Debug("OK, key returned %v ",cacheReg.CacheKey)
+
+
 }

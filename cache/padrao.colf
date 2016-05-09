@@ -1,0 +1,8 @@
+package cache
+
+type CacheRegistry struct {
+	CacheKey text
+	Payload  binary
+	Ttl      int32
+	HasValue bool
+}

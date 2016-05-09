@@ -1,8 +1,8 @@
 package cache
 
 import (
-	"bytes"
-	"encoding/gob"
+	//"bytes"
+	//"encoding/gob"
 	"time"
 
 	"github.com/garyburd/redigo/redis"
@@ -10,29 +10,33 @@ import (
 
 //Cache storage implementation using redis as key/value storage
 type RedisCacheStorage struct {
-	redisPool  redis.Pool
+	redisPool      redis.Pool
 	ttlReadTimeout int
-	cacheAreaa string
+	cacheAreaa     string
+	Serializer     SerializerGOB
 }
+
+var enableTTL = true // setup a external config
 
 //recover all cacheregistries of keys
 func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRegistry, error) {
 
 	ttlMapChan := make(chan map[string]int, 1)
+	if (enableTTL) {
+		go func() {
+			defer func() {
+				if r := recover(); r != nil {
+					log.Critical("Error trying to get ttl for registries %v!", cacheKeys)
 
-	go func() {
-		defer func() {
-			if r := recover(); r != nil {
-				log.Critical("Error trying to get ttl for registries %v!", cacheKeys)
+					//in case of error, retur an empty map
+					ttlMapChan <- make(map[string]int, 0)
+				}
+			}()
 
-				//in case of error, retur an empty map
-				ttlMapChan <- make(map[string]int, 0)
-			}
+			//put result on channel
+			ttlMapChan <- s.GetTTLMap(cacheKeys)
 		}()
-
-		//put result on channel
-		ttlMapChan <- s.GetTTLMap(cacheKeys)
-	}()
+	}
 
 	mapCacheRegistry := make(map[string]CacheRegistry)
 
@@ -45,6 +49,8 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRe
 	defer conn.Close()
 	var err error = nil
 
+	//log.Debug(cacheKeys)
+
 	replyMget, err := conn.Do("MGET", (s.getKeys(cacheKeys))...)
 	if err != nil || replyMget == nil {
 		log.Error("Error trying to get values from cache %v", err)
@@ -55,47 +61,59 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRe
 
 	arrResults, isArray := replyMget.([]interface{}) //try to convert the returned value to array
 
-	if isArray { //formal check
-		for _, cacheRegistryNotBytes := range arrResults {
-			if cacheRegistryNotBytes != nil {
-
-				cacheRegistryBytes, errBytes := redis.Bytes(cacheRegistryNotBytes, err)
-				if errBytes != nil || replyMget == nil {
-					return mapCacheRegistry, errBytes
-				}
-
-				bufferResp := bytes.NewBuffer(cacheRegistryBytes)
-
-				d := gob.NewDecoder(bufferResp) //instantiate a decoder base on bytes
-
-				cacheRegistry := CacheRegistry{}
-
-				err = d.Decode(&cacheRegistry) // try to decode this bytes in a cacheRegistry object
-				if err != nil {
-					log.Error("Warning!! Error trying to recover data from redis!", err)
-				} else {
-
-					if cacheRegistry.Payload == nil {
-						log.Error("ATENCAO! NENHUM PAYLOAD FOI RETORNADO DO REDIS!")
-					} else {
-
-						log.Debug("Retornando cache key %v do redis!", cacheRegistry.CacheKey)
-					}
-
-					//Everything is alright
-					mapCacheRegistry[cacheRegistry.CacheKey] = cacheRegistry
-				}
-			} else {
-				log.Debug("Returned null for cacheKeys %v!", cacheKeys)
-			}
-		}
-	} else {
+	if !isArray {
 		log.Error("Value returned by a MGET query is not array for keys %v! No error will be returned!", cacheKeys) //formal check
-
 		return make(map[string]CacheRegistry), nil
 	}
 
-	select {
+	for _, cacheRegistryNotBytes := range arrResults {
+		if cacheRegistryNotBytes != nil {
+
+
+/*
+			cacheRegistryBytes, isByteArr := cacheRegistryNotBytes.(string)
+			if(isByteArr){
+				log.Error("error trying to deserialize! not a byte array")
+				return mapCacheRegistry, errors.New("not byte array!")
+			}
+*/
+
+
+			cacheRegistryBytes, errBytes := redis.Bytes(cacheRegistryNotBytes, err)
+			if errBytes != nil || replyMget == nil {
+				return mapCacheRegistry, errBytes
+			}
+
+			cacheRegistry := CacheRegistry{}
+
+			interfaceResp, _, errUnm := s.Serializer.UnmarshalMsg(cacheRegistry,cacheRegistryBytes)
+			if errUnm!=nil {
+				log.Error("error trying to deserialize!",errUnm)
+				return mapCacheRegistry, errUnm
+			}
+
+			cacheRegistry, isCR := interfaceResp.(CacheRegistry)
+			if(!isCR){
+				log.Error("error trying to deserialize! object is not a CacheRegistry object type!")
+				return mapCacheRegistry, nil
+			}
+
+			if err != nil {
+				log.Error("Warning!! Error trying to recover data from redis!", err)
+			} else {
+				if cacheRegistry.Payload == nil {
+					log.Error("ATENCAO! NENHUM PAYLOAD FOI RETORNADO DO REDIS!")
+				}
+				//Everything is alright
+				mapCacheRegistry[cacheRegistry.CacheKey] = cacheRegistry
+			}
+
+		}
+	}
+
+
+	if (enableTTL) {
+		select {
 		//wait for ttl channel
 		case ttlMap := <-ttlMapChan:
 			mapCacheRegistry = s.zipTTL(mapCacheRegistry, ttlMap)
@@ -103,7 +121,9 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRe
 		case <-time.After(time.Duration(s.ttlReadTimeout) * time.Millisecond):
 			log.Warning("Retrieve TTL for cachekeys %v from redis timeout after %dms, continuing without it.", cacheKeys, s.ttlReadTimeout)
 			mapCacheRegistry = s.zipTTL(mapCacheRegistry, make(map[string]int, 0))
+		}
 	}
+
 	return mapCacheRegistry, nil // err=nil by default, if everything is alright
 }
 
@@ -146,7 +166,7 @@ func (s RedisCacheStorage) GetActualTTL(mapCacheRegistry map[string]CacheRegistr
 		log.Debug("TTL %v that came from redis %v", keyMap, respTtl)
 
 		if err != nil {
-			log.Error("Error trying to retrieve ttl of key "+keyMap, err)
+			log.Error("Error trying to retrieve ttl of key " + keyMap, err)
 			cacheRegistry.Ttl = -2
 			return mapCacheRegistry, err
 
@@ -176,7 +196,7 @@ func (s RedisCacheStorage) GetTTLMap(keys []string) map[string]int {
 		log.Debug("TTL %v that came from redis %v", key, respTtl)
 
 		if err != nil {
-			log.Error("Error trying to retrieve ttl of key "+key, err)
+			log.Error("Error trying to retrieve ttl of key " + key, err)
 			ttlMap[key] = -2
 
 		} else {
@@ -223,33 +243,29 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) error {
 	conn := s.redisPool.Get()
 	defer conn.Close()
 
-	keyValPairs := make([]interface{}, 2*len(registries))
+	keyValPairs := make([]interface{}, 2 * len(registries))
 
 	//prepare a keyval pair array
 	for index, cacheRegistry = range registries {
-		buffer := new(bytes.Buffer)
 
 		if len(cacheRegistry.CacheKey) == 0 {
 			log.Error("cache key vazio !!!")
 			//panic(errors.New("cache key vazio"))
 		}
 
-		buffer.Reset()
-		e := gob.NewEncoder(buffer)
-		err := e.Encode(cacheRegistry)
-		if err != nil {
-			log.Error("Error trying to save registry! %v", err)
+		var bytes = []byte{}
+		bytes, err := s.Serializer.MarshalMsg(cacheRegistry,bytes)
+		if(err!=nil){
 			return err
 		}
 
-		bytes := buffer.Bytes()
 
 		if len(bytes) == 0 {
 			log.Error("Error trying to decode value for key %v", cacheRegistry.CacheKey)
 		}
 
 		keyValPairs[(index * 2)] = s.getKey(cacheRegistry.CacheKey)
-		keyValPairs[(index*2)+1] = bytes
+		keyValPairs[(index * 2) + 1] = bytes
 
 	}
 
@@ -278,7 +294,7 @@ func (s RedisCacheStorage) SetExpireTTL(cacheRegistries ...CacheRegistry) {
 	//prepare a keyval pair array
 	for _, cacheRegistry := range cacheRegistries {
 		if cacheRegistry.GetTTL() > 0 {
-			log.Debug("Setting ttl to key %s ", cacheRegistry.CacheKey)
+			//log.Debug("Setting ttl to key %s ", cacheRegistry.CacheKey)
 			_, err := conn.Do("expire", s.getKey(cacheRegistry.CacheKey), cacheRegistry.GetTTL())
 			if err != nil {
 				log.Error("Error trying to save cache registry w! %v", err)
@@ -350,6 +366,7 @@ func NewRedisCacheStorage(hostPort string, password string, maxIdle int, readTim
 		*newPoolRedis(hostPort, password, maxIdle, readTimeout),
 		ttlReadTimeout,
 		cacheArea,
+		SerializerGOB{},
 	}
 
 	return redisCacheStorage
