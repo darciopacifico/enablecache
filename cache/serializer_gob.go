@@ -11,7 +11,7 @@ type SerializerGOB struct {
 
 //
 func (s SerializerGOB) GetPrefix() string{
-	return "gob"
+	return "g"
 }
 
 //
