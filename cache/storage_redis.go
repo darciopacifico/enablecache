@@ -21,7 +21,10 @@ type RedisCacheStorage struct {
 //recover all cacheregistries of keys
 func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (mapResp map[string]CacheRegistry, retError error) {
 
+	conn := s.redisPool.Get()
 	defer func() { //assure for not panicking
+		conn.Close()
+
 		if r := recover(); r != nil {
 			log.Error("Recovering error from Redis Cache Storage!!  %v", r)
 			log.Error("Returning as no cached registry found!!")
@@ -58,13 +61,11 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (mapResp map[string
 		return mapCacheRegistry, nil //empty map
 	}
 
-	conn := s.redisPool.Get()
 	if(conn==nil){
 		log.Error("Error trying to acquire redis conn! null connection")
 		return make(map[string]CacheRegistry), errors.New("Redis conn is null! Check conn errors!")
 	}
 
-	defer conn.Close()
 	var err error = nil
 
 	//log.Debug(cacheKeys)
@@ -172,8 +173,9 @@ func (s RedisCacheStorage) zipTTL(mapCacheRegistry map[string]CacheRegistry, ttl
 
 //Recover current ttl information about registries
 func (s RedisCacheStorage) GetActualTTL(mapCacheRegistry map[string]CacheRegistry) (returnMap map[string]CacheRegistry, retError error) {
-
+	conn := s.redisPool.Get()
 	defer func() { //assure for not panicking
+		conn.Close()
 		if r := recover(); r != nil {
 			log.Error("TTL Recovering error from Redis Cache Storage!!  %v", r)
 			log.Error("Returning as no TTL info found!!")
@@ -186,12 +188,11 @@ func (s RedisCacheStorage) GetActualTTL(mapCacheRegistry map[string]CacheRegistr
 	}()
 
 
-	conn := s.redisPool.Get()
+
 	if(conn==nil){
 		log.Error("TTL: Error trying to acquire redis conn! null connection")
 		return make(map[string]CacheRegistry), errors.New("TTL: Redis conn is null! Check conn errors!")
 	}
-	defer conn.Close()
 
 	//prepare a keyval pair array
 	for keyMap, cacheRegistry := range mapCacheRegistry {
@@ -218,7 +219,10 @@ func (s RedisCacheStorage) GetActualTTL(mapCacheRegistry map[string]CacheRegistr
 //Recover current ttl information about registries
 func (s RedisCacheStorage) GetTTLMap(keys []string)  (retTTLMap map[string]int ){
 
+	conn := s.redisPool.Get()
+
 	defer func() { //assure for not panicking
+		conn.Close()
 		if r := recover(); r != nil {
 			log.Error("TTL error from Redis Cache Storage!!  %v", r)
 			log.Error("Returning as emptu ttl map !!")
@@ -230,12 +234,11 @@ func (s RedisCacheStorage) GetTTLMap(keys []string)  (retTTLMap map[string]int )
 
 	ttlMap := make(map[string]int, len(keys))
 
-	conn := s.redisPool.Get()
+
 	if(conn==nil){
 		log.Error("TTLMap: Error trying to acquire redis conn! null connection")
 		return make(map[string]int)
 	}
-	defer conn.Close()
 
 	//prepare a keyval pair array
 	for _, key := range keys {
@@ -278,8 +281,10 @@ func setTTLToPayload(cacheRegistry *CacheRegistry) CacheRegistry {
 
 //save informed registries on redis
 func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) (retErr error) {
+	conn := s.redisPool.Get()
 
 	defer func() { //assure for not panicking
+		conn.Close()
 		if r := recover(); r != nil {
 			log.Error("Error trying to save cacheRegs!!  %v", r)
 			log.Error("Returning recovered error!")
@@ -293,14 +298,10 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) (retErr error)
 	var cacheRegistry CacheRegistry
 	var index int
 
-	conn := s.redisPool.Get()
 	if(conn==nil){
 		log.Error("SetValues: Error trying to acquire redis conn! null connection")
 		return errors.New("SetValues: Redis conn is null! Check conn errors!")
 	}
-
-
-	defer conn.Close()
 
 	keyValPairs := make([]interface{}, 2 * len(registries))
 
@@ -347,20 +348,20 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) (retErr error)
 
 //set defined ttl to the cache registries
 func (s RedisCacheStorage) SetExpireTTL(cacheRegistries ...CacheRegistry) {
+	conn := s.redisPool.Get()
 	defer func() { //assure for not panicking
+		conn.Close()
 		if r := recover(); r != nil {
 			log.Error("Error trying to set expire ttl!!  %v", r)
 			return
 		}
 	}()
 
-	conn := s.redisPool.Get()
 	if(conn==nil){
 		log.Error("SetExpires: Error trying to acquire redis conn! null connection")
 		return
 	}
 
-	defer conn.Close()
 
 	//prepare a keyval pair array
 	for _, cacheRegistry := range cacheRegistries {
@@ -386,13 +387,14 @@ func (s RedisCacheStorage) SetExpireTTL(cacheRegistries ...CacheRegistry) {
 
 //delete values from redis
 func (s RedisCacheStorage) DeleteValues(cacheKeys ...string) ( retErr error) {
-	c := s.redisPool.Get()
-	if(c==nil){
+	conn := s.redisPool.Get()
+	if(conn==nil){
 		log.Error("Delete: Error trying to acquire redis conn! null connection")
 		return errors.New("Delete: Redis conn is null! Check conn errors!")
 	}
 
 	defer func() { //assure for not panicking
+		conn.Close()
 		if r := recover(); r != nil {
 			log.Error("Error trying to delete reg!!  %v", r)
 
@@ -400,16 +402,13 @@ func (s RedisCacheStorage) DeleteValues(cacheKeys ...string) ( retErr error) {
 			return
 		}
 
-		if(c!=nil){
-			c.Close()
-		}
 	}()
 
 
 	//apply a prefix to cache area
 	keys := s.getKeys(cacheKeys)
 
-	reply, err := c.Do("DEL", keys...)
+	reply, err := conn.Do("DEL", keys...)
 	if err != nil {
 		log.Error("Erro ao tentar invalidar registro no cache!", err, reply)
 		return err
