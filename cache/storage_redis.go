@@ -18,10 +18,6 @@ type RedisCacheStorage struct {
 	Serializer     	Serializer // usually SerializerGOB implementation
 }
 
-var _=SerializerGOB{} // this is the usual serializer used above!!
-
-
-
 //recover all cacheregistries of keys
 func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (mapResp map[string]CacheRegistry, retError error) {
 
@@ -465,11 +461,13 @@ func NewRedisCacheStorage(hostPort string, password string, maxIdle int, readTim
 }
 
 //create a redis connection pool
-func newPoolRedis(server, password string, maxIdle int, readTimeout int) *redis.Pool {
+func newPoolRedis(server, password string, maxIdle int, maxActive int, readTimeout int) *redis.Pool {
 
 	return &redis.Pool{
 		MaxIdle:     maxIdle,
 		IdleTimeout: 240 * time.Second,
+		MaxActive: maxActive,
+		Wait:false,
 		Dial: func() ( retConn redis.Conn, retErr error) {
 
 			defer func() { //assure for not panicking
