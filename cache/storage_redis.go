@@ -447,10 +447,10 @@ func (s RedisCacheStorage) getKeys(keys []string) []interface{} {
 }
 
 //instantiate a new cachestorage redis
-func NewRedisCacheStorage(hostPort string, password string, maxIdle int, readTimeout int, ttlReadTimeout int, cacheArea string, serializer Serializer, enableTTL bool) RedisCacheStorage {
+func NewRedisCacheStorage(hostPort string, password string, maxIdle int, maxActive int, readTimeout int, ttlReadTimeout int, cacheArea string, serializer Serializer, enableTTL bool) RedisCacheStorage {
 
 	redisCacheStorage := RedisCacheStorage{
-		*newPoolRedis(hostPort, password, maxIdle, readTimeout),
+		*newPoolRedis(hostPort, password, maxIdle, maxActive,readTimeout),
 		ttlReadTimeout,
 		cacheArea,
 		enableTTL,
