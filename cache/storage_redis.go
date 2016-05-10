@@ -38,21 +38,22 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (mapResp map[string
 
 	ttlMapChan := make(chan map[string]int, 1)
 
-	go func() {
-		defer func() {
-			if r := recover(); r != nil {
-				log.Critical("Error trying to get ttl for registries %v!", cacheKeys)
+	//if (s.enableTtl) {
+	if (false) { // param does not correct. not important now
+		go func() { // parallel ttl recover
+			defer func() {
+				if r := recover(); r != nil {
+					log.Critical("Error trying to get ttl for registries %v!", cacheKeys)
 
-				//in case of error, retur an empty map
-				ttlMapChan <- make(map[string]int, 0)
-			}
+					//in case of error, retur an empty map
+					ttlMapChan <- make(map[string]int, 0)
+				}
+			}()
+
+				//put result on channel
+				ttlMapChan <- s.GetTTLMap(cacheKeys)
 		}()
-
-		if (s.enableTtl) {
-			//put result on channel
-			ttlMapChan <- s.GetTTLMap(cacheKeys)
-		}
-	}()
+	}
 
 	mapCacheRegistry := make(map[string]CacheRegistry)
 
@@ -131,7 +132,8 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (mapResp map[string
 		}
 	}
 
-	if (s.enableTtl) {
+	//if (s.enableTtl) {
+	if (false) { // error returning param. not important now
 		select {
 		//wait for ttl channel
 		case ttlMap := <-ttlMapChan:
