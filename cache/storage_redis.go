@@ -341,7 +341,7 @@ func (s RedisCacheStorage) getKey(key string) string {
 	var serPredix = s.Serializer.GetPrefix()
 
 	if len(s.cacheArea) > 0 {
-		newKey = s.cacheArea + ":"+serPredix+":" + key
+		newKey = s.cacheArea + serPredix + key
 	} else {
 		newKey = key
 	}
