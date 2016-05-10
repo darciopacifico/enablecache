@@ -9,7 +9,7 @@ import (
 
 var (
 	_=redis.ErrNil
-	cacheStorageRedis_test = NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, "cachetest", SerializerGOB{})
+	cacheStorageRedis_test = NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, "cachetest", SerializerGOB{}, true)
 	qtdChaves = 100
 )
 

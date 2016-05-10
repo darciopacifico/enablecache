@@ -12,11 +12,11 @@ type Attribute struct {
 }
 
 type Car struct {
-	CarId      int          `json:"carId"`
-	CarName    string       `json:"carName"`
-	Attributes []Attribute  `json:"specializations,omitempty"`
-	FlagMap    map[string]string `json:"flagMap"`
-	Ttl        int            `json:"-"`
+	CarId      	int          		`json:"carId"`
+	CarName    	string       		`json:"carName"`
+	Attributes 	[]Attribute  		`json:"specializations,omitempty"`
+	FlagMap    	map[string]string 	`json:"flagMap"`
+	Ttl        	int            		`json:"-"`
 
 }
 

@@ -63,37 +63,9 @@ func (SerializerGOB) MarshalMsg(src CacheRegistry, b []byte) (o []byte, err erro
 // deserialize an byte array to object
 func (SerializerGOB) UnmarshalMsg(dest CacheRegistry, bts []byte) (resp interface{}, o []byte, err error){
 	bufferResp := bytes.NewBuffer(bts)
-	dest.Payload = &(SOrder{})
 
 	d := gob.NewDecoder(bufferResp) //instantiate a decoder base on bytes
 	err = d.Decode(&dest) // try to decode this bytes in a cacheRegistry object
 
 	return dest, bts, err
-}
-
-type SOrder struct {
-	Id       int
-	Customer SCustomer
-	OrderObs string
-	ItensIds []string
-	Itens    []SOrderItem
-	Ttl      int
-}
-
-type SCustomer struct {
-	Id   int
-	Name string
-	Ttl  int
-}
-
-type SOrderItem struct {
-	Id       int
-	Name     string
-	OrderAtt []SOrderItemAtt
-}
-
-type SOrderItemAtt struct {
-	Id  int
-	Key string
-	Val string
 }
