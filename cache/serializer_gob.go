@@ -7,14 +7,11 @@ import (
 
 
 type SerializerGOB struct {
-	MapSerializer map[string]reflect.Type
 }
 
 //
 func (s SerializerGOB) Register(value interface{}){
 	gob.Register(value)
-	name, rt := getNameType(value)
-	s.MapSerializer[name]=rt
 }
 
 //
