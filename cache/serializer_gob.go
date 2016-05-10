@@ -10,6 +10,11 @@ type SerializerGOB struct {
 }
 
 //
+func (s SerializerGOB) GetPrefix() string{
+	return "gob"
+}
+
+//
 func (s SerializerGOB) Register(value interface{}){
 	gob.Register(value)
 }

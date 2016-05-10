@@ -19,6 +19,8 @@ type RedisCacheStorage struct {
 
 var _=SerializerGOB{} // this is the usual serializer used above!!
 
+
+
 //recover all cacheregistries of keys
 func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRegistry, error) {
 
@@ -336,8 +338,10 @@ func (s RedisCacheStorage) DeleteValues(cacheKeys ...string) error {
 func (s RedisCacheStorage) getKey(key string) string {
 	var newKey string
 
+	var serPredix = s.Serializer.GetPrefix()
+
 	if len(s.cacheArea) > 0 {
-		newKey = s.cacheArea + ":" + key
+		newKey = s.cacheArea + ":"+serPredix+":" + key
 	} else {
 		newKey = key
 	}

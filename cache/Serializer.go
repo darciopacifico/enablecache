@@ -12,5 +12,7 @@ type Serializer  interface {
 	// UnmarshalMsg implements msgp.Unmarshaler
 	UnmarshalMsg(dest CacheRegistry, bts []byte) (resp interface{} ,o []byte, err error)
 
+	//prefix for this serializer, enable multiple serializer at same respository (redis)
+	GetPrefix() string
 
 }
