@@ -241,6 +241,8 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) (retErr error)
 		log.Error("Error trying to flush connection! %v", errF)
 		return errF
 	}
+
+	log.Debug("Calling setting expires!!")
 	s.SetExpireTTL(registries...)
 	return nil
 }

@@ -102,11 +102,17 @@ func setTTLToPayload(cacheRegistry CacheRegistry) CacheRegistry {
 
 	exposeTTL, isExposeTTL := payload.(ExposeTTL)
 
+
+
+
 	if isExposeTTL {
-		payload = exposeTTL.SetTtl(cacheRegistry.GetTTLSeconds()) // assure the same type, from set ttl
-		cacheRegistry.Payload = payload
-		log.Debug("Setting ttl to %v, ttl value %v", cacheRegistry.CacheKey, exposeTTL.GetTtl())
+
+		ttl := cacheRegistry.GetTTLSeconds()
+		log.Debug("Setting ttl to %v, ttl value %v", cacheRegistry.CacheKey, ttl)
+
+		payload = exposeTTL.SetTtl(ttl) // assure the same type, from set ttl
 	} else {
+		cacheRegistry.Payload = payload
 		log.Debug("Payload doesn't ExposeTTL %v", cacheRegistry.CacheKey)
 	}
 
