@@ -5,6 +5,7 @@ import (
 	"sync"
 	"github.com/darciopacifico/enablecache/cache"
 	"github.com/op/go-logging"
+	"time"
 )
 
 var EMPTY_MAP = make(map[string]cache.CacheRegistry)
@@ -24,7 +25,8 @@ type CacheSpot struct {
 	SpecifyInputKeys  TypeSpecifyInputKeys
 	SpecifyOutputKeys TypeSpecifyOutputKeys
 	DefValsFunction   TypeCreateDefVals
-	wg                *sync.WaitGroup
+	WaitingGroup 	*sync.WaitGroup
+	Ttl               time.Duration
 	CallContext       // will be mounted at start up nothing to do
 }
 

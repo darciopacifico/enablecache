@@ -77,6 +77,17 @@ func FindCustomer(id int, name string, isActive bool) (Customer, bool, time.Time
 	return customer, true, customer.Creation
 }
 
+func FindCustomers(ids []int, name string, isActive bool) ([]Customer, bool, time.Time) {
+	customers := make([]Customer,len(ids))
+
+	for idx, id := range ids{
+		customer := createCustomer(id)
+		customers[idx] = customer
+	}
+
+	return customers, true, time.Now()
+}
+
 func FindCustomerSimple(id int) Customer {
 	return createCustomer(id)
 }

@@ -10,36 +10,17 @@ import (
 
 //Cache storage implementation using redis as key/value storage
 type RedisCacheStorage struct {
-	redisPool      	redis.Pool
-	ttlReadTimeout 	int
-	cacheArea      	string
-	enableTTL	 	bool
-	Serializer     	Serializer // usually SerializerGOB implementation
+	redisPool      redis.Pool
+	ttlReadTimeout int
+	cacheArea      string
+	Serializer     Serializer // usually SerializerGOB implementation
 }
 
-var _=SerializerGOB{} // this is the usual serializer used above!!
-
+var _ = SerializerGOB{} // this is the usual serializer used above!!
 
 
 //recover all cacheregistries of keys
 func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRegistry, error) {
-
-	ttlMapChan := make(chan map[string]int, 1)
-	if (s.enableTTL) {
-		go func() {
-			defer func() {
-				if r := recover(); r != nil {
-					log.Critical("Error trying to get ttl for registries %v!", cacheKeys)
-
-					//in case of error, retur an empty map
-					ttlMapChan <- make(map[string]int, 0)
-				}
-			}()
-
-			//put result on channel
-			ttlMapChan <- s.GetTTLMap(cacheKeys)
-		}()
-	}
 
 	mapCacheRegistry := make(map[string]CacheRegistry)
 
@@ -72,16 +53,6 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRe
 	for _, cacheRegistryNotBytes := range arrResults {
 		if cacheRegistryNotBytes != nil {
 
-
-/*
-			cacheRegistryBytes, isByteArr := cacheRegistryNotBytes.(string)
-			if(isByteArr){
-				log.Error("error trying to deserialize! not a byte array")
-				return mapCacheRegistry, errors.New("not byte array!")
-			}
-*/
-
-
 			cacheRegistryBytes, errBytes := redis.Bytes(cacheRegistryNotBytes, err)
 			if errBytes != nil || replyMget == nil {
 				return mapCacheRegistry, errBytes
@@ -89,14 +60,14 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRe
 
 			cacheRegistry := CacheRegistry{}
 
-			interfaceResp, _, errUnm := s.Serializer.UnmarshalMsg(cacheRegistry,cacheRegistryBytes)
-			if errUnm!=nil {
-				log.Error("error trying to deserialize!",errUnm)
+			interfaceResp, _, errUnm := s.Serializer.UnmarshalMsg(cacheRegistry, cacheRegistryBytes)
+			if errUnm != nil {
+				log.Error("error trying to deserialize!", errUnm)
 				return mapCacheRegistry, errUnm
 			}
 
 			cacheRegistry, isCR := interfaceResp.(CacheRegistry)
-			if(!isCR){
+			if (!isCR) {
 				log.Error("error trying to deserialize! object is not a CacheRegistry object type!")
 				return mapCacheRegistry, nil
 			}
@@ -113,121 +84,9 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (map[string]CacheRe
 		}
 	}
 
-	if (s.enableTTL) {
-		select {
-		//wait for ttl channel
-		case ttlMap := <-ttlMapChan:
-			mapCacheRegistry = s.zipTTL(mapCacheRegistry, ttlMap)
-		//in case of timeout, returt an empty map
-		case <-time.After(time.Duration(s.ttlReadTimeout) * time.Millisecond):
-			log.Warning("Retrieve TTL for cachekeys %v from redis timeout after %dms, continuing without it.", cacheKeys, s.ttlReadTimeout)
-			mapCacheRegistry = s.zipTTL(mapCacheRegistry, make(map[string]int, 0))
-		}
-	}
-
 	return mapCacheRegistry, nil // err=nil by default, if everything is alright
 }
 
-//Recover current ttl information about registry
-func (s RedisCacheStorage) GetTTL(key string) (int, error) {
-	oneItemMap := make(map[string]CacheRegistry, 1)
-
-	oneItemMap[key] = CacheRegistry{key, "", -2 /*not found*/, true, ""}
-
-	respMap, errTTL := s.GetActualTTL(oneItemMap)
-	return respMap[key].Ttl, errTTL
-
-}
-
-//Recover current ttl information about registries
-func (s RedisCacheStorage) zipTTL(mapCacheRegistry map[string]CacheRegistry, ttlMap map[string]int) map[string]CacheRegistry {
-	//prepare a keyval pair array
-	for key, cacheRegistry := range mapCacheRegistry {
-		if ttl, hasTtl := ttlMap[key]; hasTtl {
-			cacheRegistry.Ttl = ttl
-		} else {
-			cacheRegistry.Ttl = -1
-		}
-		mapCacheRegistry[key] = cacheRegistry
-	}
-
-	return mapCacheRegistry
-}
-
-//Recover current ttl information about registries
-func (s RedisCacheStorage) GetActualTTL(mapCacheRegistry map[string]CacheRegistry) (map[string]CacheRegistry, error) {
-
-	conn := s.redisPool.Get()
-	defer conn.Close()
-
-	//prepare a keyval pair array
-	for keyMap, cacheRegistry := range mapCacheRegistry {
-
-		respTtl, err := conn.Do("ttl", s.getKey(keyMap))
-		log.Debug("TTL %v that came from redis %v", keyMap, respTtl)
-
-		if err != nil {
-			log.Error("Error trying to retrieve ttl of key " + keyMap, err)
-			cacheRegistry.Ttl = -2
-			return mapCacheRegistry, err
-
-		} else {
-			intResp, _ := respTtl.(int64)
-			cacheRegistry.Ttl = int(intResp)
-		}
-
-		mapCacheRegistry[keyMap] = setTTLToPayload(&cacheRegistry)
-	}
-
-	return mapCacheRegistry, nil
-}
-
-//Recover current ttl information about registries
-func (s RedisCacheStorage) GetTTLMap(keys []string) map[string]int {
-
-	ttlMap := make(map[string]int, len(keys))
-
-	conn := s.redisPool.Get()
-	defer conn.Close()
-
-	//prepare a keyval pair array
-	for _, key := range keys {
-
-		respTtl, err := conn.Do("ttl", s.getKey(key))
-		log.Debug("TTL %v that came from redis %v", key, respTtl)
-
-		if err != nil {
-			log.Error("Error trying to retrieve ttl of key " + key, err)
-			ttlMap[key] = -2
-
-		} else {
-			intResp, _ := respTtl.(int64)
-			ttlMap[key] = int(intResp)
-		}
-
-	}
-
-	return ttlMap
-}
-
-//transfer the ttl information from cacheRegistry to paylaod interface, if it is ExposeTTL
-func setTTLToPayload(cacheRegistry *CacheRegistry) CacheRegistry {
-
-	payload := cacheRegistry.Payload
-
-	exposeTTL, hasTtl := payload.(ExposeTTL)
-
-	if hasTtl {
-		log.Debug("Transfering ttl from redis (%d seconds) registry to ttl attribute of object %s", cacheRegistry.Ttl, cacheRegistry.CacheKey)
-		payload = exposeTTL.SetTtl(cacheRegistry.Ttl) // assure the same type, from set ttl
-		cacheRegistry.Payload = payload
-		log.Debug("Setting ttl to %v, ttl value %v", cacheRegistry.CacheKey, exposeTTL.GetTtl())
-	} else {
-		log.Debug("Payload doesn't ExposeTTL %v", cacheRegistry.CacheKey)
-	}
-
-	return *cacheRegistry
-}
 
 //save informed registries on redis
 func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) error {
@@ -255,11 +114,10 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) error {
 		}
 
 		var bytes = []byte{}
-		bytes, err := s.Serializer.MarshalMsg(cacheRegistry,bytes)
-		if(err!=nil){
+		bytes, err := s.Serializer.MarshalMsg(cacheRegistry, bytes)
+		if (err != nil) {
 			return err
 		}
-
 
 		if len(bytes) == 0 {
 			log.Error("Error trying to decode value for key %v", cacheRegistry.CacheKey)
@@ -283,6 +141,7 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) error {
 		log.Error("Error trying to flush connection! %v", errF)
 		return errF
 	}
+	log.Debug("Calling set ttl")
 	s.SetExpireTTL(registries...)
 	return nil
 }
@@ -294,16 +153,16 @@ func (s RedisCacheStorage) SetExpireTTL(cacheRegistries ...CacheRegistry) {
 
 	//prepare a keyval pair array
 	for _, cacheRegistry := range cacheRegistries {
-		if cacheRegistry.GetTTL() > 0 {
-			//log.Debug("Setting ttl to key %s ", cacheRegistry.CacheKey)
-			_, err := conn.Do("expire", s.getKey(cacheRegistry.CacheKey), cacheRegistry.GetTTL())
+		if cacheRegistry.StorageTTL > 0 {
+			log.Debug("Setting ttl to key %s ", cacheRegistry.CacheKey)
+			_, err := conn.Do("expire", s.getKey(cacheRegistry.CacheKey), cacheRegistry.StorageTTL)
 			if err != nil {
 				log.Error("Error trying to save cache registry w! %v", err)
 				return
 			}
 
 		} else {
-			log.Debug("TTL for %s, ttl=%d will not be setted! ", s.getKey(cacheRegistry.CacheKey), cacheRegistry.GetTTL())
+			log.Debug("TTL for %s, ttl=%d will not be setted! ", s.getKey(cacheRegistry.CacheKey), cacheRegistry.StorageTTL)
 		}
 	}
 
@@ -341,7 +200,7 @@ func (s RedisCacheStorage) getKey(key string) string {
 	var serPredix = s.Serializer.GetPrefix()
 
 	if len(s.cacheArea) > 0 {
-		newKey = s.cacheArea + ":"+serPredix+":" + key
+		newKey = s.cacheArea + ":" + serPredix + ":" + key
 	} else {
 		newKey = key
 	}
@@ -369,7 +228,6 @@ func NewRedisCacheStorage(hostPort string, password string, maxIdle int, readTim
 		*newPoolRedis(hostPort, password, maxIdle, readTimeout),
 		ttlReadTimeout,
 		cacheArea,
-		enableTTL,
 		serializer,
 	}
 

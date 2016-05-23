@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"testing"
 	"time"
+	"sync"
 )
 
 //FindUser
@@ -15,12 +16,61 @@ func (f FindUserType) IsValidResults(in []reflect.Value, out []reflect.Value) bo
 	return true
 }
 
+type FindCustomersType func(ids []int, name string, isActive bool) ([]Customer, bool, time.Time)
+
 type FindCustomerType func(id int, name string, isActive bool) (Customer, bool, time.Time)
 
 type FindCustomerSimpleType func(id int) Customer
 
 func (f FindCustomerSimpleType) IsValidResults(in []reflect.Value, out []reflect.Value) bool {
 	return true
+}
+
+func SpecKeysCustomers(ins []reflect.Value, outs []reflect.Value) ([]string, []reflect.Value) {
+
+	keys := make([]string, len(outs))
+
+	for idx, out := range outs {
+		customer, _ := out.Interface().(Customer)
+		keys[idx] = "CustomerCustomKey:" + strconv.Itoa(customer.Id)
+
+		log.Debug("key;", keys[idx])
+	}
+
+	return keys, outs
+}
+
+func TestManyToOne(t *testing.T) {
+
+	var cacheFindCustomers FindCustomersType
+
+	cacheSpot := CacheSpot{
+		CachedFunc:   &cacheFindCustomers,
+		HotFunc:      FindCustomers,
+		CacheManager: cacheManager,
+		Ttl:        1 * time.Second,
+		SpecifyOutputKeys: SpecKeysCustomers,
+		WaitingGroup: &sync.WaitGroup{},
+	}
+
+	cacheSpot.MustStartCache()
+
+	customers, hasCust, _ := cacheFindCustomers([]int{1, 2, 3}, "customer", true)
+	if (hasCust ) {
+		if (len(customers) < 3) {
+			log.Error("Error trying to find customers")
+			t.Fail()
+		}
+	}
+
+	customers2, hasCust2, _ := cacheFindCustomers([]int{2, 3, 4, 5}, "customer", true)
+	if (hasCust2 ) {
+		if (len(customers2) < 4) {
+			log.Error("Error trying to find customers2")
+			t.Fail()
+		}
+	}
+
 }
 
 func TestAutoValidation(t *testing.T) {
@@ -36,6 +86,7 @@ func TestAutoValidation(t *testing.T) {
 		CachedFunc:   &cachedFinder,
 		HotFunc:      FindCustomer,
 		CacheManager: cacheManager,
+		WaitingGroup: &sync.WaitGroup{},
 	}
 
 	cacheSpot.MustStartCache()
@@ -91,6 +142,7 @@ func TestCustomValidation(t *testing.T) {
 		CachedFunc:   &cachedFinderSimple,
 		HotFunc:      FindCustomerSimple,
 		CacheManager: cacheManager,
+		WaitingGroup: &sync.WaitGroup{},
 	}
 
 	cacheSpot.MustStartCache()
@@ -122,24 +174,27 @@ func TestCustomValidation(t *testing.T) {
 func TestTTL(t *testing.T) {
 	idUser := 42
 
-	var cachedFindUser FindUserType
+	var findUserCached FindUserType
 	cacheSpot := CacheSpot{
-		CachedFunc:   &cachedFindUser,
-		HotFunc:      FindUser,
-		CacheManager: cacheManager,
+		CachedFunc:        &findUserCached,
+		HotFunc:        FindUser,
+		CacheManager:        cacheManager,
+		WaitingGroup:        &sync.WaitGroup{},
+		Ttl:                1 * time.Second, //second
 	}
 
 	//prepared a cached function, using the original one
+	//log.Error("wg setted: ",cacheSpot.WaitingGroup)
 	cacheSpot.MustStartCache()
 
 	//first search will be uncached
-	user1 := cachedFindUser(idUser)
+	user1 := findUserCached(idUser)
 
-	//wait for some time, inside the ttl window
-	time.Sleep(time.Millisecond * 20) //just wait for storage flush
+	//cacheSpot.waitingGroup.Wait()
+	cacheSpot.WaitAllParallelOps()
 
 	//user2 must be the same registry of user1
-	user2 := cachedFindUser(idUser)
+	user2 := findUserCached(idUser)
 	if user1.Creation != user2.Creation {
 		log.Error("Cache operation failed!")
 		t.Fail()
@@ -152,19 +207,21 @@ func TestTTL(t *testing.T) {
 	time.Sleep(time.Millisecond * 1200)
 
 	//search for same user again. At this time, the registry must be another one. Can't be the same of user2 or user1
-	user3 := cachedFindUser(idUser)
+	user3 := findUserCached(idUser)
 	if user3.Creation == user2.Creation {
-		log.Error("Value still cached after the expected ttl time!")
+
+		log.Error("Value still cached after the expected ttl time! ttl:", user3.GetTtl())
 		t.Fail()
 	} else {
 		log.Debug("Registry gone from cache! Operation succeed!")
 	}
 
-	//again, a new searche operatio, inside the new ttl window
-	time.Sleep(time.Millisecond * 20) //just wait for storage flush
+	//cacheSpot.waitingGroup.Wait()
+	cacheSpot.WaitAllParallelOps()
+	//time.Sleep(time.Millisecond * 10)
 
 	//inside ttl window, user4 must be the same as user3
-	user4 := cachedFindUser(idUser)
+	user4 := findUserCached(idUser)
 	if user4.Creation != user3.Creation {
 		log.Error("Cache operation failed!")
 		t.Fail()
@@ -173,7 +230,9 @@ func TestTTL(t *testing.T) {
 	}
 
 	//a final sleep to flush data
-	time.Sleep(time.Millisecond * 10)
+	//cacheSpot.waitingGroup.Wait()
+	cacheSpot.WaitAllParallelOps()
+	//time.Sleep(time.Millisecond * 10)
 }
 
 func init() {

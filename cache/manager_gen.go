@@ -32,8 +32,13 @@ func (z *CacheRegistry) DecodeMsg(dc *msgp.Reader) (err error) {
 			if err != nil {
 				return
 			}
-		case "Ttl":
-			z.Ttl, err = dc.ReadInt()
+		case "StorageTTL":
+			z.StorageTTL, err = dc.ReadFloat64()
+			if err != nil {
+				return
+			}
+		case "CacheTime":
+			z.CacheTime, err = dc.ReadTime()
 			if err != nil {
 				return
 			}
@@ -59,9 +64,9 @@ func (z *CacheRegistry) DecodeMsg(dc *msgp.Reader) (err error) {
 
 // EncodeMsg implements msgp.Encodable
 func (z *CacheRegistry) EncodeMsg(en *msgp.Writer) (err error) {
-	// map header, size 5
+	// map header, size 6
 	// write "CacheKey"
-	err = en.Append(0x85, 0xa8, 0x43, 0x61, 0x63, 0x68, 0x65, 0x4b, 0x65, 0x79)
+	err = en.Append(0x86, 0xa8, 0x43, 0x61, 0x63, 0x68, 0x65, 0x4b, 0x65, 0x79)
 	if err != nil {
 		return err
 	}
@@ -78,12 +83,21 @@ func (z *CacheRegistry) EncodeMsg(en *msgp.Writer) (err error) {
 	if err != nil {
 		return
 	}
-	// write "Ttl"
-	err = en.Append(0xa3, 0x54, 0x74, 0x6c)
+	// write "StorageTTL"
+	err = en.Append(0xaa, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x54, 0x54, 0x4c)
 	if err != nil {
 		return err
 	}
-	err = en.WriteInt(z.Ttl)
+	err = en.WriteFloat64(z.StorageTTL)
+	if err != nil {
+		return
+	}
+	// write "CacheTime"
+	err = en.Append(0xa9, 0x43, 0x61, 0x63, 0x68, 0x65, 0x54, 0x69, 0x6d, 0x65)
+	if err != nil {
+		return err
+	}
+	err = en.WriteTime(z.CacheTime)
 	if err != nil {
 		return
 	}
@@ -111,9 +125,9 @@ func (z *CacheRegistry) EncodeMsg(en *msgp.Writer) (err error) {
 // MarshalMsg implements msgp.Marshaler
 func (z *CacheRegistry) MarshalMsg(b []byte) (o []byte, err error) {
 	o = msgp.Require(b, z.Msgsize())
-	// map header, size 5
+	// map header, size 6
 	// string "CacheKey"
-	o = append(o, 0x85, 0xa8, 0x43, 0x61, 0x63, 0x68, 0x65, 0x4b, 0x65, 0x79)
+	o = append(o, 0x86, 0xa8, 0x43, 0x61, 0x63, 0x68, 0x65, 0x4b, 0x65, 0x79)
 	o = msgp.AppendString(o, z.CacheKey)
 	// string "Payload"
 	o = append(o, 0xa7, 0x50, 0x61, 0x79, 0x6c, 0x6f, 0x61, 0x64)
@@ -121,9 +135,12 @@ func (z *CacheRegistry) MarshalMsg(b []byte) (o []byte, err error) {
 	if err != nil {
 		return
 	}
-	// string "Ttl"
-	o = append(o, 0xa3, 0x54, 0x74, 0x6c)
-	o = msgp.AppendInt(o, z.Ttl)
+	// string "StorageTTL"
+	o = append(o, 0xaa, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x54, 0x54, 0x4c)
+	o = msgp.AppendFloat64(o, z.StorageTTL)
+	// string "CacheTime"
+	o = append(o, 0xa9, 0x43, 0x61, 0x63, 0x68, 0x65, 0x54, 0x69, 0x6d, 0x65)
+	o = msgp.AppendTime(o, z.CacheTime)
 	// string "HasValue"
 	o = append(o, 0xa8, 0x48, 0x61, 0x73, 0x56, 0x61, 0x6c, 0x75, 0x65)
 	o = msgp.AppendBool(o, z.HasValue)
@@ -159,8 +176,13 @@ func (z *CacheRegistry) UnmarshalMsg(bts []byte) (o []byte, err error) {
 			if err != nil {
 				return
 			}
-		case "Ttl":
-			z.Ttl, bts, err = msgp.ReadIntBytes(bts)
+		case "StorageTTL":
+			z.StorageTTL, bts, err = msgp.ReadFloat64Bytes(bts)
+			if err != nil {
+				return
+			}
+		case "CacheTime":
+			z.CacheTime, bts, err = msgp.ReadTimeBytes(bts)
 			if err != nil {
 				return
 			}
@@ -186,6 +208,6 @@ func (z *CacheRegistry) UnmarshalMsg(bts []byte) (o []byte, err error) {
 }
 
 func (z *CacheRegistry) Msgsize() (s int) {
-	s = 1 + 9 + msgp.StringPrefixSize + len(z.CacheKey) + 8 + msgp.GuessSize(z.Payload) + 4 + msgp.IntSize + 9 + msgp.BoolSize + 9 + msgp.StringPrefixSize + len(z.TypeName)
+	s = 1 + 9 + msgp.StringPrefixSize + len(z.CacheKey) + 8 + msgp.GuessSize(z.Payload) + 11 + msgp.Float64Size + 10 + msgp.TimeSize + 9 + msgp.BoolSize + 9 + msgp.StringPrefixSize + len(z.TypeName)
 	return
 }

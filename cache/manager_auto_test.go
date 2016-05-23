@@ -34,9 +34,8 @@ func TestReflexiveRecursiveTeardown(t *testing.T) {
 	//log.Debug("Order original!====================")
 	//spew.Dump(order)
 	//cr := CacheRegistry{cacheKey, order, ttlDefaultTestOrder, true}
-	cr := CacheRegistry{cacheKey, order, 12001, true, ""}
+	cr := CacheRegistry{cacheKey, order, 12001, time.Now(), true, ""}
 
-	setTTLToPayload(&cr)
 	err := cacheManagerAuto.SetCache(cr)
 	if err != nil {
 		t.Fail()
@@ -56,7 +55,7 @@ func TestReflexiveRecursiveTeardown(t *testing.T) {
 
 	customerTtlBaixo := order2.Customer.SetTtl(888)
 
-	cacheReg := CacheRegistry{"Customer:66", customerTtlBaixo, 6666, true, ""}
+	cacheReg := CacheRegistry{"Customer:66", customerTtlBaixo, 6666, time.Now(), true, ""}
 
 	cacheStorageAuto.SetExpireTTL(cacheReg)
 
@@ -80,7 +79,7 @@ func TestReflexiveTypeAssertion(t *testing.T) {
 
 	var order = createOrder(14)
 
-	cr := CacheRegistry{"Order:14", order, ttlDefaultTestOrder, true, ""}
+	cr := CacheRegistry{"Order:14", order, ttlDefaultTestOrder, time.Now(), true, ""}
 
 	expectedOrderItemCK := "OrderItem:" + strconv.Itoa(order.Itens[1].Id)
 
@@ -117,7 +116,7 @@ func TestSerDeserGOB(t *testing.T) {
 	mapStr["someAttr"] = mapStr2
 	mapStr2["someCacheKey"] = make(map[string]interface{})
 
-	cacheReg := CacheRegistry{"teste", mapStr, -1, true, ""}
+	cacheReg := CacheRegistry{"teste", mapStr, -1, time.Now() ,true, ""}
 
 	var destBytes []byte
 	bufferE := bytes.NewBuffer(destBytes)

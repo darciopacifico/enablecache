@@ -7,6 +7,8 @@ import (
 	"math/rand"
 	"strconv"
 	"testing"
+	"sync"
+	"time"
 )
 
 type UserEmail struct {
@@ -35,7 +37,9 @@ func init() {
 	cs = CacheSpot{
 		CachedFunc:   &CFindByEmail,
 		HotFunc:      FindByEmail,
+		Ttl: 100 * time.Second,
 		CacheManager: cmStr,
+		WaitingGroup: &sync.WaitGroup{},
 	}.MustStartCache()
 
 	gob.Register(UserEmail{})

@@ -9,6 +9,7 @@ import (
 
 	"github.com/darciopacifico/enablecache/aop"
 	"github.com/darciopacifico/enablecache/cache"
+	"sync"
 )
 
 //concrete no cached function
@@ -35,6 +36,7 @@ func init(){
 		HotFunc: FindProduct,       // concrete FindProduct function
 		CachedFunc: &CachedFindProduct, // Empty cached function as ref. Will receive a swap function
 		CacheManager: cacheManager, // Cache Manager implementation
+		WaitingGroup: &sync.WaitGroup{},
 	}.MustStartCache()          // Validate function signatures, assoaciate swap to CachedFunc
 }
 
