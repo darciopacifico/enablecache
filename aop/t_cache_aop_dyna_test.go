@@ -11,12 +11,13 @@ import (
 	"github.com/op/go-logging"
 	"math/rand"
 	"os"
+	"sync"
 )
 
 var (
-	cacheAreaAuto     = "dyna_test"
-	cacheStorageRedis = cache.NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, cacheAreaAuto, cache.SerializerGOB{}, true)
-	cmAuto            = cache.SimpleCacheManager{
+	cacheAreaAuto = "dyna_test:" + strconv.Itoa(int(time.Now().Unix()))
+	cacheStorageRedis = cache.NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, cacheAreaAuto, cache.SerializerGOB{})
+	cmAuto = cache.SimpleCacheManager{
 		CacheStorage: cacheStorageRedis,
 	}
 )
@@ -51,7 +52,7 @@ func BenchmarkDynaSwap(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		//customers, err = FindManyCustomers([]int{6, 7, 8})
-		customers, err = cFindManyB([]int{6, 7, 8})
+		customers, err = cFindManyB_many_one([]int{6, 7, 8})
 
 	}
 
@@ -61,40 +62,53 @@ func BenchmarkDynaSwap(b *testing.B) {
 
 }
 
-var cFindOne func(int) (People, error, bool)
-var cFindOneB func(int) (People, error, bool)
-var cFindMany func([]int) ([]People, error)
-var cFindManyB func([]int) ([]People, error)
+var cFindOne_one_one func(int) (People, error, bool)
+var cFindOneB_one_many func(int) (People, error, bool)
+var cFindMany_many_many func([]int) ([]People, error)
+var cFindManyB_many_one func([]int) ([]People, error)
 
 func init() {
 	gob.Register(People{})
 
+	//one to one
 	CacheSpot{
-		CachedFunc:   &cFindOne,
+		CachedFunc:   &cFindOne_one_one,
 		HotFunc:      FindOneCustomer,
 		CacheManager: cmAuto,
+		Ttl: 	time.Second*100,
+		WaitingGroup: &sync.WaitGroup{},
 		//ValidateResults: func (allIns []reflect.Value, allOuts []reflect.Value, cacheKey string, singleValueToCache interface{}) bool{return true},
 		//SpecifyOutputKeys:KeysForCache,
 	}.MustStartCache()
 
+	//one to many
 	CacheSpot{
-		CachedFunc:   &cFindOneB,
+		CachedFunc:   &cFindOneB_one_many,
 		HotFunc:      FindManyCustomers,
+		Ttl: 	time.Second*100,
 		CacheManager: cmAuto,
+		WaitingGroup: &sync.WaitGroup{},
 		//ValidateResults:IsValidResults,
 		//SpecifyOutputKeys:KeysForCache,
 	}.MustStartCache()
 
-	CacheSpot{CachedFunc: &cFindMany,
+	//many to many
+	CacheSpot{CachedFunc: &cFindMany_many_many,
 		HotFunc:      FindManyCustomers,
+		Ttl: 	time.Second*100,
 		CacheManager: cmAuto,
+		WaitingGroup: &sync.WaitGroup{},
 		//ValidateResults:ManyIsValidResults,
 		//SpecifyOutputKeys:ManyKeysForCache,
 	}.MustStartCache()
 
-	CacheSpot{CachedFunc: &cFindManyB,
+
+	//many to one
+	CacheSpot{CachedFunc: &cFindManyB_many_one,
 		HotFunc:      FindOneCustomer,
+		Ttl: 	time.Second*100,
 		CacheManager: cmAuto,
+		WaitingGroup: &sync.WaitGroup{},
 		//ValidateResults:ManyIsValidResults,
 		//SpecifyOutputKeys:ManyKeysForCache,
 	}.MustStartCache()
@@ -126,23 +140,29 @@ func TestAllSwaps(t *testing.T) {
 
 	log.Debug("teste 23")
 
-	ps, errM := cFindMany([]int{1, 2, 3})
+	ps, errM := cFindMany_many_many([]int{1, 2, 3})
 
 	fmt.Printf("procurando pessoas %v err = %v  \n", ps, errM)
 
-	ps, errM = cFindManyB([]int{2, 3, 4, 5})
+	ps, errM = cFindManyB_many_one([]int{2, 3, 4, 5})
 	fmt.Printf("procurando pessoas %v err = %v \n", ps, errM)
 
-	p, err, f := cFindOne(2)
+	ps, errM = cFindManyB_many_one([]int{4, 5, 10, 11})
+	fmt.Printf("procurando pessoas %v err = %v \n", ps, errM)
+
+	p, err, f := cFindOne_one_one(2)
 	fmt.Printf("procurando pessoa %v err = %v, f=%v \n", p, err, f)
 
-	p, err, f = cFindOne(6)
+	p, err, f = cFindOne_one_one(6)
 	fmt.Printf("procurando pessoa %v err = %v, f=%v \n", p, err, f)
 
-	p, err, f = cFindOneB(4)
+	p, err, f = cFindOneB_one_many(4)
 	fmt.Printf("procurando pessoa %v err = %v, f=%v \n", p, err, f)
 
-	p, err, f = cFindOneB(9)
+	p, err, f = cFindOneB_one_many(12)
+	fmt.Printf("procurando pessoa %v err = %v, f=%v \n", p, err, f)
+
+	p, err, f = cFindOneB_one_many(9)
 	fmt.Printf("procurando pessoa %v err = %v, f=%v \n", p, err, f)
 
 }

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/darciopacifico/enablecache/cache"
 	"regexp"
 	"runtime"
 )
@@ -17,6 +16,7 @@ var RGX_FUNCNAME = regexp.MustCompile(`(.*\/)`)
 func isMany(vType reflect.Type) bool {
 	return vType.Kind() == reflect.Array || vType.Kind() == reflect.Slice
 }
+
 
 //check if some value is an array
 func isValMany(value reflect.Value) bool {
@@ -31,6 +31,7 @@ func GetFunctionName(i interface{}) string {
 }
 
 //Retrieve ttl value, if interfaca implements cache.ExposeTTL
+/*
 func discoverTTL(valRet interface{}, defaultTTL int) int {
 
 	//switch valRel.(type)
@@ -43,6 +44,7 @@ func discoverTTL(valRet interface{}, defaultTTL int) int {
 	}
 	return ttl
 }
+*/
 
 //panic if is not a pointer
 func mustBePointer(someValues ...interface{}) {
@@ -130,9 +132,9 @@ func valToString(value reflect.Value) (string, error) {
 func mustBeCompatible(a, b reflect.Type) {
 	if !a.ConvertibleTo(b) || !a.AssignableTo(b) {
 		panic(errors.New(fmt.Sprintf(
-			"Types '%v' and '%v' is not compatile to each other! "+
-				"It is no possible to make a swap function that "+
-				"return or receive different kinds of objects!", a.Name(), b.Name())))
+			"Types '%v' and '%v' is not compatile to each other! " +
+			"It is no possible to make a swap function that " +
+			"return or receive different kinds of objects!", a.Name(), b.Name())))
 	}
 }
 

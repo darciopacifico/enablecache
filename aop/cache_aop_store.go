@@ -3,6 +3,7 @@ package aop
 import (
 	"github.com/darciopacifico/enablecache/cache"
 	"reflect"
+	"time"
 )
 
 //store results in cache
@@ -28,15 +29,17 @@ func (cacheSpot CacheSpot) cacheValues(notCachedIns []reflect.Value, origOuts []
 
 			if cacheSpot.validateResults(notCachedIns, origOuts, cacheId, valRet) {
 
-				ttl := discoverTTL(valRet, -1)
-				log.Debug("TTL for reg %v %v!", cacheId, ttl)
+				log.Debug("TTL for reg %v %v!", cacheId, cacheSpot.Ttl)
 				//invoke cache manager to persist returned value
-				cacheRegs = append(cacheRegs, cache.CacheRegistry{CacheKey: cacheId, Payload: valRet, Ttl: ttl, HasValue: true, TypeName: ""})
-
+				cacheRegs = append(cacheRegs, cache.CacheRegistry{
+					CacheKey: cacheId,
+					Payload: valRet,
+					StorageTTL: cacheSpot.Ttl.Seconds(),
+					CacheTime: time.Now(),
+					HasValue: true,
+					TypeName: ""})
 			} else {
-
 				log.Warning("Reg %v is not valid to cache!", cacheId)
-
 			}
 		}
 	}
@@ -61,12 +64,15 @@ func (cacheSpot CacheSpot) singleStoreInCache(hotOut reflect.Value, cacheKey str
 		//get raw value
 		valRet := hotOut.Interface()
 
-		ttl := discoverTTL(valRet, -1)
-
-		log.Debug("TTL for reg %v %v!", cacheKey, ttl)
+		log.Debug("TTL for reg !", cacheKey, cacheSpot.Ttl)
 
 		//invoke cache manager to persist returned value
-		cacheRegistry := cache.CacheRegistry{CacheKey: cacheKey, Payload: valRet, Ttl: ttl, HasValue: true}
+		cacheRegistry := cache.CacheRegistry{
+			CacheKey: cacheKey,
+			Payload: valRet,
+			StorageTTL: cacheSpot.Ttl.Seconds(),
+			CacheTime: time.Now(),
+			HasValue: true}
 		cacheSpot.CacheManager.SetCache(cacheRegistry)
 		log.Debug("registry %s saved successfully!", cacheKey)
 	}
@@ -104,7 +110,7 @@ func (cacheSpot CacheSpot) getKeysForOuts(ins []reflect.Value, outs []reflect.Va
 }
 
 func (cacheSpot CacheSpot) storeCacheOneOne(originalIns []reflect.Value, hotOuts []reflect.Value, cacheKey string, valueToCache reflect.Value) {
-	cacheSpot.wg.Add(1)
+	cacheSpot.WaitingGroup.Add(1)
 
 	go func() {
 		defer func() { //assure for not panicking
@@ -113,7 +119,7 @@ func (cacheSpot CacheSpot) storeCacheOneOne(originalIns []reflect.Value, hotOuts
 				log.Error("Recovering! Error trying to save cache registry y! %v", r)
 			}
 
-			cacheSpot.wg.Done()
+			cacheSpot.WaitingGroup.Done()
 		}()
 
 		// check whether results are valid and must be cached
@@ -124,13 +130,13 @@ func (cacheSpot CacheSpot) storeCacheOneOne(originalIns []reflect.Value, hotOuts
 }
 
 func (cacheSpot CacheSpot) storeManyToAny( notCachedIns []reflect.Value, hotReturnedValues []reflect.Value ){
-	cacheSpot.wg.Add(1)
+	cacheSpot.WaitingGroup.Add(1)
 	go func() {
 		defer func() {
 			if r := recover(); r != nil {
 				log.Error("Recovering! Error trying to save cache registry y! %v", r)
 			}
-			cacheSpot.wg.Done()
+			cacheSpot.WaitingGroup.Done()
 		}()
 		cacheSpot.cacheValues(notCachedIns, hotReturnedValues)
 	}()

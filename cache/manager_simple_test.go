@@ -4,19 +4,19 @@ import (
 	"testing"
 	"time"
 
-	"math/rand"
 	"strconv"
 )
 
 const cacheKeyForTest = "Order:1"
 
 var (
-	ttlDefaultTestOrder     = 1200
-	ttlDefaultTestOrderItem = 600
-	cacheArea               = strconv.Itoa(rand.Int())
+	ttlDefaultTestOrder = 1200.0
+	ttlDefaultTestOrderItem = 600.0
+	cacheArea = "dyna_test:" + strconv.Itoa(int(time.Now().Unix()))
+
 	//all registries will be deleted, if test success
 
-	cacheStorage = NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, cacheArea, SerializerGOB{}, true)
+	cacheStorage = NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, cacheArea, SerializerGOB{})
 
 	cacheManager = SimpleCacheManager{
 		cacheStorage,
@@ -29,14 +29,14 @@ type Order struct {
 	OrderObs string
 	ItensIds []string
 	Itens    []OrderItem
-	Ttl      int
+	Ttl      float64
 }
 
-func (c Order) GetTtl() int {
+func (c Order) GetTtl() float64 {
 	return c.Ttl
 }
 
-func (c Order) SetTtl(ttl int) interface{} {
+func (c Order) SetTtl(ttl float64) interface{} {
 	c.Ttl = ttl
 	return c
 }
@@ -70,6 +70,7 @@ func init() {
 		cacheKeyForTest,
 		order,
 		ttlDefaultTestOrderItem,
+		time.Now(),
 		true,
 		"",
 	}
@@ -112,6 +113,7 @@ func TestCacheManager(t *testing.T) {
 		cacheKeyForTest,
 		orderUpdated,
 		ttlDefaultTestOrder,
+		time.Now(),
 		true,
 		"",
 	}
@@ -128,5 +130,35 @@ func TestCacheManager(t *testing.T) {
 		log.Debug("registro de cache atualizado com sucesso!")
 	}
 
+	cacheManager.Invalidate(cacheKeyForTest)
+
+	somePayload2, _ := cacheManager.GetCache(cacheKeyForTest)
+
+	if somePayload2.HasValue || somePayload2.Payload != nil {
+		log.Error("Error: Cache registry not invalidated")
+		t.Fail()
+	} else {
+		log.Debug("Cache registry invalidated successfully!")
+	}
+
 	time.Sleep(time.Millisecond * 30)
+}
+
+func TestMinTTL(t *testing.T) {
+
+	if (MinTTL(-22, 90) != -22) {
+		log.Error("Error ttl calculation erro!")
+		t.Fail()
+	}
+
+	if (MinTTL(TTL_INFINITY, 90) != 90) {
+		log.Error("Error ttl calculation erro!")
+		t.Fail()
+	}
+
+	if (MinTTL(70, TTL_INFINITY) != 70) {
+		log.Error("Error ttl calculation erro!")
+		t.Fail()
+	}
+
 }

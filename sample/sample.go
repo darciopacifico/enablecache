@@ -9,6 +9,7 @@ import (
 
 	"github.com/darciopacifico/enablecache/aop"
 	"github.com/darciopacifico/enablecache/cache"
+	"sync"
 )
 
 //concrete no cached function
@@ -27,7 +28,7 @@ var cacheSpot aop.CacheSpot
 func init(){
 	//cache manager that will intermediate all operations for cache store/read.
 	cacheManager := cache.SimpleCacheManager{
-		CacheStorage: cache.NewRedisCacheStorage("localhost:6379", "", 8, 200, 3000, 2000, "lab", cache.SerializerGOB{}, true),
+		CacheStorage: cache.NewRedisCacheStorage("localhost:6379", "", 8, 200, 3000, "lab", cache.SerializerGOB{}),
 	}
 
 	//start cache spot reference.
@@ -35,6 +36,7 @@ func init(){
 		HotFunc: FindProduct,       // concrete FindProduct function
 		CachedFunc: &CachedFindProduct, // Empty cached function as ref. Will receive a swap function
 		CacheManager: cacheManager, // Cache Manager implementation
+		WaitingGroup: &sync.WaitGroup{},
 	}.MustStartCache()          // Validate function signatures, assoaciate swap to CachedFunc
 }
 

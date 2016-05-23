@@ -1,6 +1,7 @@
 package cache
 import (
 	"fmt"
+	"time"
 )
 
 //go:generate msgp
@@ -25,7 +26,8 @@ func GetReg(id int) CacheRegistry {
 	cr := CacheRegistry{
 		CacheKey: fmt.Sprintf("cacheReg_%v", id),
 		Payload :GetCar(id),
-		Ttl: 90000000,
+		StorageTTL: -1,
+		CacheTime: time.Now(),
 		HasValue:true,
 		TypeName:"",
 	}

@@ -20,7 +20,7 @@ func (s SerializerGOB) Register(value interface{}){
 }
 
 //
-func getNameType(value interface{})(string, reflect.Type){
+func GetNameType(value interface{})(string, reflect.Type){
 	rt := reflect.TypeOf(value)
 	name := rt.String()
 
@@ -46,7 +46,7 @@ func getNameType(value interface{})(string, reflect.Type){
 // seralize an objeto to byte array
 func (SerializerGOB) MarshalMsg(src CacheRegistry, b []byte) (o []byte, err error){
 
-	typeName, _ := getNameType(src.Payload)
+	typeName, _ := GetNameType(src.Payload)
 
 	src.TypeName = typeName
 

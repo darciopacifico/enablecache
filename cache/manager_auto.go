@@ -4,8 +4,8 @@ import (
 	"encoding/gob"
 	"errors"
 	"fmt"
-	"math"
 	"reflect"
+	"time"
 )
 
 //
@@ -74,22 +74,29 @@ func (c AutoCacheManager) mapToArray(mapToSave map[string]CacheRegistry) []Cache
 	return arrCacheRegistry
 }
 
-//return time to live
-func (c AutoCacheManager) GetCacheTTL(cacheKey string) (int, error) {
-	return c.Ps.GetTTL(cacheKey)
-}
-
 //get cache for only one cachekey
 func (c AutoCacheManager) GetCache(cacheKey string) (CacheRegistry, error) {
 	cacheRegs, err := c.GetCaches(cacheKey)
 	if err != nil {
-		return CacheRegistry{cacheKey, nil, -2, false, ""}, err
+		return CacheRegistry{
+			CacheKey  :cacheKey,
+			Payload   :nil,
+			StorageTTL:-2,
+			CacheTime :time.Unix(0,0),
+			HasValue  :false,
+			TypeName  :""}, err
 	}
 
 	if len(cacheRegs) > 0 {
 		return cacheRegs[cacheKey], nil
 	} else {
-		return CacheRegistry{cacheKey, nil, -2, false, ""}, nil
+		return CacheRegistry{
+			cacheKey,
+			nil,
+			-2,
+			time.Unix(0,0),
+			false,
+			""}, nil
 	}
 }
 
@@ -138,15 +145,18 @@ func (c AutoCacheManager) buildUpCRs(cacheKeys []string, crTreeRefs map[string]C
 
 	var mountedCRs = make(map[string]CacheRegistry, len(cacheKeys)) //make the final map
 
-	for _, cacheKey := range cacheKeys { //iterate over requested keys
+	for _, cacheKey := range cacheKeys {
+		//iterate over requested keys
 
 		cacheRegistry := (*allCRs)[cacheKey]                              //cache registry. No presence check is needed. hasSomeCachemiss already check that...
 		crTreeRef, hasTree := crTreeRefs[getKeyForDependencies(cacheKey)] //tree of values to rebuild the cache registry
 
-		if hasTree && crTreeRef.HasValue { // check whether cache key has a tree of attributes and cachevalues to build up the cacheRegistry
+		if hasTree && crTreeRef.HasValue {
+			// check whether cache key has a tree of attributes and cachevalues to build up the cacheRegistry
 			err := c.buildUpCR(&cacheRegistry, crTreeRef, allCRs)
 
-			if err != nil { //at this time, no error will be accepted.
+			if err != nil {
+				//at this time, no error will be accepted.
 				log.Error("One or many cache registries was missed! %v", err)
 				//any error invalidate all cache operation
 				return make(map[string]CacheRegistry, 0), err
@@ -168,12 +178,11 @@ func (c AutoCacheManager) buildUpCR(cacheRegistry *CacheRegistry, crTreeRef Cach
 	mapAttributes := crTreeRef.Payload.(map[string]interface{})
 
 	//call a reflexive builup
-	value, err, ttl := c.buildUp(cacheRegistry, mapAttributes, allCRs)
+	value, err := c.buildUp(cacheRegistry, mapAttributes, allCRs)
 	if err != nil {
 		return err
 	}
 
-	cacheRegistry.Ttl = ttl
 	cacheRegistry.Payload = value.Interface()
 
 	//is everything alright
@@ -215,11 +224,13 @@ func recoverDependencyKeys(crTreeRefs map[string]interface{}) []string {
 
 //navigate over the mapDependencies (tree) and accumulate all cache keys that must be returned
 func accumulateKeys(mapDependencies map[string]interface{}, additionalKeys *[]string) {
-	for _, itfMapCKs := range mapDependencies { //iterate over attributes
+	for _, itfMapCKs := range mapDependencies {
+		//iterate over attributes
 
 		mapCKs := itfMapCKs.(map[string]interface{})
 
-		for cachekey, itfMapAtt2 := range mapCKs { //iterate over cacheKeys for attributes
+		for cachekey, itfMapAtt2 := range mapCKs {
+			//iterate over cacheKeys for attributes
 
 			(*additionalKeys) = append((*additionalKeys), cachekey) // accumulate keys
 
@@ -234,17 +245,19 @@ func accumulateKeys(mapDependencies map[string]interface{}, additionalKeys *[]st
 //navigate over the mapDependencies (tree) and accumulate all cache keys that must be returned
 func printKeys(mapDependencies map[string]interface{}, ident string) {
 
-	for attName, itfMapCKs := range mapDependencies { //iterate over attributes
+	for attName, itfMapCKs := range mapDependencies {
+		//iterate over attributes
 
 		mapCKs := itfMapCKs.(map[string]interface{})
 
-		for cachekey, itfMapAtt2 := range mapCKs { //iterate over cacheKeys for attributes
+		for cachekey, itfMapAtt2 := range mapCKs {
+			//iterate over cacheKeys for attributes
 
 			fmt.Println(ident, "att ", attName, "cacheKey ", cachekey)
 
 			mapAtt2, _ := itfMapAtt2.(map[string]interface{})
 
-			printKeys(mapAtt2, ident+ident) //recursive call to next level
+			printKeys(mapAtt2, ident + ident) //recursive call to next level
 
 		}
 	}
@@ -262,40 +275,11 @@ func (c AutoCacheManager) getCKDepTree(cacheKeys ...string) []string {
 	return dependencyKeys
 }
 
-//Based on cacheManager algorithm implementation, calculates the final ttl of requested value
-func (c AutoCacheManager) calculateTTL(cacheRegistry CacheRegistry, mapBuildUp map[string]CacheRegistry) CacheRegistry {
-
-	//max of ttl type. if still equals maxint32 at final, will be changed to -1, meaning infinite ttl
-	ttl := math.MaxInt32
-
-	//range over all child values, looking for smaller ttl, except for -1, that means infinite
-	for _, payload := range mapBuildUp {
-		if payload.GetTTL() != -1 && payload.GetTTL() < ttl {
-			ttl = payload.GetTTL()
-		}
-	}
-
-	//compare the smaller ttl, except for -1, that means infinite
-	if cacheRegistry.GetTTL() != -1 && cacheRegistry.GetTTL() < ttl {
-		ttl = cacheRegistry.GetTTL()
-	}
-
-	//there is no ttl defined, remaining equals maxint32.
-	if ttl == math.MaxInt32 {
-		ttl = -1 //infinite
-	}
-
-	//update ttl attribute
-	cacheRegistry.Ttl = ttl
-
-	return cacheRegistry
-
-}
-
 //test whether all requested keys has returned
 func (c AutoCacheManager) hasSomeCacheMiss(keys []string, mapCheckReturn map[string]CacheRegistry) bool {
 
-	if len(keys) > len(mapCheckReturn) { // if the number of asked keys is greater than returned values, meant that some val was missed
+	if len(keys) > len(mapCheckReturn) {
+		// if the number of asked keys is greater than returned values, meant that some val was missed
 		return true
 	}
 
@@ -321,7 +305,7 @@ func (c AutoCacheManager) visited(visiteds map[string]CacheRegistry, cacheRegist
 }
 
 //recursivelly rebuild the value, based on tree of attributes and values.
-func (c AutoCacheManager) buildUp(cacheRegistry *CacheRegistry, mapAttributes map[string]interface{}, mapVisits *map[string]CacheRegistry) (reflect.Value, error, int) {
+func (c AutoCacheManager) buildUp(cacheRegistry *CacheRegistry, mapAttributes map[string]interface{}, mapVisits *map[string]CacheRegistry) (reflect.Value, error) {
 
 	//create a reflect.Value representation for cacheRegistry.Payload, fit and ready for reflect operations
 	payloadValue := getValueForPayload(cacheRegistry)
@@ -341,55 +325,33 @@ func (c AutoCacheManager) buildUp(cacheRegistry *CacheRegistry, mapAttributes ma
 			//recover the object to put in the attribute/field, as single value or appended as array..
 			crCK, hasVal := (*mapVisits)[cacheKey]
 			if !hasVal {
-				return payloadValue, errors.New(fmt.Sprintf("Cachekey %v to put in the attribyte %v was not found!", cacheKey, attributeName)), -2
+				return payloadValue, errors.New(fmt.Sprintf("Cachekey %v to put in the attribyte %v was not found!", cacheKey, attributeName))
 			}
 
 			//recursivelly buildup the cacheValue, as same way of value
-			buildedUpCacheValue, err, _ := c.buildUp(&crCK, mapAttributes2, mapVisits)
+			buildedUpCacheValue, err := c.buildUp(&crCK, mapAttributes2, mapVisits)
 			//buildedUpCacheValue, err := c.buildUp(&crCK, mapAttributes2, mapVisits)
-			if err != nil { //formal check for error
+			if err != nil {
+				//formal check for error
 				log.Error("Error trying to build up attribute %v, setting or appending value %v", attributeName, cacheKey)
-				return payloadValue, err, -2
+				return payloadValue, err
 			}
 
 			//check the kind of attribute (array or single value)
 			//set or append the buildedUpCacheValue to the attribute
 			setAttribute(&attribute, buildedUpCacheValue)
 
-			//check the ttl of parent and child and set the lower one to parent always
-			setTTL(cacheRegistry, &payloadValue, &crCK, &buildedUpCacheValue)
-
-			//log.Warning("ttl for registry %v %v ", cacheRegistry.CacheKey, cacheRegistry.Ttl)
 		}
 	}
 
 	//renew the cacheregistry payload attribute with a recently builded up interface that came from payloadValue
 	cacheRegistry.Payload = payloadValue.Interface()
 
-	cacheRegistry.Ttl = cacheRegistry.Ttl - 50
 
 	//finally, return the builded up value
-	return payloadValue, nil, cacheRegistry.Ttl
+	return payloadValue, nil
 }
 
-//check the ttl of parent and child and set the lower one to parent always
-func setTTL(crParent *CacheRegistry, valParent *reflect.Value, crChild *CacheRegistry, valChild *reflect.Value) {
-
-	//og.Error("Setando ttl pai %v, ttl filho %v ", crParent.Ttl, crChild.Ttl)
-
-	crParent.Ttl = MinTTL(crParent.Ttl, crChild.Ttl)
-
-	//log.Error("##menor ttl %v %v", crParent.CacheKey, crParent.Ttl)
-	setTTLToPayload(crParent)
-
-	//payload := crParent.Payload
-	//exposeTTL, hasTtl := payload.(ExposeTTL)
-
-	//if hasTtl {
-	//	log.Error("&&menor ttl %v ", exposeTTL.GetTtl())
-	//}
-	//log.Error("**menor ttl %v %v", crParent.CacheKey, crParent.Ttl)
-}
 
 //crate a reflect.Value for cacheRegistry.Payload
 func getValueForPayload(cacheRegistry *CacheRegistry) reflect.Value {
@@ -480,8 +442,18 @@ func (c AutoCacheManager) mapAttributesToCacheKeys(cacheKey string, cacheRegistr
 				return nil, err
 			}
 
+
+			payl := fieldValue.Interface()
+			typeName, _ := GetNameType(payl)
+
 			//recursivelly inspect this fieldValue as same as value passed to this function before
-			cacheRegistryField := CacheRegistry{cacheKey, fieldValue.Interface(), cacheRegistry.Ttl, true, ""}
+			cacheRegistryField := CacheRegistry{
+				cacheKey,
+				payl,
+				cacheRegistry.StorageTTL,
+				cacheRegistry.CacheTime,
+				true,
+				typeName}
 
 			//mapAttributes, err := c.MapAttributesToCacheKeys(cacheKey, fieldValue, mapVisits)
 			mapAttributes, err := c.mapAttributesToCacheKeys(cacheKey, &cacheRegistryField, mapVisits)
@@ -520,7 +492,13 @@ func (c AutoCacheManager) mapAttributesToCacheKeys(cacheKey string, cacheRegistr
 	if len(mapAttribute) > 0 {
 		//put the tree of references
 		treeCacheKey := getKeyForDependencies(cacheKey)
-		(*mapVisits)[treeCacheKey] = CacheRegistry{treeCacheKey, mapAttribute, -1, true, ""}
+		(*mapVisits)[treeCacheKey] = CacheRegistry{
+			treeCacheKey,
+			mapAttribute,
+			-1,
+			time.Unix(0,0),
+			true,
+			""}
 	}
 
 	//return all stuff
@@ -556,7 +534,8 @@ func getFieldValues(field reflect.Value) []reflect.Value {
 //only cacheable values will be inspected at attribute level and, perhaps, stored separately.
 //non cacheable values, will be stored at all
 func addIfCacheable(values *[]reflect.Value, value reflect.Value) {
-	if value.IsValid() && value.CanInterface() { // i really try to put these two ifs at the same line... sorry about that :-(
+	if value.IsValid() && value.CanInterface() {
+		// i really try to put these two ifs at the same line... sorry about that :-(
 		if cacheable, isCacheable := value.Interface().(Cacheable); isCacheable && len(cacheable.GetCacheKey()) > 0 {
 			//the value is cacheable and key is not empty
 			*values = append(*values, value)

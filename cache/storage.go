@@ -12,14 +12,7 @@ type CacheStorage interface {
 	//GetValues(keys ...string) (map[string]interface{}, map[string]bool, map[string]int, error)
 	GetValuesMap(keys ...string) (map[string]CacheRegistry, error)
 
-	//recover ttl of registry
-	GetTTL(keys string) (int, error)
-
 	//delete cache values
 	DeleteValues(cacheKey ...string) error
 }
 
-//returns internal ttl
-func (p *CacheRegistry) GetTTL() int {
-	return p.Ttl
-}

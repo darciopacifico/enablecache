@@ -3,6 +3,7 @@ package cache
 
 import (
 	"math"
+	"time"
 )
 
 //go:generate msgp
@@ -11,11 +12,20 @@ import (
 // Contains struct payload to be cached and additional information about cache registry
 // Cachemanager operation must return cache registry always
 type CacheRegistry struct {
-	CacheKey string      //unique key in cache
-	Payload  interface{} //payload to be cached, usually an byte array
-	Ttl      int         //time to live
-	HasValue bool        //return the presence of cached value on cache storage. Useful in batch operations and to avoid nil errors
-	TypeName string 	 //type name of payload. Only serializer implementation can see this attribute
+	CacheKey   string      	//unique key in cache
+	Payload    interface{} 	//payload to be cached, usually an byte array
+	StorageTTL float64 	// Cache Time to Live duration
+	CacheTime  time.Time   	//date when cache registry was created
+	HasValue   bool        	//return the presence of cached value on cache storage. Useful in batch operations and to avoid nil errors
+	TypeName   string      	//type name of payload. Only serializer implementation can see this attribute
+}
+
+//Calculates TTl of cache registry
+func (c CacheRegistry) GetTTLSeconds() float64 {
+	//ceil to store in redis with no problem
+	ttlSeconds := math.Ceil(c.StorageTTL - time.Since(c.CacheTime).Seconds())
+	//log.Debug("TTL to save in seconds",ttlSeconds)
+	return ttlSeconds
 }
 
 //Define an basic contract for CacheManager
@@ -24,7 +34,6 @@ type CacheRegistry struct {
 //invalidate cacheKey and its dependencies etc
 //Cachemanager get operations must return cache registry always, no matter registry exists or not
 type CacheManager interface {
-
 	//set values to cache
 	//SetCache(cacheKey string, cacheVal interface{}, ttl int) int
 	SetCache(cacheRegistry ...CacheRegistry) error
@@ -37,8 +46,8 @@ type CacheManager interface {
 	//GetCache(cacheKey string) (interface{}, bool, int)
 	GetCaches(cacheKey ...string) (map[string]CacheRegistry, error)
 
-	//return time to live of cacheKey
-	GetCacheTTL(cacheKey string) (int, error)
+	//return time to live of cacheKey // will be saved and calculated as a CacheRegistry attribute
+	//GetCacheTTL(cacheKey string) (int, error)
 
 	//Invalidate cache registry. Means that this cache registry is not valid or consistent anymore.
 	//Do not means that registry was deleted in original data source. This operation don't update parent registries,
@@ -62,9 +71,10 @@ type UpdaterCacheManager interface {
 
 //means that some struct will define their own ttl.
 //cacheRegistry will copy this ttl definition for cache operations
-type ExposeTTL interface { //teste
-	GetTtl() int
-	SetTtl(int) interface{}
+type ExposeTTL interface {
+	//teste
+	GetTtl() float64
+	SetTtl(float64) interface{}
 }
 
 //Implementation of this interface means that struct knows how to update his

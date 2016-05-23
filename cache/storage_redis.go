@@ -12,9 +12,7 @@ import (
 //Cache storage implementation using redis as key/value storage
 type RedisCacheStorage struct {
 	redisPool      	redis.Pool
-	ttlReadTimeout 	int
 	cacheArea      	string
-	enableTtl	 	bool
 	Serializer     	Serializer // usually SerializerGOB implementation
 }
 
@@ -129,92 +127,11 @@ func (s RedisCacheStorage) GetValuesMap(cacheKeys ...string) (mapResp map[string
 		}
 	}
 
-	//if (s.enableTtl) {
-	if (false) { // error returning param. not important now
-		select {
-		//wait for ttl channel
-		case ttlMap := <-ttlMapChan:
-			mapCacheRegistry = s.zipTTL(mapCacheRegistry, ttlMap)
-		//in case of timeout, returt an empty map
-		case <-time.After(time.Duration(s.ttlReadTimeout) * time.Millisecond):
-			log.Warning("Retrieve TTL for cachekeys %v from redis timeout after %dms, continuing without it.", cacheKeys, s.ttlReadTimeout)
-			mapCacheRegistry = s.zipTTL(mapCacheRegistry, make(map[string]int, 0))
-		}
-	}
 
 	return mapCacheRegistry, nil // err=nil by default, if everything is alright
 }
 
-//Recover current ttl information about registry
-func (s RedisCacheStorage) GetTTL(key string) (int, error) {
-	oneItemMap := make(map[string]CacheRegistry, 1)
 
-	oneItemMap[key] = CacheRegistry{key, "", -2 /*not found*/, true, ""}
-
-	respMap, errTTL := s.GetActualTTL(oneItemMap)
-	return respMap[key].Ttl, errTTL
-
-}
-
-//Recover current ttl information about registries
-func (s RedisCacheStorage) zipTTL(mapCacheRegistry map[string]CacheRegistry, ttlMap map[string]int) map[string]CacheRegistry {
-	//prepare a keyval pair array
-	for key, cacheRegistry := range mapCacheRegistry {
-		if ttl, hasTtl := ttlMap[key]; hasTtl {
-			cacheRegistry.Ttl = ttl
-		} else {
-			cacheRegistry.Ttl = -1
-		}
-		mapCacheRegistry[key] = cacheRegistry
-	}
-
-	return mapCacheRegistry
-}
-
-//Recover current ttl information about registries
-func (s RedisCacheStorage) GetActualTTL(mapCacheRegistry map[string]CacheRegistry) (returnMap map[string]CacheRegistry, retError error) {
-	conn := s.redisPool.Get()
-	defer func() { //assure for not panicking
-		conn.Close()
-		if r := recover(); r != nil {
-			log.Error("TTL Recovering error from Redis Cache Storage!!  %v", r)
-			log.Error("Returning as no TTL info found!!")
-
-			returnMap = mapCacheRegistry
-			retError = errors.New("Error trying to get actual ttl val!")
-
-			return
-		}
-	}()
-
-
-
-	if(conn==nil){
-		log.Error("TTL: Error trying to acquire redis conn! null connection")
-		return make(map[string]CacheRegistry), errors.New("TTL: Redis conn is null! Check conn errors!")
-	}
-
-	//prepare a keyval pair array
-	for keyMap, cacheRegistry := range mapCacheRegistry {
-
-		respTtl, err := conn.Do("ttl", s.getKey(keyMap))
-		log.Debug("TTL %v that came from redis %v", keyMap, respTtl)
-
-		if err != nil {
-			log.Error("Error trying to retrieve ttl of key " + keyMap, err)
-			cacheRegistry.Ttl = -2
-			return mapCacheRegistry, err
-
-		} else {
-			intResp, _ := respTtl.(int64)
-			cacheRegistry.Ttl = int(intResp)
-		}
-
-		mapCacheRegistry[keyMap] = setTTLToPayload(&cacheRegistry)
-	}
-
-	return mapCacheRegistry, nil
-}
 
 //Recover current ttl information about registries
 func (s RedisCacheStorage) GetTTLMap(keys []string)  (retTTLMap map[string]int ){
@@ -260,24 +177,6 @@ func (s RedisCacheStorage) GetTTLMap(keys []string)  (retTTLMap map[string]int )
 	return ttlMap
 }
 
-//transfer the ttl information from cacheRegistry to paylaod interface, if it is ExposeTTL
-func setTTLToPayload(cacheRegistry *CacheRegistry) CacheRegistry {
-
-	payload := cacheRegistry.Payload
-
-	exposeTTL, hasTtl := payload.(ExposeTTL)
-
-	if hasTtl {
-		log.Debug("Transfering ttl from redis (%d seconds) registry to ttl attribute of object %s", cacheRegistry.Ttl, cacheRegistry.CacheKey)
-		payload = exposeTTL.SetTtl(cacheRegistry.Ttl) // assure the same type, from set ttl
-		cacheRegistry.Payload = payload
-		log.Debug("Setting ttl to %v, ttl value %v", cacheRegistry.CacheKey, exposeTTL.GetTtl())
-	} else {
-		log.Debug("Payload doesn't ExposeTTL %v", cacheRegistry.CacheKey)
-	}
-
-	return *cacheRegistry
-}
 
 //save informed registries on redis
 func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) (retErr error) {
@@ -365,16 +264,16 @@ func (s RedisCacheStorage) SetExpireTTL(cacheRegistries ...CacheRegistry) {
 
 	//prepare a keyval pair array
 	for _, cacheRegistry := range cacheRegistries {
-		if cacheRegistry.GetTTL() > 0 {
+		if cacheRegistry.GetTTLSeconds() > 0 {
 			//log.Debug("Setting ttl to key %s ", cacheRegistry.CacheKey)
-			_, err := conn.Do("expire", s.getKey(cacheRegistry.CacheKey), cacheRegistry.GetTTL())
+			_, err := conn.Do("expire", s.getKey(cacheRegistry.CacheKey), cacheRegistry.GetTTLSeconds())
 			if err != nil {
 				log.Error("Error trying to save cache registry w! %v", err)
 				return
 			}
 
 		} else {
-			log.Debug("TTL for %s, ttl=%d will not be setted! ", s.getKey(cacheRegistry.CacheKey), cacheRegistry.GetTTL())
+			log.Debug("TTL for %s, ttl=%d will not be setted! ", s.getKey(cacheRegistry.CacheKey), cacheRegistry.GetTTLSeconds())
 		}
 	}
 
@@ -446,13 +345,11 @@ func (s RedisCacheStorage) getKeys(keys []string) []interface{} {
 }
 
 //instantiate a new cachestorage redis
-func NewRedisCacheStorage(hostPort string, password string, maxIdle int, maxActive int, readTimeout int, ttlReadTimeout int, cacheArea string, serializer Serializer, enableTTL bool) RedisCacheStorage {
+func NewRedisCacheStorage(hostPort string, password string, maxIdle int, maxActive int, readTimeout int, cacheArea string, serializer Serializer) RedisCacheStorage {
 
 	redisCacheStorage := RedisCacheStorage{
 		*newPoolRedis(hostPort, password, maxIdle, maxActive,readTimeout),
-		ttlReadTimeout,
 		cacheArea,
-		enableTTL,
 		serializer,
 	}
 

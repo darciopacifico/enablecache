@@ -2,6 +2,7 @@ package cache
 
 import (
 	"github.com/op/go-logging"
+	"time"
 )
 
 var log = logging.MustGetLogger("cache")
@@ -33,11 +34,6 @@ func (c SimpleCacheManager) SetCache(cacheRegistry ...CacheRegistry) error {
 	return c.CacheStorage.SetValues(cacheRegistry...)
 }
 
-//return time to live
-func (c SimpleCacheManager) GetCacheTTL(cacheKey string) (int, error) {
-	return c.CacheStorage.GetTTL(cacheKey)
-}
-
 //implement getCache operation that can recover child data in other cache registries.
 func (c SimpleCacheManager) GetCache(cacheKey string) (CacheRegistry, error) {
 
@@ -47,12 +43,24 @@ func (c SimpleCacheManager) GetCache(cacheKey string) (CacheRegistry, error) {
 	if err != nil {
 		log.Error("Error trying to recover value from cache storage! %s", cacheKey)
 		st.Miss()
-		return CacheRegistry{cacheKey, nil, -2, false, ""}, err
+		return CacheRegistry{
+			cacheKey,
+			nil,
+			-2,
+			time.Unix(0, 0),
+			false,
+			""}, err
 	}
 	if len(cacheRegistries) == 0 {
 		log.Debug("Cache registry not found! %s", cacheKey)
 		st.Miss()
-		return CacheRegistry{cacheKey, nil, -2, false, ""}, nil
+		return CacheRegistry{
+			cacheKey,
+			nil,
+			-2,
+			time.Unix(0, 0),
+			false,
+			""}, nil
 	}
 
 	cacheRegistry := cacheRegistries[cacheKey]
@@ -71,5 +79,38 @@ func (c SimpleCacheManager) GetCache(cacheKey string) (CacheRegistry, error) {
 
 //implement getCache operation that can recover child data in other cache registries.
 func (c SimpleCacheManager) GetCaches(cacheKeys ...string) (map[string]CacheRegistry, error) {
-	return c.CacheStorage.GetValuesMap(cacheKeys...)
+	mapCR, err := c.CacheStorage.GetValuesMap(cacheKeys...)
+
+	for key, cacheRegistry := range mapCR {
+
+		mapCR[key] = setTTLToPayload(cacheRegistry)
+
+	}
+
+	return mapCR, err
 }
+
+
+//transfer the ttl information from cacheRegistry to paylaod interface, if it is ExposeTTL
+func setTTLToPayload(cacheRegistry CacheRegistry) CacheRegistry {
+
+	if (cacheRegistry.Payload == nil) {
+		return cacheRegistry
+	}
+
+	payload := cacheRegistry.Payload
+
+	exposeTTL, isExposeTTL := payload.(ExposeTTL)
+
+	if isExposeTTL {
+		payload = exposeTTL.SetTtl(cacheRegistry.GetTTLSeconds()) // assure the same type, from set ttl
+		cacheRegistry.Payload = payload
+		log.Debug("Setting ttl to %v, ttl value %v", cacheRegistry.CacheKey, exposeTTL.GetTtl())
+	} else {
+		log.Debug("Payload doesn't ExposeTTL %v", cacheRegistry.CacheKey)
+	}
+
+	return cacheRegistry
+}
+
+

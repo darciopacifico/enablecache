@@ -3,21 +3,25 @@ package aop
 import (
 	"errors"
 	"fmt"
-	"os"
 	"reflect"
-	"sync"
+	"os"
 )
 
 //parse function signatures, validators,
 //makes a swap function for reflection operations
 func (cacheSpot CacheSpot) MustStartCache() CacheSpot {
 	//gracefull exit at panic
-	defer func() { //assure for not panicking
+	defer func() {
+		//assure for not panicking
 		if r := recover(); r != nil {
 			log.Error("Error trying to make a swap function! %v", r)
 			os.Exit(1)
 		}
 	}()
+
+	if cacheSpot.WaitingGroup == nil {
+		panic(errors.New("Waiting group == null! You must specify a new waiting group for this cacheSpot!"))
+	}
 
 	if cacheSpot.CacheManager == nil || !cacheSpot.CacheManager.Validade() {
 		panic(errors.New(fmt.Sprintf("You must provide a ready and valid cache manager!")))
@@ -39,8 +43,6 @@ func (cacheSpot CacheSpot) MustStartCache() CacheSpot {
 
 //analize functions and fill reflect objects as need
 func (cacheSpot *CacheSpot) parseFunctionsForSwap() {
-	//wait group must be a pointer
-	cacheSpot.wg = &sync.WaitGroup{}
 
 	//take inputs and output types
 	SpotInType, SpotOutType := getInOutTypes(reflect.TypeOf(cacheSpot.CachedFunc))
@@ -189,7 +191,8 @@ func (c CacheSpot) mustHaveValidationMethod() {
 	//if function has a function with validation behaviour
 	if c.ValidateResults == nil {
 		log.Debug("Function '%s' doesn't implements ValidateResults!", c.cachedFuncName)
-		if numOut > 1 && functionType.Elem().Out(1).Kind() == reflect.Bool { //for more than one outs, the second one must be a boolean
+		if numOut > 1 && functionType.Elem().Out(1).Kind() == reflect.Bool {
+			//for more than one outs, the second one must be a boolean
 			log.Warning("Atention! The second return value (a boolean) will be used as validation criteria! Implement ValidateResults inferface to define a special criteria!")
 
 		} else {
@@ -210,12 +213,14 @@ func (c CacheSpot) mustValidateCardinality() {
 	}
 
 	//validate same cardinality for empty function
-	if isMany(ine[0]) != isMany(oute[0]) { //XOR
+	if isMany(ine[0]) != isMany(oute[0]) {
+		//XOR
 		panic(errors.New("the empty destiny function doesn't have the same cardinality for first paramater and first return!"))
 	}
 
 	//validate same cardinality for original hot function
-	if isMany(ino[0]) != isMany(outo[0]) { //XOR
+	if isMany(ino[0]) != isMany(outo[0]) {
+		//XOR
 		panic(errors.New("the original function can't be cached, because it doesn't have the same cardinality for first paramater and first return!"))
 	}
 
@@ -251,7 +256,8 @@ func (cacheSpot CacheSpot) createDefaultValues(success bool) []reflect.Value {
 				var err error = nil
 				defaultValues[i] = reflect.ValueOf(&err).Elem()
 
-			} else if i > 0 { // an interface at 0 position can be ignored
+			} else if i > 0 {
+				// an interface at 0 position can be ignored
 
 				log.Error("(not error) It's not possible to identify an default value for function return index %v!", i)
 				panic(errors.New("It's not possible to identify an default value for function!"))
