@@ -8,7 +8,6 @@ import (
 	"strconv"
 	"testing"
 	"sync"
-	"time"
 )
 
 type UserEmail struct {
@@ -22,8 +21,8 @@ func (u UserEmail) GetCacheKey() string {
 }
 
 var (
-	csRedis = cache.NewRedisCacheStorage("localhost:6379", "", 8,200, 2000,  "str_test", cache.SerializerGOB{})
-	cmStr   = cache.SimpleCacheManager{
+	csRedis = cache.NewRedisCacheStorage("localhost:6379", "", 8, 200, 2000, "str_test", cache.SerializerGOB{})
+	cmStr = cache.SimpleCacheManager{
 		CacheStorage: csRedis,
 	}
 
@@ -37,7 +36,7 @@ func init() {
 	cs = CacheSpot{
 		CachedFunc:   &CFindByEmail,
 		HotFunc:      FindByEmail,
-		Ttl: 100 * time.Second,
+		Ttl: 100,
 		CacheManager: cmStr,
 		WaitingGroup: &sync.WaitGroup{},
 	}.MustStartCache()

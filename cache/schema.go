@@ -26,7 +26,7 @@ func GetReg(id int) CacheRegistry {
 	cr := CacheRegistry{
 		CacheKey: fmt.Sprintf("cacheReg_%v", id),
 		Payload :GetCar(id),
-		StorageTTL: -1,
+		StoreTTL: 3600,
 		CacheTime: time.Now(),
 		HasValue:true,
 		TypeName:"",

@@ -75,7 +75,7 @@ func init() {
 		CachedFunc:   &cFindOne_one_one,
 		HotFunc:      FindOneCustomer,
 		CacheManager: cmAuto,
-		Ttl: 	time.Second*100,
+		Ttl: 	100,
 		WaitingGroup: &sync.WaitGroup{},
 		//ValidateResults: func (allIns []reflect.Value, allOuts []reflect.Value, cacheKey string, singleValueToCache interface{}) bool{return true},
 		//SpecifyOutputKeys:KeysForCache,
@@ -85,7 +85,7 @@ func init() {
 	CacheSpot{
 		CachedFunc:   &cFindOneB_one_many,
 		HotFunc:      FindManyCustomers,
-		Ttl: 	time.Second*100,
+		Ttl:  100,
 		CacheManager: cmAuto,
 		WaitingGroup: &sync.WaitGroup{},
 		//ValidateResults:IsValidResults,
@@ -95,7 +95,7 @@ func init() {
 	//many to many
 	CacheSpot{CachedFunc: &cFindMany_many_many,
 		HotFunc:      FindManyCustomers,
-		Ttl: 	time.Second*100,
+		Ttl: 	100,
 		CacheManager: cmAuto,
 		WaitingGroup: &sync.WaitGroup{},
 		//ValidateResults:ManyIsValidResults,
@@ -106,7 +106,7 @@ func init() {
 	//many to one
 	CacheSpot{CachedFunc: &cFindManyB_many_one,
 		HotFunc:      FindOneCustomer,
-		Ttl: 	time.Second*100,
+		Ttl: 	100,
 		CacheManager: cmAuto,
 		WaitingGroup: &sync.WaitGroup{},
 		//ValidateResults:ManyIsValidResults,

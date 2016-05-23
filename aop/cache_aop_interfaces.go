@@ -5,7 +5,6 @@ import (
 	"sync"
 	"github.com/darciopacifico/enablecache/cache"
 	"github.com/op/go-logging"
-	"time"
 )
 
 var EMPTY_MAP = make(map[string]cache.CacheRegistry)
@@ -25,9 +24,9 @@ type CacheSpot struct {
 	SpecifyInputKeys  TypeSpecifyInputKeys
 	SpecifyOutputKeys TypeSpecifyOutputKeys
 	DefValsFunction   TypeCreateDefVals
-	WaitingGroup 	*sync.WaitGroup
-	Ttl               time.Duration
-	CallContext       // will be mounted at start up nothing to do
+	WaitingGroup      *sync.WaitGroup
+	Ttl               float64
+	CallContext                          // will be mounted at start up nothing to do
 }
 
 //reflect objects need to reflect function call
@@ -44,7 +43,6 @@ type CallContext struct {
 	hotFunctName   string // hot func name
 	isManyOuts     bool   //compose cardinality of swap call
 	isManyIns      bool   //compose cardinality of swap call
-
 }
 
 //Specialize validation results. Only valid results will be cached.

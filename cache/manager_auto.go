@@ -81,7 +81,7 @@ func (c AutoCacheManager) GetCache(cacheKey string) (CacheRegistry, error) {
 		return CacheRegistry{
 			CacheKey  :cacheKey,
 			Payload   :nil,
-			StorageTTL:-2,
+			StoreTTL:-2,
 			CacheTime :time.Unix(0,0),
 			HasValue  :false,
 			TypeName  :""}, err
@@ -450,7 +450,7 @@ func (c AutoCacheManager) mapAttributesToCacheKeys(cacheKey string, cacheRegistr
 			cacheRegistryField := CacheRegistry{
 				cacheKey,
 				payl,
-				cacheRegistry.StorageTTL,
+				cacheRegistry.StoreTTL,
 				cacheRegistry.CacheTime,
 				true,
 				typeName}

@@ -242,7 +242,6 @@ func (s RedisCacheStorage) SetValues(registries ...CacheRegistry) (retErr error)
 		return errF
 	}
 
-	log.Debug("Calling setting expires!!")
 	s.SetExpireTTL(registries...)
 	return nil
 }

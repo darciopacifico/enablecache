@@ -29,12 +29,12 @@ func (cacheSpot CacheSpot) cacheValues(notCachedIns []reflect.Value, origOuts []
 
 			if cacheSpot.validateResults(notCachedIns, origOuts, cacheId, valRet) {
 
-				log.Debug("TTL for reg %v %v!", cacheId, cacheSpot.Ttl)
+				log.Debug("TTL from cachespot 2!", cacheId, cacheSpot.Ttl)
 				//invoke cache manager to persist returned value
 				cacheRegs = append(cacheRegs, cache.CacheRegistry{
 					CacheKey: cacheId,
 					Payload: valRet,
-					StorageTTL: cacheSpot.Ttl.Seconds(),
+					StoreTTL: cacheSpot.Ttl,
 					CacheTime: time.Now(),
 					HasValue: true,
 					TypeName: ""})
@@ -64,13 +64,13 @@ func (cacheSpot CacheSpot) singleStoreInCache(hotOut reflect.Value, cacheKey str
 		//get raw value
 		valRet := hotOut.Interface()
 
-		log.Debug("TTL for reg !", cacheKey, cacheSpot.Ttl)
+		log.Debug("TTL from cachespot !", cacheKey, cacheSpot.Ttl)
 
 		//invoke cache manager to persist returned value
 		cacheRegistry := cache.CacheRegistry{
 			CacheKey: cacheKey,
 			Payload: valRet,
-			StorageTTL: cacheSpot.Ttl.Seconds(),
+			StoreTTL: cacheSpot.Ttl,
 			CacheTime: time.Now(),
 			HasValue: true}
 		cacheSpot.CacheManager.SetCache(cacheRegistry)
@@ -113,7 +113,8 @@ func (cacheSpot CacheSpot) storeCacheOneOne(originalIns []reflect.Value, hotOuts
 	cacheSpot.WaitingGroup.Add(1)
 
 	go func() {
-		defer func() { //assure for not panicking
+		defer func() {
+			//assure for not panicking
 
 			if r := recover(); r != nil {
 				log.Error("Recovering! Error trying to save cache registry y! %v", r)
@@ -129,7 +130,7 @@ func (cacheSpot CacheSpot) storeCacheOneOne(originalIns []reflect.Value, hotOuts
 	}()
 }
 
-func (cacheSpot CacheSpot) storeManyToAny( notCachedIns []reflect.Value, hotReturnedValues []reflect.Value ){
+func (cacheSpot CacheSpot) storeManyToAny(notCachedIns []reflect.Value, hotReturnedValues []reflect.Value) {
 	cacheSpot.WaitingGroup.Add(1)
 	go func() {
 		defer func() {
@@ -156,8 +157,8 @@ func (c CacheSpot) validateResults(allIns []reflect.Value, allOuts []reflect.Val
 
 		//has some return value
 		if len(allOuts) > 1 &&
-			allOuts[1].IsValid() &&
-			allOuts[1].Kind() == reflect.Bool {
+		allOuts[1].IsValid() &&
+		allOuts[1].Kind() == reflect.Bool {
 
 			boolVal, _ := allOuts[1].Interface().(bool)
 

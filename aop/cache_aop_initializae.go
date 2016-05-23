@@ -19,6 +19,10 @@ func (cacheSpot CacheSpot) MustStartCache() CacheSpot {
 		}
 	}()
 
+	if cacheSpot.Ttl==0 {
+		panic(errors.New("Cachespot ttl could not be 0!"))
+	}
+
 	if cacheSpot.WaitingGroup == nil {
 		panic(errors.New("Waiting group == null! You must specify a new waiting group for this cacheSpot!"))
 	}

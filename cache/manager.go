@@ -14,7 +14,7 @@ import (
 type CacheRegistry struct {
 	CacheKey   string      	//unique key in cache
 	Payload    interface{} 	//payload to be cached, usually an byte array
-	StorageTTL float64 	// Cache Time to Live duration
+	StoreTTL float64 	// Cache Time to Live duration
 	CacheTime  time.Time   	//date when cache registry was created
 	HasValue   bool        	//return the presence of cached value on cache storage. Useful in batch operations and to avoid nil errors
 	TypeName   string      	//type name of payload. Only serializer implementation can see this attribute
@@ -23,7 +23,8 @@ type CacheRegistry struct {
 //Calculates TTl of cache registry
 func (c CacheRegistry) GetTTLSeconds() float64 {
 	//ceil to store in redis with no problem
-	ttlSeconds := math.Ceil(c.StorageTTL - time.Since(c.CacheTime).Seconds())
+
+	ttlSeconds := math.Ceil(c.StoreTTL - time.Since(c.CacheTime).Seconds())
 	//log.Debug("TTL to save in seconds",ttlSeconds)
 	return ttlSeconds
 }

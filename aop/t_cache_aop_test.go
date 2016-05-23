@@ -48,7 +48,7 @@ func TestManyToOne(t *testing.T) {
 		CachedFunc:   &cacheFindCustomers,
 		HotFunc:      FindCustomers,
 		CacheManager: cacheManager,
-		Ttl:        1 * time.Second,
+		Ttl:        1 ,
 		SpecifyOutputKeys: SpecKeysCustomers,
 		WaitingGroup: &sync.WaitGroup{},
 	}
@@ -86,6 +86,7 @@ func TestAutoValidation(t *testing.T) {
 		CachedFunc:   &cachedFinder,
 		HotFunc:      FindCustomer,
 		CacheManager: cacheManager,
+		Ttl:100,
 		WaitingGroup: &sync.WaitGroup{},
 	}
 
@@ -143,6 +144,7 @@ func TestCustomValidation(t *testing.T) {
 		HotFunc:      FindCustomerSimple,
 		CacheManager: cacheManager,
 		WaitingGroup: &sync.WaitGroup{},
+		Ttl:100,
 	}
 
 	cacheSpot.MustStartCache()
@@ -180,7 +182,7 @@ func TestTTL(t *testing.T) {
 		HotFunc:        FindUser,
 		CacheManager:        cacheManager,
 		WaitingGroup:        &sync.WaitGroup{},
-		Ttl:                1 * time.Second, //second
+		Ttl:                1 , //second
 	}
 
 	//prepared a cached function, using the original one

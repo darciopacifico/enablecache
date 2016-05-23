@@ -32,8 +32,8 @@ func (z *CacheRegistry) DecodeMsg(dc *msgp.Reader) (err error) {
 			if err != nil {
 				return
 			}
-		case "StorageTTL":
-			z.StorageTTL, err = dc.ReadFloat64()
+		case "StoreTTL":
+			z.StoreTTL, err = dc.ReadFloat64()
 			if err != nil {
 				return
 			}
@@ -83,12 +83,12 @@ func (z *CacheRegistry) EncodeMsg(en *msgp.Writer) (err error) {
 	if err != nil {
 		return
 	}
-	// write "StorageTTL"
-	err = en.Append(0xaa, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x54, 0x54, 0x4c)
+	// write "StoreTTL"
+	err = en.Append(0xa8, 0x53, 0x74, 0x6f, 0x72, 0x65, 0x54, 0x54, 0x4c)
 	if err != nil {
 		return err
 	}
-	err = en.WriteFloat64(z.StorageTTL)
+	err = en.WriteFloat64(z.StoreTTL)
 	if err != nil {
 		return
 	}
@@ -135,9 +135,9 @@ func (z *CacheRegistry) MarshalMsg(b []byte) (o []byte, err error) {
 	if err != nil {
 		return
 	}
-	// string "StorageTTL"
-	o = append(o, 0xaa, 0x53, 0x74, 0x6f, 0x72, 0x61, 0x67, 0x65, 0x54, 0x54, 0x4c)
-	o = msgp.AppendFloat64(o, z.StorageTTL)
+	// string "StoreTTL"
+	o = append(o, 0xa8, 0x53, 0x74, 0x6f, 0x72, 0x65, 0x54, 0x54, 0x4c)
+	o = msgp.AppendFloat64(o, z.StoreTTL)
 	// string "CacheTime"
 	o = append(o, 0xa9, 0x43, 0x61, 0x63, 0x68, 0x65, 0x54, 0x69, 0x6d, 0x65)
 	o = msgp.AppendTime(o, z.CacheTime)
@@ -176,8 +176,8 @@ func (z *CacheRegistry) UnmarshalMsg(bts []byte) (o []byte, err error) {
 			if err != nil {
 				return
 			}
-		case "StorageTTL":
-			z.StorageTTL, bts, err = msgp.ReadFloat64Bytes(bts)
+		case "StoreTTL":
+			z.StoreTTL, bts, err = msgp.ReadFloat64Bytes(bts)
 			if err != nil {
 				return
 			}
@@ -208,6 +208,6 @@ func (z *CacheRegistry) UnmarshalMsg(bts []byte) (o []byte, err error) {
 }
 
 func (z *CacheRegistry) Msgsize() (s int) {
-	s = 1 + 9 + msgp.StringPrefixSize + len(z.CacheKey) + 8 + msgp.GuessSize(z.Payload) + 11 + msgp.Float64Size + 10 + msgp.TimeSize + 9 + msgp.BoolSize + 9 + msgp.StringPrefixSize + len(z.TypeName)
+	s = 1 + 9 + msgp.StringPrefixSize + len(z.CacheKey) + 8 + msgp.GuessSize(z.Payload) + 9 + msgp.Float64Size + 10 + msgp.TimeSize + 9 + msgp.BoolSize + 9 + msgp.StringPrefixSize + len(z.TypeName)
 	return
 }
